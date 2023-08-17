@@ -1,17 +1,47 @@
-import React from 'react';
+
+
 import Image from 'next/image';
-import { HomeLower } from './HomeLower';
-import WeAreOpen from '../../../public/New Project.jpg';
+import React from 'react';
+import LandingImage from '../../../public/HomePage/landing-image.jpg';
+import OurServices from './OurServices';
+import BecomeMerchant from './BecomeMerchant';
 
+interface IHomePageProps {}
 
+const Page: React.FC<IHomePageProps> = () => {
+  const servicesList = [
+    {
+      imageUrl: '/HomePage/customer-service.png',
+      title: 'Range Of Services',
+      description:
+        'We offer a range of services designed to exceed your expectations.',
+    },
+    {
+      imageUrl: '/HomePage/best-customer-experience.png',
+      title: 'Super experience',
+      description: 'With a few clicks, enjoy instant service at your doorstep.',
+    },
+    {
+      imageUrl: '/HomePage/FastService.png',
+      title: 'Fast Service',
+      description:
+        "Efficiency in motion - that's the essence of our fast and reliable service.",
+    },
+    {
+      imageUrl: '/HomePage/support.png',
+      title: 'Dedicated Support',
+      description:
+        'Our dedicated support team is always there to address your queries.',
+    },
+  ];
 
-const Page = () => {
   return (
     <>
-      <div className="text-center">
-        <Image src={WeAreOpen} alt="" />
+      <div className="">
+        <Image src={LandingImage} alt="" />
       </div>
-      <HomeLower/>
+      <OurServices services={servicesList} />
+      <BecomeMerchant />
     </>
   );
 };
