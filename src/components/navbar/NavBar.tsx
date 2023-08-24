@@ -23,6 +23,7 @@ import {
   Navbar,
   Typography,
 } from '@material-tailwind/react';
+import Link from 'next/link';
 import React from 'react';
 
 // profile menu component
@@ -225,7 +226,7 @@ const NavBar = () => {
   }, []);
 
   return (
-    <Navbar className="absolute opacity-95 mx-auto  lg:pl-6" fullWidth>
+    <Navbar className="sticky opacity-95 mx-auto  lg:pl-6" fullWidth>
       <div className="relative flex items-center text-blue-gray-900">
         <Typography
           as="a"
@@ -251,6 +252,9 @@ const NavBar = () => {
       <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />
       </Collapse>
+      <Link href="/AboutUs">
+        <Button className="p-4 ml-[50%]">About</Button>
+      </Link>
     </Navbar>
   );
 };
