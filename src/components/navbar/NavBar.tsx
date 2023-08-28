@@ -25,6 +25,8 @@ import {
 } from '@material-tailwind/react';
 import Link from 'next/link';
 import React from 'react';
+import Image from 'next/image';
+import Logo from 'public/ExpertEase-Logo.png'
 
 // profile menu component
 const profileMenuItems = [
@@ -225,16 +227,14 @@ const NavBar = () => {
     );
   }, []);
 
+  const isLoggedIn = !true;
+
   return (
-    <Navbar className="sticky opacity-95 mx-auto  lg:pl-6" fullWidth>
+    <Navbar className="sticky opacity-95 mx-auto  lg:pl-6 top-0 z-50" fullWidth>
       <div className="relative flex items-center text-blue-gray-900">
-        <Typography
-          as="a"
-          href="#"
-          className="mr-4 ml-2 cursor-pointer py-1.5 font-semibold"
-        >
-          ODS
-        </Typography>
+        <Link href='/'>
+        <Image src={Logo} alt='' className='ml-5 cursor-pointer font-semibold hover:animate-bounce' height={140} width={140}/>
+        </Link>
         <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
           <NavList />
         </div>
@@ -247,16 +247,19 @@ const NavBar = () => {
         >
           <Bars2Icon className="h-6 w-6" />
         </IconButton>
-        <ProfileMenu />
+        {isLoggedIn ? (
+          <ProfileMenu />
+        ) : (
+          <Link href="/auth/SignIn" className=" absolute  left-[90vw]">
+            <Button className="px-4 py-3 ">LogIn</Button>
+          </Link>
+        )}
       </div>
       <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />
       </Collapse>
-      <Link href="/AboutUs">
-        <Button className="p-4 ml-[50%]">About</Button>
-      </Link>
     </Navbar>
   );
 };
 
-export default NavBar;
+export default NavBar

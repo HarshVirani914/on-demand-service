@@ -23,7 +23,7 @@ const HorizontalCard: React.FC<IHorizontalCardProps> = ({
   btnTitle,
 }) => {
   return (
-    <Card className="w-full max-w-[48rem] flex-row mb-10">
+    <Card className="w-full max-w-[48rem] flex-row mb-10 my-4">
       <CardHeader
         shadow={false}
         floated={false}
