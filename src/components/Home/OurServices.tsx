@@ -1,34 +1,47 @@
-import Image from 'next/image';
+'use client';
+
 import React from 'react';
+import { FeatureCard } from '../card';
+import Typewriter from 'typewriter-effect';
 
 interface IOurServicesProps {
-  services: {
-    imageUrl: string;
+  cardTitles: {
     title: string;
-    description: string;
+    imgUrl: string;
   }[];
 }
 
-const OurServices: React.FC<IOurServicesProps> = ({ services }) => {
+const OurServices: React.FC<IOurServicesProps> = ({ cardTitles }) => {
   return (
-    <div>
-      <div className="text-black font-semibold mx-auto text-center text-4xl mt-6 underline ">
-        Why Choose Us ?
+    <div className="my-20 flex w-full items-center justify-between overflow-hidden text-start sm:flex-row">
+      <div className='bg-gradient-to-r from-cyan-600 to-gray-900 bg-clip-text text-transparent font-bold text-5xl flex flex-col gap-y-8 justify-center items-center w-[50%]'>
+      <div>
+      <Typewriter
+        options={{
+          strings: ['POPULAR SERVICES','AT YOUR DOOR STEP'],
+          autoStart: true,
+          loop: true,
+          delay:50,
+          deleteSpeed:30
+        }}
+      />
       </div>
-
-      <div className="my-10 flex gap-28 items-center justify-center m-auto text-center flex-row">
-        {services.map(({ imageUrl, title, description }, key) => (
-          <div
-            className="flex flex-col gap-2 items-center justify-center"
-            key={key}
-          >
-            <div>
-              <Image src={imageUrl} width={128} height={128} alt="" />
-            </div>
-            <div className="font-semibold text-lg">{title}</div>
-            <div className="w-52">{description}</div>
-          </div>
-        ))}
+      <div>
+      
+      </div>
+      </div>
+      {/* <div id='services' className="w-[50%]">
+        <Typography className="font-bold text-7xl flex justify-center items-center">
+          Popular <br />
+          Services
+        </Typography>
+      </div> */}
+      <div className="w-[50%]">
+        <div className="flex flex-row flex-wrap gap-8">
+          {cardTitles.map(({ title, imgUrl }, key) => (
+            <FeatureCard title={title} imgUrl={imgUrl} key={key} />
+          ))}
+        </div>
       </div>
     </div>
   );
