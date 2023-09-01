@@ -1,12 +1,11 @@
 'use client';
 import Image from 'next/image';
 import React from 'react';
-import LandingImage from '../../../public/HomePage/New Home 2.jpg';
+import LandingImage from '../../../public/HomePage/New Home enhanced.png';
 import BecomeMerchant from './BecomeMerchant';
 import WhyUs from './WhyUs';
 import OurServices from './OurServices';
 import Link from 'next/link';
-
 
 interface IHomePageProps {}
 
@@ -62,21 +61,29 @@ const Page: React.FC<IHomePageProps> = () => {
 
   return (
     <>
-      <div className="">
-        <Image src={LandingImage} alt="" />
-        <div className='absolute left-[9vw] bottom-[16vw]'>
-        <div className='text-black text-start font-bold text-3xl gap-4'>
-          <div className='text-4xl'>Bringing Services to Your Doorstep</div>
-          <div className='mt-2 text-xl'>- On Demand, On Time.</div>
+      <Image
+        className="-z-50 hidden md:block relative"
+        src={LandingImage}
+        alt="LandingImg"
+      />
+      <div className="flex flex-col justify-center items-center md:block md:absolute md:left-32 md:top-80">
+        <div className="m-5 md:m-0">
+          <div className="text-black md:text-start font-bold text-sm md:text-3xl gap-4">
+            <div className="text-center md:text-start text-2xl md:text-4xl">
+              Bringing Services to Your Doorstep
+            </div>
+            <div className="mt-2 text-center md:text-start md:text-xl">
+              - On Demand, On Time.
+            </div>
+          </div>
         </div>
-        </div>
-        <Link href="/aboutus">
-          <div className="absolute left-[9vw] bottom-[10vw]">
-            <button className="p-4 px-10 border-black border-2 text-center font-semibold hover:bg-black hover:text-white">
+        <div className="mt-4">
+          <Link href="/aboutus">
+            <button className="bg-black text-white sm:bg-white sm:text-black p-4 px-10 border-black border-2 text-center font-semibold hover:bg-black transition-colors duration-200 hover:text-white">
               Explore Our Services
             </button>
-          </div>
-        </Link>
+          </Link>
+        </div>
       </div>
       <WhyUs services={servicesList} />
       <OurServices cardTitles={cardTitles} />

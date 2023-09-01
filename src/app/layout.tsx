@@ -1,10 +1,8 @@
-'use client'
-
 import { Layout } from '@/components';
+import { Footer } from '@/components/Footer';
 import { Navbar } from '@/components/navbar';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { Footer } from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      {/* <LoadingBar
+        {/* <LoadingBar
         color='#f11946'
         progress={100}
         height={1.6}

@@ -16,7 +16,7 @@ const WhyUs: React.FC<IOurServicesProps> = ({ services }) => {
         Why Choose Us ?
       </div>
 
-      <div className="my-10 flex gap-28 items-center justify-center m-auto text-center flex-col sm:flex-row">
+      <div className="my-10 flex gap-10 sm:gap-28 items-center justify-center m-auto text-center flex-col sm:flex-row sm:flex-wrap">
         {services.map(({ imageUrl, title, description }, key) => (
           <div
             className="flex flex-col gap-2 items-center justify-center"

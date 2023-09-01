@@ -3,7 +3,7 @@
 import { Typography } from '@material-tailwind/react';
 import Link from 'next/link';
 import Image from 'next/image';
-import Logo from 'public/ExpertEase-Logo.png'
+import Logo from 'public/ExpertEase-Logo.png';
 
 const LINKS = [
   {
@@ -46,9 +46,15 @@ export default function FooterWithSocialLinks() {
     <footer className="align-bottom w-full my-14">
       <div className="mx-auto w-full max-w-7xl px-8">
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
-        <Link href='/'>
-        <Image src={Logo} alt='' className='ml-5 cursor-pointer font-semibold' height={140} width={140}/>
-        </Link>
+          <Link href="/">
+            <Image
+              src={Logo}
+              alt=""
+              className="ml-5 cursor-pointer font-semibold"
+              height={140}
+              width={140}
+            />
+          </Link>
           <div className="grid grid-cols-3 justify-between gap-4">
             {LINKS.map(({ title, items }) => (
               <ul key={title}>
