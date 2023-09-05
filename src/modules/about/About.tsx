@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import AboutUsImg from 'public/AboutUs/about-us.jpg';
+import AboutUsImg from 'public/AboutUs/about-us.png';
 
 const AboutUs = () => {
   return (

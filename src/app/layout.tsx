@@ -1,12 +1,13 @@
-import { Layout } from '@/components';
 import { Footer } from '@/components/Footer';
+import { Layout } from '@/components/layout';
 import { Navbar } from '@/components/navbar';
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'ExpertEase',
   description: 'Instant service at your doorstep.',
 };

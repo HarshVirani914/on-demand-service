@@ -1,9 +1,9 @@
-import { AboutUs } from '@/modules/AboutUs';
+import { About } from '@/modules/about';
 
 export default function Page() {
   return (
     <>
-      <AboutUs />
+      <About />
     </>
   );
 }

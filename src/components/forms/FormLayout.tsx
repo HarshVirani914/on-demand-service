@@ -3,7 +3,7 @@ import React from 'react';
 
 interface Props extends Omit<FormikConfig<any>, 'children'> {
   children?: React.ReactNode | Function;
-  onSubmit: (input: any) => Promise<any> | any;
+  onSubmit: (_input: any) => Promise<any> | any;
   initalValues?: Record<string, any>;
 }
 

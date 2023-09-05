@@ -1,6 +1,6 @@
 import React from 'react';
 import SellerCardImage from '../../../public/HomePage/seller-card-image.jpg';
-import { Card } from '../card';
+import { Card } from '../../components/card';
 
 interface IPageProps {}
 

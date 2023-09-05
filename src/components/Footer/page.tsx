@@ -11,7 +11,7 @@ const LINKS = [
     items: [
       {
         title: 'Our Services',
-        link: '/aboutus',
+        link: '/about',
       },
     ],
   },
@@ -20,7 +20,7 @@ const LINKS = [
     items: [
       {
         title: 'About Us',
-        link: '/aboutus',
+        link: '/about',
       },
       {
         title: 'Contact Us',
@@ -33,7 +33,7 @@ const LINKS = [
     items: [
       {
         title: 'Blog',
-        link: '/aboutus',
+        link: '/about',
       },
     ],
   },
@@ -88,7 +88,7 @@ export default function FooterWithSocialLinks() {
             className="mb-4 text-center font-normal text-blue-gray-900 md:mb-0"
           >
             &copy; {currentYear}{' '}
-            <a href="https://material-tailwind.com/">ExpertEase</a>. All Rights
+            <Link href="/">ExpertEase</Link>. All Rights
             Reserved.
           </Typography>
           <div className="flex gap-4 text-blue-gray-900 sm:justify-center">

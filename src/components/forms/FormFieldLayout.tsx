@@ -28,7 +28,7 @@ export interface FormFieldProps {
   children?: Function | React.ReactNode;
   isDisabled?: boolean;
   inputLabel?: string;
-  handleChange?: (value?: any) => void;
+  handleChange?: (_value?: any) => void;
 }
 
 const FormFieldLayout: React.FC<FormFieldProps> = ({
@@ -48,12 +48,13 @@ const FormFieldLayout: React.FC<FormFieldProps> = ({
         };
 
         return (
-          <div className="flex flex-col gap-1">
+          <div className={`flex flex-col gap-1 ${classes?.body}`}>
             {!!children && typeof children === 'function' ? (
               children({ field, form, meta })
             ) : (
               <Input
                 {...field}
+                className={classes?.input}
                 name={name}
                 label={label}
                 type={type}

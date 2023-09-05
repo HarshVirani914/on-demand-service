@@ -4,7 +4,7 @@ import React from 'react';
 export interface Props extends Omit<InputProps, 'ref'> {}
 
 const Input: React.FC<Props> = ({ className, ...props }) => {
-  return <TWInput size="lg" className={`w-80 ${className}`} {...props} />;
+  return <TWInput size="lg" className={`w-full ${className}`} {...props} />;
 };
 
 export default Input;

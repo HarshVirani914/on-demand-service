@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { FeatureCard } from '../card';
 import Typewriter from 'typewriter-effect';
+import { FeatureCard } from '../../components/card';
 
 interface IOurServicesProps {
   cardTitles: {

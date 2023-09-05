@@ -21,7 +21,7 @@ const handleSubmit = async (values: any) => {
 
 const SignInForm = () => {
   return (
-    <div className="flex items-center justify-center" style={{ margin: '7%' }}>
+    <div className="flex items-center justify-center min-h-screen">
       <Card color="transparent" shadow={false} className="m-20">
         <Typography variant="h4" color="blue-gray">
           Log In
@@ -51,7 +51,7 @@ const SignInForm = () => {
                 Don&apos;t have an account?{' '}
                 <Link
                   href="/auth/SignUp"
-                  className="font-medium text-blue-500 transition-colors hover:text-blue-700"
+                  className="font-medium text-blue-500 transition-colors hover:text-blue-700 underline"
                 >
                   Sign Up
                 </Link>
