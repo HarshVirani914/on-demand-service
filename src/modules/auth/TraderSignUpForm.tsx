@@ -6,6 +6,7 @@ import { Form, Formik } from 'formik';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
+import { Select, Option } from '@material-tailwind/react';
 
 interface IWizardProps {
   children: React.ReactNode;
@@ -67,22 +68,12 @@ const Wizard: React.FC<IWizardProps> = ({
       validationSchema={step.props.validationSchema}
     >
       {(formik) => (
-        <Form className="mb-2 w-80 max-w-screen-lg sm:w-96">
-          <Typography >
+        <Form className="mb-2 w-80 max-w-screen-lg sm:w-[26rem]">
+          <Typography>
             Step {stepNumber + 1} of {totalSteps}
           </Typography>
           {step}
           <div>
-            {stepNumber > 0 && (
-              <Button
-                className="mt-4"
-                fullWidth
-                onClick={() => previous(formik.values)}
-                type="button"
-              >
-                Back
-              </Button>
-            )}
             <div>
               <Button
                 disabled={formik.isSubmitting}
@@ -93,6 +84,16 @@ const Wizard: React.FC<IWizardProps> = ({
                 {isLastStep ? 'Submit' : 'Next'}
               </Button>
             </div>
+            {stepNumber > 0 && (
+              <Button
+                className="mt-4"
+                fullWidth
+                onClick={() => previous(formik.values)}
+                type="button"
+              >
+                Back
+              </Button>
+            )}
           </div>
         </Form>
       )}
@@ -158,7 +159,6 @@ const App = () => (
             contactNumber: Yup.string().required('Required'),
             address1: Yup.string().required('Required'),
             address2: Yup.string().required('Required'),
-            description: Yup.string().required('Required'),
           })}
         >
           <Typography variant="h4" color="blue-gray">
@@ -172,6 +172,70 @@ const App = () => (
             <FormFieldLayout label="Contact Number" name="contactNumber" />
             <FormFieldLayout label="Address 1" name="address1" />
             <FormFieldLayout label="Address 2" name="address2" />
+          </div>
+        </WizardStep>
+        <WizardStep
+          onSubmit={() => console.log('Step3 onSubmit')}
+          validationSchema={Yup.object({
+            SelectCategory: Yup.string().required('Required'),
+            ShopOpen: Yup.string().required('Required'),
+            ShopClose: Yup.string().required('Required'),
+            description: Yup.string().required('Required'),
+          })}
+        >
+          <Typography variant="h4" color="blue-gray">
+            Company Details
+          </Typography>
+          <Typography color="gray" className="my-1 font-normal">
+            Enter company details to continue
+          </Typography>
+          <div className="mb-4 flex flex-col gap-4">
+            <Select label="Select Category" name="SelectCategory">
+              <Option>Car Services</Option>
+              <Option>Ac Services</Option>
+              <Option>Home Cleaning Services</Option>
+              <Option>Plumber Services</Option>
+            </Select>
+            <div className="flex flex-row gap-2 ">
+              <Select label="Shop Open" name="ShopOpen" className="">
+                <Option>1</Option>
+                <Option>2</Option>
+                <Option>3</Option>
+                <Option>4</Option>
+                <Option>5</Option>
+                <Option>6</Option>
+                <Option>7</Option>
+                <Option>8</Option>
+                <Option>9</Option>
+                <Option>10</Option>
+                <Option>11</Option>
+                <Option>12</Option>
+              </Select>
+              <Select label="AM/PM" name="AM/PM/1">
+                <Option>AM</Option>
+                <Option>PM</Option>
+              </Select>
+            </div>
+            <div className="flex flex-row gap-2 ">
+              <Select label="Shop Close" name="ShopClose">
+                <Option>1</Option>
+                <Option>2</Option>
+                <Option>3</Option>
+                <Option>4</Option>
+                <Option>5</Option>
+                <Option>6</Option>
+                <Option>7</Option>
+                <Option>8</Option>
+                <Option>9</Option>
+                <Option>10</Option>
+                <Option>11</Option>
+                <Option>12</Option>
+              </Select>
+              <Select label="AM/PM" name="AM/PM/2">
+                <Option>AM</Option>
+                <Option>PM</Option>
+              </Select>
+            </div>
             <FormFieldLayout label="Description" name="description" />
           </div>
         </WizardStep>

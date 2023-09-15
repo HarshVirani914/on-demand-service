@@ -3,17 +3,13 @@
 import {
   Bars2Icon,
   ChevronDownIcon,
-  CodeBracketSquareIcon,
-  CubeTransparentIcon,
   PowerIcon,
-  RocketLaunchIcon,
   Square3Stack3DIcon,
-  UserCircleIcon,
+  UserCircleIcon
 } from '@heroicons/react/24/outline';
 import {
   Avatar,
   Button,
-  Card,
   Collapse,
   IconButton,
   Menu,
@@ -21,12 +17,13 @@ import {
   MenuItem,
   MenuList,
   Navbar,
-  Typography,
+  Typography
 } from '@material-tailwind/react';
-import Link from 'next/link';
-import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Logo from 'public/ExpertEase-Logo.png';
+import React from 'react';
+import NavigationMenus from './Menu/page';
 
 // profile menu component
 const profileMenuItems = [
@@ -109,29 +106,61 @@ function ProfileMenu() {
 }
 
 // nav list menu
-const navListMenuItems = [
+const CarServicesList = [
   {
-    title: '@material-tailwind/html',
+    title: 'Car Services',
     description:
-      'Learn how to use @material-tailwind/html, packed with rich components and widgets.',
+      'Revitalize Your Ride with Our Expert Car Service!',
   },
   {
-    title: '@material-tailwind/react',
-    description:
-      'Learn how to use @material-tailwind/react, packed with rich components for React.',
+    title: 'Car General Services',
+    
+      description:
+      'Keeping Your Car in Peak Condition, One Service at a Time.',
   },
   {
-    title: 'Material Tailwind PRO',
+    title: 'Car Washing',
     description:
-      'A complete set of UI Elements for building faster websites in less time.',
+      'Shine Bright! Pamper Your Car with Our Expert Car Washing Services.',
   },
 ];
 
-function NavListMenu() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+const HomeServicesList = [
+  {
+    title: 'Home Services',
+    description:
+      'Your One-Stop Solution for All Your Home Service Needs!',
+  },
+  {
+    title: 'Ac Services',
+    
+      description:
+      'Stay Cool and Comfortable with Our Home AC Services!',
+  },
+  {
+    title: 'Home Cleaning Services',
+    description:
+      'Experience the Freshness of a Spotless Home!',
+  },
+  {
+    title: 'Plumber Services',
+    description:
+      "Plumbing Problems? We've Got the Pipes Covred!!",
+  },
+];
+
+interface INavListMenuProps {
+  header : string;
+  navListMenuItems: {
+    title: string;
+    description : string;
+  }[]
+}
+
+function NavListMenu({ header , navListMenuItems }: INavListMenuProps) {
 
   const renderItems = navListMenuItems.map(({ title, description }) => (
-    <a href="#" key={title}>
+    <Link href={`/category/${title.replace(/ /g, '-').toLowerCase()}`} key={header}>
       <MenuItem>
         <Typography variant="h6" color="blue-gray" className="mb-1">
           {title}
@@ -140,41 +169,13 @@ function NavListMenu() {
           {description}
         </Typography>
       </MenuItem>
-    </a>
+    </Link>
   ));
 
   return (
     <React.Fragment>
-      <Menu allowHover open={isMenuOpen} handler={setIsMenuOpen}>
-        <MenuHandler>
-          <Typography as="a" href="#" variant="small" className="font-normal">
-            <MenuItem className="hidden items-center gap-2 text-blue-gray-900 lg:flex lg:rounded-full">
-              <Square3Stack3DIcon className="h-[18px] w-[18px]" /> Pages{' '}
-              <ChevronDownIcon
-                strokeWidth={2}
-                className={`h-3 w-3 transition-transform ${
-                  isMenuOpen ? 'rotate-180' : ''
-                }`}
-              />
-            </MenuItem>
-          </Typography>
-        </MenuHandler>
-        <MenuList className="hidden w-[36rem] grid-cols-7 gap-3 overflow-visible lg:grid">
-          <Card
-            color="blue"
-            shadow={false}
-            variant="gradient"
-            className="col-span-3 grid h-full w-full place-items-center rounded-md"
-          >
-            <RocketLaunchIcon strokeWidth={1} className="h-28 w-28" />
-          </Card>
-          <ul className="col-span-4 flex w-full flex-col gap-1">
-            {renderItems}
-          </ul>
-        </MenuList>
-      </Menu>
       <MenuItem className="flex items-center gap-2 text-blue-gray-900 lg:hidden">
-        <Square3Stack3DIcon className="h-[18px] w-[18px]" /> Pages{' '}
+        <Square3Stack3DIcon className="h-[18px] w-[18px]" /> {header}{' '}
       </MenuItem>
       <ul className="ml-6 flex w-full flex-col gap-1 lg:hidden">
         {renderItems}
@@ -183,41 +184,11 @@ function NavListMenu() {
   );
 }
 
-// nav list component
-const navListItems = [
-  {
-    label: 'Account',
-    icon: UserCircleIcon,
-  },
-  {
-    label: 'Blocks',
-    icon: CubeTransparentIcon,
-  },
-  {
-    label: 'Docs',
-    icon: CodeBracketSquareIcon,
-  },
-];
-
 function NavList() {
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      <NavListMenu />
-      {navListItems.map(({ label, icon }, key) => (
-        <Typography
-          key={key}
-          as="a"
-          href="#"
-          variant="small"
-          color="blue-gray"
-          className="font-normal"
-        >
-          <MenuItem className="flex items-center gap-2 lg:rounded-full">
-            {React.createElement(icon, { className: 'h-[18px] w-[18px]' })}{' '}
-            {label}
-          </MenuItem>
-        </Typography>
-      ))}
+      <NavListMenu header="Car services" navListMenuItems={CarServicesList} />
+      <NavListMenu header="Home services"  navListMenuItems={HomeServicesList}/>
     </ul>
   );
 }
@@ -235,7 +206,10 @@ const NavBar = () => {
   }, []);
 
   return (
-    <Navbar className="sticky opacity-95 mx-auto lg:pl-6 top-0 z-50" fullWidth>
+    <Navbar
+      className="sticky opacity-[99%] mx-auto lg:pl-6 top-0 z-50"
+      fullWidth
+    >
       <div className="relative flex items-center text-blue-gray-900">
         <Link href="/">
           <Image
@@ -247,8 +221,11 @@ const NavBar = () => {
           />
         </Link>
         <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
-          <NavList />
+          <NavigationMenus />
         </div>
+        {/* <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+          <NavList />
+        </div> */}
         <IconButton
           size="sm"
           color="blue-gray"
