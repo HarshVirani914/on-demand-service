@@ -8,12 +8,14 @@ import {
   Typography,
 } from '@material-tailwind/react';
 import Image, { StaticImageData } from 'next/image';
+import Link from 'next/link';
 
 interface IHorizontalCardProps {
   imageUrl: StaticImageData;
   title: string;
   description: string;
   btnTitle?: string;
+  href: string;
 }
 
 const HorizontalCard: React.FC<IHorizontalCardProps> = ({
@@ -21,6 +23,7 @@ const HorizontalCard: React.FC<IHorizontalCardProps> = ({
   title,
   description,
   btnTitle,
+  href
 }) => {
   return (
     <Card className="w-full max-w-[48rem] flex-col m-5 sm:flex-row sm:mb-10 sm:my-4">
@@ -38,8 +41,8 @@ const HorizontalCard: React.FC<IHorizontalCardProps> = ({
         <Typography color="gray" className="mb-8 font-normal">
           {description}
         </Typography>
-        <a href="#" className="inline-block">
-          <Button variant="text" className="flex items-center gap-2">
+        <Link href={href} className="inline-block">
+        <Button variant="text" className="flex items-center gap-2">
             {btnTitle ? btnTitle : 'Learn More'}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +59,7 @@ const HorizontalCard: React.FC<IHorizontalCardProps> = ({
               />
             </svg>
           </Button>
-        </a>
+        </Link>
       </CardBody>
     </Card>
   );
