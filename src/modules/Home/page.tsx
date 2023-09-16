@@ -6,6 +6,7 @@ import BecomeMerchant from './BecomeMerchant';
 import WhyUs from './WhyUs';
 import OurServices from './OurServices';
 import Link from 'next/link';
+import 'src/app/globals.css';
 
 interface IHomePageProps {}
 
@@ -78,7 +79,7 @@ const Page: React.FC<IHomePageProps> = () => {
           </div>
         </div>
         <div className="mt-4">
-          <Link href="/about">
+          <Link href="/dashboard/user">
             <button className="bg-black text-white sm:bg-white sm:text-black p-4 px-10 border-black border-2 text-center font-semibold hover:bg-black transition-colors duration-200 hover:text-white">
               Explore Our Services
             </button>

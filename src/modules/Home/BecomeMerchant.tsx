@@ -12,6 +12,7 @@ const BecomeMerchant: React.FC<IPageProps> = () => {
         title="Start As A Service Provider..."
         description="Unlock Your Potential as a Service Provider: Step into a world of opportunities on our website. If you're an AC technician, car service expert, salon professional or any service provider, this is your platform to shine. Connect with customers actively seeking your services."
         btnTitle="Get Started"
+        href='/auth/Serviceprovider-SignUp'
       />
     </div>
   );
