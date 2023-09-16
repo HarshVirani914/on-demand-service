@@ -11,7 +11,7 @@ const LINKS = [
     items: [
       {
         title: 'Our Services',
-        link: '/about',
+        link: '/ourservices',
       },
     ],
   },
@@ -43,7 +43,7 @@ const currentYear = new Date().getFullYear();
 
 export default function FooterWithSocialLinks() {
   return (
-    <footer className="align-bottom w-full my-14">
+    <footer className="z-45 align-bottom w-full my-14 bottom-0 z-45">
       <div className="mx-auto w-full max-w-7xl px-8">
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
           <Link href="/">
