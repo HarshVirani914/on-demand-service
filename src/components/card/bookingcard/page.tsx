@@ -55,11 +55,15 @@ const BookingCard: React.FC<IBookingCard> = ({
           ) : null}
         </CardHeader>
         <CardBody>
-          <div className="mb-3 flex items-center justify-between">
-            <Typography variant="h5" color="blue-gray" className="font-medium">
-              Car Services
+          <div className="mb-3 flex flex-col gap-y-1 ">
+            <div className='flex flex-row gap-x-6 items-center justify-between'>
+              <div>
+              <Typography variant="h5" color="blue-gray" className="font-medium">
+              Car General Services
             </Typography>
-            {ratingSymbol ? (
+              </div>
+              <div>
+              {ratingSymbol ? (
               <Typography
                 color="blue-gray"
                 className="flex items-center gap-1.5 font-normal"
@@ -79,9 +83,16 @@ const BookingCard: React.FC<IBookingCard> = ({
                 5.0
               </Typography>
             ) : null}
+              </div>
+            </div>
+            <div className='flex flex-row gap-2'>
+              <Typography variant="h6" color="blue-gray" className="font-medium"  >
+                Service Charge : {`600`}/-
+              </Typography>
+              </div>
           </div>
           <Typography color="gray">
-            - Car Washing <br />- Car General Service
+            - Engine Check up , Tyre Check up
           </Typography>
         </CardBody>
         <CardFooter className="pt-3">
