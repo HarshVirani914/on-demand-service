@@ -5,8 +5,9 @@ import {
   ChevronDownIcon,
   PowerIcon,
   Square3Stack3DIcon,
-  UserCircleIcon
+  UserCircleIcon,
 } from '@heroicons/react/24/outline';
+import { useCookies } from 'react-cookie';
 import {
   Avatar,
   Button,
@@ -17,13 +18,13 @@ import {
   MenuItem,
   MenuList,
   Navbar,
-  Typography
+  Typography,
 } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Logo from 'public/ExpertEase-Logo.png';
 import React from 'react';
 import NavigationMenus from './Menu/page';
+import { TOKEN_NAME, useLogout } from '@/modules/auth/hooks';
 
 // profile menu component
 const profileMenuItems = [
@@ -36,10 +37,12 @@ const profileMenuItems = [
     icon: PowerIcon,
   },
 ];
-const isLoggedIn = !true;
 
 function ProfileMenu() {
+  const [cookies, setCookies] = useCookies();
+  const { logout } = useLogout();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const isLoggedIn = !!cookies[TOKEN_NAME];
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -89,6 +92,7 @@ function ProfileMenu() {
                   variant="small"
                   className="font-normal"
                   color={isLastItem ? 'red' : 'inherit'}
+                  onClick={isLastItem ? logout : undefined}
                 >
                   {label}
                 </Typography>
@@ -109,14 +113,12 @@ function ProfileMenu() {
 const CarServicesList = [
   {
     title: 'Car Services',
-    description:
-      'Revitalize Your Ride with Our Expert Car Service!',
+    description: 'Revitalize Your Ride with Our Expert Car Service!',
   },
   {
     title: 'Car General Services',
-    
-      description:
-      'Keeping Your Car in Peak Condition, One Service at a Time.',
+
+    description: 'Keeping Your Car in Peak Condition, One Service at a Time.',
   },
   {
     title: 'Car Washing',
@@ -128,39 +130,37 @@ const CarServicesList = [
 const HomeServicesList = [
   {
     title: 'Home Services',
-    description:
-      'Your One-Stop Solution for All Your Home Service Needs!',
+    description: 'Your One-Stop Solution for All Your Home Service Needs!',
   },
   {
     title: 'Ac Services',
-    
-      description:
-      'Stay Cool and Comfortable with Our Home AC Services!',
+
+    description: 'Stay Cool and Comfortable with Our Home AC Services!',
   },
   {
     title: 'Home Cleaning Services',
-    description:
-      'Experience the Freshness of a Spotless Home!',
+    description: 'Experience the Freshness of a Spotless Home!',
   },
   {
     title: 'Plumber Services',
-    description:
-      "Plumbing Problems? We've Got the Pipes Covred!!",
+    description: "Plumbing Problems? We've Got the Pipes Covred!!",
   },
 ];
 
 interface INavListMenuProps {
-  header : string;
+  header: string;
   navListMenuItems: {
     title: string;
-    description : string;
-  }[]
+    description: string;
+  }[];
 }
 
-function NavListMenu({ header , navListMenuItems }: INavListMenuProps) {
-
+function NavListMenu({ header, navListMenuItems }: INavListMenuProps) {
   const renderItems = navListMenuItems.map(({ title, description }) => (
-    <Link href={`/category/${title.replace(/ /g, '-').toLowerCase()}`} key={header}>
+    <Link
+      href={`/category/${title.replace(/ /g, '-').toLowerCase()}`}
+      key={header}
+    >
       <MenuItem>
         <Typography variant="h6" color="blue-gray" className="mb-1">
           {title}
@@ -188,7 +188,7 @@ function NavList() {
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       <NavListMenu header="Car services" navListMenuItems={CarServicesList} />
-      <NavListMenu header="Home services"  navListMenuItems={HomeServicesList}/>
+      <NavListMenu header="Home services" navListMenuItems={HomeServicesList} />
     </ul>
   );
 }
@@ -213,8 +213,8 @@ const NavBar = () => {
       <div className="relative flex items-center text-blue-gray-900">
         <Link href="/">
           <Image
-            src={Logo}
-            alt="Logo"
+            src="/ExpertEase-Logo.png"
+            alt="ExpertEase"
             className="ml-5 cursor-pointer font-semibold hover:animate-bounce"
             height={140}
             width={140}

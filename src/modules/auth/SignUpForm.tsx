@@ -4,32 +4,10 @@ import { FormFieldLayout, FormLayout } from '@/components/forms';
 import { Button, Card, Typography } from '@material-tailwind/react';
 import { Form } from 'formik';
 import Link from 'next/link';
-import * as Yup from 'yup';
-
-const initalValues = {
-  name: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-};
-
-const SignupSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
-  email: Yup.string().email('Invalid email').required('Required'),
-  password: Yup.string().required('Required'),
-  confirmPassword: Yup.string()
-    .required('Required')
-    .equals([Yup.ref('password')], 'Passwords must match'),
-});
-
-const handleSubmit = async (values: any) => {
-  console.log(values);
-};
+import { useSignup } from './hooks';
 
 const SignUpForm = () => {
+  const { initialValues, loading, handleSubmit, RegisterSchema } = useSignup();
   return (
     <div className="flex items-center justify-center min-h-screen">
       <Card color="transparent" shadow={false} className="m-6">
@@ -41,8 +19,8 @@ const SignUpForm = () => {
         </Typography>
         <FormLayout
           onSubmit={handleSubmit}
-          initialValues={initalValues}
-          validationSchema={SignupSchema}
+          initialValues={initialValues}
+          validationSchema={RegisterSchema}
           enableReinitialize
         >
           {() => (
@@ -61,7 +39,12 @@ const SignUpForm = () => {
                   name="confirmPassword"
                 />
               </div>
-              <Button className="mt-6" fullWidth type="submit" disabled={false}>
+              <Button
+                className="mt-6"
+                fullWidth
+                type="submit"
+                disabled={loading}
+              >
                 Sign up
               </Button>
               <Typography color="gray" className="mt-4 text-center font-normal">

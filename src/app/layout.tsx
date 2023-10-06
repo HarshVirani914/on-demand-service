@@ -1,8 +1,7 @@
-import { Footer } from '@/components/Footer';
-import { Layout } from '@/components/layout';
-import { Navbar } from '@/components/navbar';
+import { WithApollo } from '@/modules/apollo';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { Toaster } from 'react-hot-toast';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -20,16 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <LoadingBar
-        color='#f11946'
-        progress={100}
-        height={1.6}
-      /> */}
-        <Layout>
-          <Navbar />
+        <WithApollo>
           {children}
-          <Footer />
-        </Layout>
+          <Toaster />
+        </WithApollo>
       </body>
     </html>
   );

@@ -66,6 +66,7 @@ const Page: React.FC<IHomePageProps> = () => {
         className="-z-50 hidden md:block relative"
         src={LandingImage}
         alt="LandingImg"
+        priority
       />
       <div className="flex flex-col justify-center items-center md:block md:absolute md:left-32 md:top-80">
         <div className="m-5 md:m-0">

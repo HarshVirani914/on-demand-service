@@ -1,7 +1,14 @@
+import { AuthRestrict, Layout } from '@/components/layout';
 import { SignInForm } from '@/modules/auth';
 
-const page = () => {
-  return <SignInForm />;
+type Props = {};
+
+const page: React.FC<Props> = () => {
+  return (
+    <Layout>
+      <SignInForm />
+    </Layout>
+  );
 };
 
 export default page;

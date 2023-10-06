@@ -1,9 +1,8 @@
 'use client';
 
 import { Typography } from '@material-tailwind/react';
-import Link from 'next/link';
 import Image from 'next/image';
-import Logo from 'public/ExpertEase-Logo.png';
+import Link from 'next/link';
 
 const LINKS = [
   {
@@ -48,8 +47,8 @@ export default function FooterWithSocialLinks() {
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
           <Link href="/">
             <Image
-              src={Logo}
-              alt=""
+              src="/ExpertEase-Logo.png"
+              alt="ExpertEase"
               className="ml-5 cursor-pointer font-semibold"
               height={140}
               width={140}
@@ -87,8 +86,7 @@ export default function FooterWithSocialLinks() {
             variant="small"
             className="mb-4 text-center font-normal text-blue-gray-900 md:mb-0"
           >
-            &copy; {currentYear}{' '}
-            <Link href="/">ExpertEase</Link>. All Rights
+            &copy; {currentYear} <Link href="/">ExpertEase</Link>. All Rights
             Reserved.
           </Typography>
           <div className="flex gap-4 text-blue-gray-900 sm:justify-center">

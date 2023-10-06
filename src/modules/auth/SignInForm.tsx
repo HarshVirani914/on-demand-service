@@ -4,22 +4,10 @@ import { FormFieldLayout, FormLayout } from '@/components/forms';
 import { Button, Card, Typography } from '@material-tailwind/react';
 import { Form } from 'formik';
 import Link from 'next/link';
-import * as Yup from 'yup';
-
-const initalValues = {
-  email: '',
-  password: '',
-};
-
-const SigninSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Required'),
-  password: Yup.string().required('Required'),
-});
-const handleSubmit = async (values: any) => {
-  console.log(values);
-};
+import { useLogin } from './hooks';
 
 const SignInForm = () => {
+  const { initialValues, loading, handleSubmit, validationSchema } = useLogin();
   return (
     <div className="flex items-center justify-center min-h-screen">
       <Card color="transparent" shadow={false} className="m-20">
@@ -30,8 +18,8 @@ const SignInForm = () => {
           Enter details to log in
         </Typography>
         <FormLayout
-          initialValues={initalValues}
-          validationSchema={SigninSchema}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           {() => (
@@ -44,7 +32,12 @@ const SignInForm = () => {
                   name="password"
                 />
               </div>
-              <Button className="mt-6" fullWidth type="submit" disabled={false}>
+              <Button
+                className="mt-6"
+                fullWidth
+                type="submit"
+                disabled={loading}
+              >
                 Log In
               </Button>
               <Typography color="gray" className="mt-4 text-center font-normal">

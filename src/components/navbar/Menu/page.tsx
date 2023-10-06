@@ -32,7 +32,8 @@ export default function NavigationMenus() {
       category: 'Car Services',
       title: 'Car Washing',
       href: '/docs/installation',
-      description: 'Shine Bright! Pamper Your Car with Our Expert Car Washing Services.',
+      description:
+        'Shine Bright! Pamper Your Car with Our Expert Car Washing Services.',
     },
     {
       category: 'Home Services',
@@ -59,7 +60,12 @@ export default function NavigationMenus() {
     return services
       .filter((item) => item.category === category)
       .map((item, index) => (
-        <ListItem key={index} title={item.title} href={`/category/${item.title.replace(/ /g, '-').toLowerCase()}`} description={item.description}>
+        <ListItem
+          key={index}
+          title={item.title}
+          href={`/category/${item.title.replace(/ /g, '-').toLowerCase()}`}
+          description={item.description}
+        >
           {item.description}
         </ListItem>
       ));
@@ -76,11 +82,15 @@ export default function NavigationMenus() {
                 <NavigationMenuLink asChild>
                   <Link
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href={`/category/${("Car Services").replace(/ /g, '-').toLowerCase()}`}
+                    href={`/category/${'Car Services'
+                      .replace(/ /g, '-')
+                      .toLowerCase()}`}
                   >
                     <Image src={carService} alt="" />
                     <div className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">Car Services</div>
+                    <div className="mb-2 mt-4 text-lg font-medium">
+                      Car Services
+                    </div>
                     <p className="text-sm leading-tight text-muted-foreground">
                       Revitalize Your Ride with Our Expert Car Service!
                     </p>
@@ -99,11 +109,15 @@ export default function NavigationMenus() {
                 <NavigationMenuLink asChild>
                   <Link
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href={`/category/${("Home Services").replace(/ /g, '-').toLowerCase()}`}
+                    href={`/category/${'Home Services'
+                      .replace(/ /g, '-')
+                      .toLowerCase()}`}
                   >
                     <Image src={HomeService} alt="" />
                     <div className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">Home Services</div>
+                    <div className="mb-2 mt-4 text-lg font-medium">
+                      Home Services
+                    </div>
                     <p className="text-sm leading-tight text-muted-foreground">
                       Your One-Stop Solution for All Your Home Service Needs!
                     </p>
@@ -126,7 +140,7 @@ interface ListItemProps {
   children?: React.ReactNode; // Define children explicitly
 }
 
-const ListItem: React.FC<ListItemProps> = ({ title, href, description, children }) => {
+const ListItem: React.FC<ListItemProps> = ({ title, href, children }) => {
   return (
     <li>
       <Link href={href}>
