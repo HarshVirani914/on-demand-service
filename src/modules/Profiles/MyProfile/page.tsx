@@ -2,7 +2,7 @@
 import { Sidebar } from '@/components/UserDashboard/Sidebar';
 import React from 'react';
 import Image from 'next/image';
-import profileImg from 'public/MyProfile/26128227_2204_w037_n003_302b_p1_302.jpg';
+import profileImg from 'public/MyProfile/my-profile.jpg';
 import { Input } from '@material-tailwind/react';
 import {
   AlertDialog,
