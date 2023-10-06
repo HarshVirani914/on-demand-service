@@ -25,7 +25,7 @@ const ServiceProviderDashboard = () => {
         title:"Listed Services",
         href : "/serviceproviderdashboard"
       }]} />
-      <div className="sm:ml-[20%] justify-center items-center">
+      <div className="sm:ml-[12%] justify-center items-center">
         <div className="bg-black/90  m-10 p-5 mt-[2rem] sm:m-20 sm:mt-[2rem] rounded-xl">
           <div className="text-center text-white flex justify-center text-4xl font-semibold">
             Listed Services
@@ -51,6 +51,41 @@ const ServiceProviderDashboard = () => {
           </AlertDialog>
         </div>
         <div className="p-7 sm:px-20 mt-[3rem] sm:-mt[2rem] mx-auto grid  lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-5">
+          <div>
+            <BookingCard
+              buttonLabel="Edit Service"
+              likeSymbol={false}
+              ratingSymbol={false}
+            />
+          </div>
+          <div>
+            <BookingCard
+              buttonLabel="Edit Service"
+              likeSymbol={false}
+              ratingSymbol={false}
+            />
+          </div>
+          <div>
+            <BookingCard
+              buttonLabel="Edit Service"
+              likeSymbol={false}
+              ratingSymbol={false}
+            />
+          </div>
+          <div>
+            <BookingCard
+              buttonLabel="Edit Service"
+              likeSymbol={false}
+              ratingSymbol={false}
+            />
+          </div>
+          <div>
+            <BookingCard
+              buttonLabel="Edit Service"
+              likeSymbol={false}
+              ratingSymbol={false}
+            />
+          </div>
           <div>
             <BookingCard
               buttonLabel="Edit Service"

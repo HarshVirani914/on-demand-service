@@ -79,7 +79,7 @@ const Page: React.FC<IHomePageProps> = () => {
           </div>
         </div>
         <div className="mt-4">
-          <Link href="/dashboard/user">
+          <Link href={`/category/${("Services").replace(/ /g, '-').toLowerCase()}`}>
             <button className="bg-black text-white sm:bg-white sm:text-black p-4 px-10 border-black border-2 text-center font-semibold hover:bg-black transition-colors duration-200 hover:text-white">
               Explore Our Services
             </button>

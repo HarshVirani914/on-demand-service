@@ -1,9 +1,17 @@
+'use client'
 import BookingCard from '@/components/card/bookingcard/page';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const Dashboard = ({params} : {params : {categoryId : string}}) => {
+const Dashboard = ({ params }: { params: { categoryId: string } }) => {
+  const { categoryId } = params;
 
-  const {categoryId} = params;
+  useEffect(() => {
+    const title = categoryId
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+    document.title = `Expertease-${title}`;
+  }, [categoryId]);
 
   return (
     <>

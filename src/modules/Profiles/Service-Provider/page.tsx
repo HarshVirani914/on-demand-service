@@ -41,7 +41,7 @@ const ServiceProviderProfile = (props: Props) => {
           },
         ]}
       />
-      <div className="sm:ml-[20%]">
+      <div className="sm:ml-[12%]">
         <div className="bg-black/90  m-10 p-5 mt-[2rem] sm:m-20 sm:mt-[2rem] rounded-xl">
           <div className="text-center text-white flex justify-center text-4xl font-semibold">
             Service-Provider Profile
@@ -126,7 +126,7 @@ const ServiceProviderProfile = (props: Props) => {
                       Are you absolutely sure?
                     </AlertDialogTitle>
                     <AlertDialogDescription>
-                      This action will update your profile and user's will see
+                      This action will update your profile and users will see
                       your updated Profile.
                     </AlertDialogDescription>
                   </AlertDialogHeader>

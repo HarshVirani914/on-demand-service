@@ -7,11 +7,15 @@ import Logo from 'public/ExpertEase-Logo.png';
 
 const LINKS = [
   {
-    title: 'Product',
+    title: 'Our Services',
     items: [
       {
-        title: 'Our Services',
-        link: '/ourservices',
+        title: 'Car Services',
+        link: `/category/${("Car Services").replace(/ /g, '-').toLowerCase()}`
+      },
+      {
+        title: 'Home Services',
+        link: `/category/${("Home Services").replace(/ /g, '-').toLowerCase()}`
       },
     ],
   },
@@ -22,10 +26,6 @@ const LINKS = [
         title: 'About Us',
         link: '/about',
       },
-      {
-        title: 'Contact Us',
-        link: '/contactus',
-      },
     ],
   },
   {
@@ -33,7 +33,7 @@ const LINKS = [
     items: [
       {
         title: 'Blog',
-        link: '/about',
+        link: '/blog',
       },
     ],
   },

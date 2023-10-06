@@ -36,6 +36,9 @@ const Wizard: React.FC<IWizardProps> = ({
   const totalSteps = steps.length;
   const isLastStep = stepNumber === totalSteps - 1;
 
+  console.log(totalSteps);
+  console.log('isLastStep', isLastStep);
+
   const next = (values: any) => {
     setSnapshot(values);
     setStepNumber(Math.min(stepNumber + 1, totalSteps - 1));
@@ -51,9 +54,11 @@ const Wizard: React.FC<IWizardProps> = ({
     bag: { setTouched: (_arg0: {}) => void }
   ) => {
     if (step.props.onSubmit) {
+      console.log('step.props.onSubmit', step.props.onSubmit);
       await step.props.onSubmit(values, bag);
     }
     if (isLastStep) {
+      console.log('onSubmit', onSubmit);
       return onSubmit(values, bag);
     } else {
       bag.setTouched({});
@@ -177,7 +182,7 @@ const App = () => (
         <WizardStep
           onSubmit={() => console.log('Step3 onSubmit')}
           validationSchema={Yup.object({
-            SelectCategory: Yup.string().required('Required'),
+            Category: Yup.string().required('Required'),
             ShopOpen: Yup.string().required('Required'),
             ShopClose: Yup.string().required('Required'),
             description: Yup.string().required('Required'),
@@ -190,13 +195,23 @@ const App = () => (
             Enter company details to continue
           </Typography>
           <div className="mb-4 flex flex-col gap-4">
-            <Select label="Select Category" name="SelectCategory">
-              <Option>Car Services</Option>
-              <Option>Ac Services</Option>
-              <Option>Home Cleaning Services</Option>
-              <Option>Plumber Services</Option>
-            </Select>
+            <FormFieldLayout label="Category" name="Category" />
             <div className="flex flex-row gap-2 ">
+              <FormFieldLayout label="Shop Open" name="ShopOpen" />
+              <FormFieldLayout label="AM/PM" name="shopopenampm" />
+            </div>
+            <div className="flex flex-row gap-2 ">
+              <FormFieldLayout label="Shop Close" name="ShopClose" />
+              <FormFieldLayout label="AM/PM" name="shopcloseampm" />
+            </div>
+            <FormFieldLayout label="Description" name="description" />
+            {/* <Select label="Select Category" name="SelectCategory">
+              <Option value='car service' index={1}>Car Services</Option>
+              <Option value='ac services' index={2}>Ac Services</Option>
+              <Option value="home cleaning services" index={3}>Home Cleaning Services</Option>
+              <Option value='plumber services' index={4}>Plumber Services</Option>
+            </Select> */}
+            {/* <div className="flex flex-row gap-2 ">
               <Select label="Shop Open" name="ShopOpen" className="">
                 <Option>1</Option>
                 <Option>2</Option>
@@ -235,8 +250,8 @@ const App = () => (
                 <Option>AM</Option>
                 <Option>PM</Option>
               </Select>
-            </div>
-            <FormFieldLayout label="Description" name="description" />
+            </div> */}
+            {/* <FormFieldLayout label="Description" name="description" /> */}
           </div>
         </WizardStep>
       </Wizard>
