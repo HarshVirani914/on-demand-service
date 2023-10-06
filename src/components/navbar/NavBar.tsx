@@ -1,5 +1,6 @@
 'use client';
 
+import { TOKEN_NAME, useLogout } from '@/modules/auth/hooks';
 import {
   Bars2Icon,
   ChevronDownIcon,
@@ -7,9 +8,7 @@ import {
   Square3Stack3DIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
-import { useCookies } from 'react-cookie';
 import {
-  Avatar,
   Button,
   Collapse,
   IconButton,
@@ -22,14 +21,19 @@ import {
 } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import profileImage from 'public/MyProfile/my-profile.jpg';
 import React from 'react';
+import { useCookies } from 'react-cookie';
 import NavigationMenus from './Menu/page';
-import { TOKEN_NAME, useLogout } from '@/modules/auth/hooks';
 
 // profile menu component
 const profileMenuItems = [
   {
     label: 'My Profile',
+    icon: UserCircleIcon,
+  },
+  {
+    label: 'Service Provider Dashboard',
     icon: UserCircleIcon,
   },
   {
@@ -55,13 +59,11 @@ function ProfileMenu() {
             color="blue-gray"
             className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
           >
-            <Avatar
-              variant="circular"
-              size="sm"
-              alt="tania andrew"
-              className="border border-gray-900 p-0.5"
-              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-            />
+            <Image
+              src={profileImage}
+              alt=""
+              className="w-9 h-9 overflow-hidden rounded-full border border-gray-900"
+            ></Image>
             <ChevronDownIcon
               strokeWidth={2.5}
               className={`h-3 w-3 transition-transform ${
@@ -94,7 +96,22 @@ function ProfileMenu() {
                   color={isLastItem ? 'red' : 'inherit'}
                   onClick={isLastItem ? logout : undefined}
                 >
-                  {label}
+                  {React.createElement(icon, {
+                    className: `h-4 w-4 ${
+                      label === 'Sign Out' ? 'text-red-500' : ''
+                    }`,
+                    strokeWidth: 2,
+                  })}
+                  <Link href={`/${label.replaceAll(' ', '').toLowerCase()}`}>
+                    <Typography
+                      as="span"
+                      variant="small"
+                      className="font-normal"
+                      color={label === 'Sign Out' ? 'red' : 'inherit'}
+                    >
+                      {label}
+                    </Typography>
+                  </Link>
                 </Typography>
               </MenuItem>
             );

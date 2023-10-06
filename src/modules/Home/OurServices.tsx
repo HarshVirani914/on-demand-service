@@ -3,6 +3,7 @@
 import React from 'react';
 import Typewriter from 'typewriter-effect';
 import { FeatureCard } from '../../components/card';
+import Link from 'next/link';
 
 interface IOurServicesProps {
   cardTitles: {
@@ -37,7 +38,9 @@ const OurServices: React.FC<IOurServicesProps> = ({ cardTitles }) => {
       <div className="w-[50%]">
         <div className="flex flex-row flex-wrap gap-8">
           {cardTitles.map(({ title, imgUrl }, key) => (
-            <FeatureCard title={title} imgUrl={imgUrl} key={key} />
+            <Link href={`/category/${title.replace(/ /g, '-').toLowerCase()}`} key={key}>
+            <FeatureCard title={title} imgUrl={imgUrl} />
+            </Link>
           ))}
         </div>
       </div>

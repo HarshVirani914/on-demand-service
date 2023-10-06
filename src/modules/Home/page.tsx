@@ -68,7 +68,7 @@ const Page: React.FC<IHomePageProps> = () => {
         alt="LandingImg"
         priority
       />
-      <div className="flex flex-col justify-center items-center md:block md:absolute md:left-32 md:top-80">
+      <div className=" flex flex-col justify-center items-center md:block md:absolute md:left-24 md:top-80">
         <div className="m-5 md:m-0">
           <div className="text-black md:text-start font-bold text-sm md:text-3xl gap-4">
             <div className="text-center md:text-start text-2xl md:text-4xl">
