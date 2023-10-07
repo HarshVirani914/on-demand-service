@@ -17,14 +17,16 @@ import {
   MenuItem,
   MenuList,
   Navbar,
-  Typography,
+  Typography
 } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Logo from 'public/ExpertEase-Logo.png';
 import profileImage from 'public/MyProfile/my-profile.jpg';
 import React from 'react';
 import { useCookies } from 'react-cookie';
 import NavigationMenus from './Menu/page';
+import { useCurrentUserQuery } from '@/generated/graphql';
 
 // profile menu component
 const profileMenuItems = [
@@ -43,14 +45,17 @@ const profileMenuItems = [
 ];
 
 function ProfileMenu() {
-  const [cookies, setCookies] = useCookies();
-  const { logout } = useLogout();
+   const { data } = useCurrentUserQuery();
+
+   const { logout } = useLogout();
+
+   const isLoggedin = !!data?.currentUser?.id;
+   const isServiceProvider = !!data?.currentUser?.company?.id;
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const isLoggedIn = !!cookies[TOKEN_NAME];
 
   const closeMenu = () => setIsMenuOpen(false);
 
-  return isLoggedIn ? (
+  return isLoggedin ? (
     <>
       <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
         <MenuHandler>
@@ -73,28 +78,21 @@ function ProfileMenu() {
           </Button>
         </MenuHandler>
         <MenuList className="p-1">
-          {profileMenuItems.map(({ label, icon }, key) => {
-            const isLastItem = key === profileMenuItems.length - 1;
-            return (
-              <MenuItem
-                key={label}
-                onClick={closeMenu}
-                className={`flex items-center gap-2 rounded ${
-                  isLastItem
-                    ? 'hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10'
-                    : ''
-                }`}
-              >
-                {React.createElement(icon, {
-                  className: `h-4 w-4 ${isLastItem ? 'text-red-500' : ''}`,
-                  strokeWidth: 2,
-                })}
-                <Typography
-                  as="span"
-                  variant="small"
-                  className="font-normal"
-                  color={isLastItem ? 'red' : 'inherit'}
-                  onClick={isLastItem ? logout : undefined}
+          {profileMenuItems
+            .filter(
+              ({ label }) =>
+                !(label === 'Service Provider Dashboard' && !isServiceProvider)
+            )
+            .map(({ label, icon }, key) => {
+              return (
+                <MenuItem
+                  key={label}
+                  onClick={closeMenu}
+                  className={`flex items-center gap-2 rounded ${
+                    label === 'Sign Out'
+                      ? 'hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10'
+                      : ''
+                  }`}
                 >
                   {React.createElement(icon, {
                     className: `h-4 w-4 ${
@@ -102,20 +100,26 @@ function ProfileMenu() {
                     }`,
                     strokeWidth: 2,
                   })}
-                  <Link href={`/${label.replaceAll(' ', '').toLowerCase()}`}>
+                  <Link
+                    href={
+                      label === 'Sign Out'
+                        ? '/'
+                        : `/${label.replaceAll(' ', '').toLowerCase()}`
+                    }
+                  >
                     <Typography
                       as="span"
                       variant="small"
                       className="font-normal"
+                      onClick={label === 'Sign Out' ? logout : undefined}
                       color={label === 'Sign Out' ? 'red' : 'inherit'}
                     >
                       {label}
                     </Typography>
                   </Link>
-                </Typography>
-              </MenuItem>
-            );
-          })}
+                </MenuItem>
+              );
+            })}
         </MenuList>
       </Menu>
     </>
@@ -230,8 +234,8 @@ const NavBar = () => {
       <div className="relative flex items-center text-blue-gray-900">
         <Link href="/">
           <Image
-            src="/ExpertEase-Logo.png"
-            alt="ExpertEase"
+            src={Logo}
+            alt="Logo"
             className="ml-5 cursor-pointer font-semibold hover:animate-bounce"
             height={140}
             width={140}

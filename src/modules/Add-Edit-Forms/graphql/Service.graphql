@@ -1,0 +1,6 @@
+query Service($id: UUID!) {
+  service(id: $id) {
+    id
+    ...Lite_Service
+  }
+}

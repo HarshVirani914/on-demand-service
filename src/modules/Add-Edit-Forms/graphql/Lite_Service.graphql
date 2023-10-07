@@ -1,0 +1,8 @@
+fragment Lite_Service on Service {
+  id
+  name
+  price
+  description
+  companyId
+  categoryId
+}

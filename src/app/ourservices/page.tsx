@@ -1,9 +1,12 @@
+import { Layout } from "@/components/layout";
 import OurServices from "@/modules/OurServices/page";
 
 export default function Page() {
   return (
     <>
-      <OurServices />
+      <Layout>
+        <OurServices />
+      </Layout>
     </>
   );
 }

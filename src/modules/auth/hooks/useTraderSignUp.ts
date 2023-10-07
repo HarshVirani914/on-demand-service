@@ -14,23 +14,20 @@ export const useTraderSignUp = () => {
       onCompleted(data) {
         deleteCookies(TOKEN_NAME);
         deleteCookies('currentUserId');
-        deleteCookies('currentCompanyId');
 
         setCookies(TOKEN_NAME, data.registerCompany?.token);
         setCookies('currentUserId', data.registerCompany?.company?.userId);
-        setCookies('currentCompanyId', data.registerCompany?.company?.id);
 
         toast.success('Signed up in successfully');
 
         router.replace('/');
       },
       onError(error) {
-        toast.error('Error signup in' + error.message);
+        toast.error('Error ' + error.message);
       },
     });
 
   const handleSubmit = (input: any) => {
-    console.log(input);
     const sanitizedInput = TraderRegisterSchema.omit(['confirmPassword']).cast(
       input,
       {

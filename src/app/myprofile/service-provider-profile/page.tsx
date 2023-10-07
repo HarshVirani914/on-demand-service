@@ -1,4 +1,5 @@
-import { ServiceProviderProfile } from '@/modules/Profiles/Service-Provider'
+import { Layout } from '@/components/layout';
+import { ServiceProviderProfile } from '@/modules/Profiles/ServiceProvider'
 import React from 'react'
 
 type Props = {}
@@ -6,9 +7,11 @@ type Props = {}
 const page = (props: Props) => {
   return (
     <>
-    <ServiceProviderProfile />
+      <Layout>
+        <ServiceProviderProfile />
+      </Layout>
     </>
-  )
+  );
 }
 
 export default page

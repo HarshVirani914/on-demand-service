@@ -17,7 +17,7 @@ export const useSignup = () => {
       setCookies(TOKEN_NAME, data.register?.token);
       setCookies('currentUserId', data.register?.user?.id);
 
-      toast.success('Signed up in successfully');
+      toast.success('Signed up successfully');
 
       router.replace('/');
     },

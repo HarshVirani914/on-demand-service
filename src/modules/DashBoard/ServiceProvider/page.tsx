@@ -1,15 +1,14 @@
-'use client'
-import { ServiceProviderDashboard } from '@/components/ServiceProviderDashboard/ListedServices'
-import { Sidebar } from '@/components/UserDashboard/Sidebar'
-import React from 'react'
+'use client';
+import { ServiceProviderDashboard } from '@/components/ServiceProviderDashboard/ListedServices';
+import { LayoutChildProps } from '@/components/layout/Layout';
 
-const Serviceprovider = () => {
+const Serviceprovider = ({ currentUser }: LayoutChildProps) => {
   return (
     <>
-        {/* <Sidebar /> */}
-        <ServiceProviderDashboard />
+      {/* <Sidebar /> */}
+      <ServiceProviderDashboard />
     </>
-  )
-}
+  );
+};
 
-export default Serviceprovider
+export default Serviceprovider;

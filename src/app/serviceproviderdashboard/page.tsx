@@ -1,11 +1,12 @@
-import Serviceprovider from '@/modules/DashBoard/ServiceProvider/page'
-import React from 'react'
-
+import { Layout } from '@/components/layout';
+import Serviceprovider from '@/modules/DashBoard/ServiceProvider/page';
 
 const page = () => {
   return (
-    <Serviceprovider />
-  )
-}
+    <Layout>
+      <Serviceprovider />
+    </Layout>
+  );
+};
 
-export default page
+export default page;

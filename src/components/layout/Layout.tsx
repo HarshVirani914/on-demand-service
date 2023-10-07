@@ -1,8 +1,8 @@
 'use client';
-import { ApolloError } from '@apollo/client';
-import { Navbar } from '../navbar';
-import { Footer } from '../Footer';
+import { Lite_UserFragment, useCurrentUserQuery } from '@/generated/graphql';
 import { ThemeProvider } from '@material-tailwind/react';
+import { Footer } from '../Footer';
+import { Navbar } from '../navbar';
 
 export enum AuthRestrict {
   NEVER = 0,
@@ -17,15 +17,15 @@ interface LayoutProps {
 }
 
 export interface LayoutChildProps {
-  error?: ApolloError | Error;
-  loading: boolean;
-  currentUser?: null;
+  currentUser?: Lite_UserFragment | null;
 }
 
 const Layout: React.FC<LayoutProps> = ({
   children,
   forbidWhen = AuthRestrict.NEVER,
 }) => {
+  const { data } = useCurrentUserQuery();
+
   const forbidsLoggedIn = forbidWhen & AuthRestrict.LOGGED_IN;
   const forbidsLoggedOut = forbidWhen & AuthRestrict.LOGGED_OUT;
   const forbidsNotAdmin = forbidWhen & AuthRestrict.NOT_ADMIN;
@@ -52,9 +52,11 @@ const Layout: React.FC<LayoutProps> = ({
 
   return (
     <>
-      <Navbar />
-      <ThemeProvider>{renderChildren()}</ThemeProvider>
-      <Footer />
+      <ThemeProvider>
+        <Navbar />
+        {renderChildren()}
+        <Footer />
+      </ThemeProvider>
     </>
   );
 };

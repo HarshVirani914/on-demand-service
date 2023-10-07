@@ -13,14 +13,13 @@ export const useLogout = () => {
     onCompleted(data) {
       deleteCookie(TOKEN_NAME);
       deleteCookie('currentUserId');
-      deleteCookie('currentCompanyId');
 
       toast.success('Logged out successfully');
 
       router.replace('/');
     },
     onError(error) {
-      toast.error('Error in logout' + error.message);
+      toast.error('Error ' + error.message);
     },
   });
 

@@ -2,5 +2,24 @@ fragment Lite_User on User {
   id
   name
   email
-  password
+  type
+  isVerified
+  isAdmin
+  addresses {
+    nodes {
+      id
+      address
+      contactNumber
+    }
+  }
+  company {
+    ...Lite_Company
+    companyCategory {
+      categoryId
+      category {
+        id
+        name
+      }
+    }
+  }
 }

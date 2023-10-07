@@ -14,14 +14,13 @@ export const useLogin = () => {
     onCompleted(data) {
       setCookies(TOKEN_NAME, data.login?.token);
       setCookies('currentUserId', data.login?.user?.id);
-      setCookies('currentCompanyId', data.login?.user?.companies.nodes[0]?.id);
 
       toast.success('Logged in successfully');
 
       router.replace('/');
     },
     onError(error) {
-      toast.error('Error logging in' + error.message);
+      toast.error('Error ' + error.message);
     },
   });
 

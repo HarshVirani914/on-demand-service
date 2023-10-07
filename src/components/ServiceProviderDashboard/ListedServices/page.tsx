@@ -1,7 +1,5 @@
+import { Sidebar } from '@/components/UserDashboard/Sidebar';
 import BookingCard from '@/components/card/bookingcard/page';
-import React from 'react';
-import { CgAdd } from 'react-icons/cg';
-import Link from 'next/link';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -9,22 +7,31 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { AddService } from '@/modules/Add-Edit-Forms/AddService';
-import { Sidebar } from '@/components/UserDashboard/Sidebar';
-import {
-  MdOutlineSpaceDashboard,
-  MdOutlineHomeRepairService,
-} from 'react-icons/md';
+import { CgAdd } from 'react-icons/cg';
 
 const ServiceProviderDashboard = () => {
+  const serviceData = [
+    { id: 1, title: 'Service 1', charges: '200', description: 'Description 1' },
+    { id: 2, title: 'Service 2', charges: '200', description: 'Description 2' },
+    { id: 3, title: 'Service 3', charges: '200', description: 'Description 3' },
+  ];
+
+
   return (
+    
     <>
-    <Sidebar items={[{
-        title:"Service Provider Profile",
-        href : "/myprofile/service-provider-profile"
-      },{
-        title:"Listed Services",
-        href : "/serviceproviderdashboard"
-      }]} />
+      <Sidebar
+        items={[
+          {
+            title: 'Service Provider Profile',
+            href: '/myprofile/service-provider-profile',
+          },
+          {
+            title: 'Listed Services',
+            href: '/serviceproviderdashboard',
+          },
+        ]}
+      />
       <div className="sm:ml-[20%] justify-center items-center">
         <div className="bg-black/90  m-10 p-5 mt-[2rem] sm:m-20 sm:mt-[2rem] rounded-xl">
           <div className="text-center text-white flex justify-center text-4xl font-semibold">
@@ -51,41 +58,18 @@ const ServiceProviderDashboard = () => {
           </AlertDialog>
         </div>
         <div className="p-7 sm:px-20 mt-[3rem] sm:-mt[2rem] mx-auto grid  lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-5">
-          <div>
-            <BookingCard
-              buttonLabel="Edit Service"
-              likeSymbol={false}
-              ratingSymbol={false}
-            />
-          </div>
-          <div>
-            <BookingCard
-              buttonLabel="Edit Service"
-              likeSymbol={false}
-              ratingSymbol={false}
-            />
-          </div>
-          <div>
-            <BookingCard
-              buttonLabel="Edit Service"
-              likeSymbol={false}
-              ratingSymbol={false}
-            />
-          </div>
-          <div>
-            <BookingCard
-              buttonLabel="Edit Service"
-              likeSymbol={false}
-              ratingSymbol={false}
-            />
-          </div>
-          <div>
-            <BookingCard
-              buttonLabel="Edit Service"
-              likeSymbol={false}
-              ratingSymbol={false}
-            />
-          </div>
+          {serviceData.map((service) => (
+            <div key={service.id}>
+              <BookingCard
+                buttonLabel="Edit Service"
+                likeSymbol={false}
+                ratingSymbol={false}
+                charges={service.charges}
+                title={service.title}
+                description={service.description}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </>

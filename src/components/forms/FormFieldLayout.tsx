@@ -36,6 +36,7 @@ const FormFieldLayout: React.FC<FormFieldProps> = ({
   label,
   children,
   classes,
+  isDisabled,
   type = 'text',
   ...props
 }) => {
@@ -58,6 +59,7 @@ const FormFieldLayout: React.FC<FormFieldProps> = ({
                 name={name}
                 label={label}
                 type={type}
+                disabled={isDisabled}
                 onChange={handleChange}
                 error={!!meta?.error && meta.touched}
               />

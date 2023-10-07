@@ -2,21 +2,22 @@
 
 import { FormFieldLayout } from '@/components/forms';
 import { Button, Card, Typography } from '@material-tailwind/react';
-import { Form, Formik } from 'formik';
+import { Field, FieldProps, Form, Formik } from 'formik';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { Select, Option } from '@material-tailwind/react';
 import { useTraderSignUp } from './hooks/useTraderSignUp';
+import { useCategories } from '../Add-Edit-Forms/hooks/useCategories';
 
 interface IWizardProps {
-  children: React.ReactNode;
+  children: React.ReactNode | React.JSX.Element;
   initialValues: any;
   onSubmit: (_values: any, bag: any) => void;
 }
 
 interface IWizardStepProps {
-  children: React.ReactNode;
+  children: React.ReactNode | React.JSX.Element;
   onSubmit: (values: any, bag: any) => void;
   validationSchema: any;
 }
@@ -67,6 +68,7 @@ const Wizard: React.FC<IWizardProps> = ({
       initialValues={snapshot}
       onSubmit={handleSubmit}
       validationSchema={step.props.validationSchema}
+      enableReinitialize
     >
       {(formik) => (
         <Form className="mb-2 w-80 max-w-screen-lg sm:w-[26rem]">
@@ -104,13 +106,6 @@ const Wizard: React.FC<IWizardProps> = ({
 
 const WizardStep = ({ children }: IWizardStepProps) => children;
 
-const initialValues = {
-  name: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-};
-
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Too Short!')
@@ -124,6 +119,8 @@ const SignupSchema = Yup.object().shape({
 });
 
 const App = () => {
+    const { categories } = useCategories();
+
   const { initialValues, handleSubmit } = useTraderSignUp();
 
   return (
@@ -178,7 +175,7 @@ const App = () => {
           <WizardStep
             onSubmit={() => console.log('Step3 onSubmit')}
             validationSchema={Yup.object({
-              serviceCategory: Yup.string().required('Required'),
+              categoryId: Yup.string().required('Required'),
               shopOpen: Yup.string().required('Required'),
               shopClose: Yup.string().required('Required'),
               description: Yup.string().required('Required'),
@@ -191,7 +188,28 @@ const App = () => {
               Enter company details to continue
             </Typography>
             <div className="mb-4 flex flex-col gap-4">
-              <FormFieldLayout label="Category" name="serviceCategory" />
+                <Form className="mt-4 mb-2 w-full ">
+                  <div className=" flex flex-col gap-4">
+                    <Field name="categoryId">
+                      {({ field, form }: FieldProps) => (
+                        <Select
+                          {...field}
+                          label="Select Category"
+                          variant="outlined"
+                          onChange={(e: any) =>
+                            form.setFieldValue(field.name, e)
+                          }
+                        >
+                          {categories.map(({ id, name }) => (
+                            <Option value={id} key={id}>
+                              {name.toLocaleUpperCase()}
+                            </Option>
+                          ))}
+                        </Select>
+                      )}
+                    </Field>
+                  </div>
+                </Form>
               <FormFieldLayout label="Shop Open" type="time" name="shopOpen" />
               <FormFieldLayout
                 label="Shop Close"
@@ -199,53 +217,6 @@ const App = () => {
                 name="shopClose"
               />
               <FormFieldLayout label="Description" name="description" />
-              {/* <Select label="Select Category" name="SelectCategory">
-              <Option value='car service' index={1}>Car Services</Option>
-              <Option value='ac services' index={2}>Ac Services</Option>
-              <Option value="home cleaning services" index={3}>Home Cleaning Services</Option>
-              <Option value='plumber services' index={4}>Plumber Services</Option>
-            </Select> */}
-              {/* <div className="flex flex-row gap-2 ">
-              <Select label="Shop Open" name="ShopOpen" className="">
-                <Option>1</Option>
-                <Option>2</Option>
-                <Option>3</Option>
-                <Option>4</Option>
-                <Option>5</Option>
-                <Option>6</Option>
-                <Option>7</Option>
-                <Option>8</Option>
-                <Option>9</Option>
-                <Option>10</Option>
-                <Option>11</Option>
-                <Option>12</Option>
-              </Select>
-              <Select label="AM/PM" name="AM/PM/1">
-                <Option>AM</Option>
-                <Option>PM</Option>
-              </Select>
-            </div>
-            <div className="flex flex-row gap-2 ">
-              <Select label="Shop Close" name="ShopClose">
-                <Option>1</Option>
-                <Option>2</Option>
-                <Option>3</Option>
-                <Option>4</Option>
-                <Option>5</Option>
-                <Option>6</Option>
-                <Option>7</Option>
-                <Option>8</Option>
-                <Option>9</Option>
-                <Option>10</Option>
-                <Option>11</Option>
-                <Option>12</Option>
-              </Select>
-              <Select label="AM/PM" name="AM/PM/2">
-                <Option>AM</Option>
-                <Option>PM</Option>
-              </Select>
-            </div> */}
-              {/* <FormFieldLayout label="Description" name="description" /> */}
             </div>
           </WizardStep>
         </Wizard>

@@ -1,11 +1,14 @@
-import { MyProfile } from '@/modules/Profiles/MyProfile';
+import { Layout } from '@/components/layout';
+import { MyProfile } from '@/modules/Profiles/UserProfile';
 
 type Props = {};
 
 const page = (props: Props) => {
   return (
     <>
-      <MyProfile />
+      <Layout>
+        <MyProfile />
+      </Layout>
     </>
   );
 };

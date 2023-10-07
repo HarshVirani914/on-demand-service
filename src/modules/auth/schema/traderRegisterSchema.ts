@@ -9,7 +9,7 @@ const traderRegisterFields = {
     .ensure()
     .required('Company Contact Number is required'),
   address: string().trim().ensure().required('Address 1 is required'),
-  serviceCategory: string().required('Service Category is required'),
+  categoryId: string().required('Service Category is required'),
   shopOpen: string().required('Shop Open is required'),
   shopClose: string().required('Shop Close is required'),
   description: string(),
