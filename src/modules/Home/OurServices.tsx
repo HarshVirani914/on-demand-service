@@ -36,9 +36,9 @@ const OurServices: React.FC<IOurServicesProps> = ({ cardTitles }) => {
         </Typography>
       </div> */}
       <div className="w-[50%]">
-        <div className="flex flex-row flex-wrap gap-8">
+        <div className="flex flex-row flex-wrap gap-8 sm:p-2">
           {cardTitles.map(({ title, imgUrl }, key) => (
-            <Link href={`/category/${title.replace(/ /g, '-').toLowerCase()}`} key={key}>
+            <Link className='hover:scale-105 ease-linear' href={`/category/${title.replace(/ /g, '-').toLowerCase()}`} key={key}>
             <FeatureCard title={title} imgUrl={imgUrl} />
             </Link>
           ))}

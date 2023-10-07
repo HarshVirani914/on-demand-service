@@ -38,6 +38,9 @@ const Wizard: React.FC<IWizardProps> = ({
   const totalSteps = steps.length;
   const isLastStep = stepNumber === totalSteps - 1;
 
+  console.log(totalSteps);
+  console.log('isLastStep', isLastStep);
+
   const next = (values: any) => {
     setSnapshot(values);
     setStepNumber(Math.min(stepNumber + 1, totalSteps - 1));
@@ -53,9 +56,11 @@ const Wizard: React.FC<IWizardProps> = ({
     bag: { setTouched: (_arg0: {}) => void }
   ) => {
     if (step.props.onSubmit) {
+      console.log('step.props.onSubmit', step.props.onSubmit);
       await step.props.onSubmit(values, bag);
     }
     if (isLastStep) {
+      console.log('onSubmit', onSubmit);
       return onSubmit(values, bag);
     } else {
       bag.setTouched({});

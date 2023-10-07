@@ -25,7 +25,7 @@ const FeatureCard: React.FC<IFeatureCard> = ({ title, imgUrl }) => {
         floated={false}
         shadow={false}
         color="transparent"
-        className="absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center"
+        className="absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center "
         style={imageStyle}
       >
         <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/50" />

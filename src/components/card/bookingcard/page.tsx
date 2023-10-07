@@ -105,9 +105,16 @@ const BookingCard: React.FC<IBookingCard> = ({
               </Typography>
             </div>
           </div>
-          <Typography color="gray">
-            - {description}
+          <div className='flex flex-row gap-x-1'>
+            <div>
+            <Typography color="gray">
+            - 
           </Typography>
+            </div>
+            <div><Typography color="gray">
+            Engine Check up , Tyre Check up
+          </Typography></div>
+          </div>
         </CardBody>
         <CardFooter className="pt-3">
           {/* <Button size="lg" fullWidth={true}>

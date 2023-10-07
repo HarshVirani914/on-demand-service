@@ -1,8 +1,12 @@
+'use client'
 import { Layout } from '@/components/layout';
 import { HomePage } from '@/modules/Home';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-export default function Home(): React.ReactElement {
+export default function Home() {
+  useEffect(() => {
+    document.title = 'Expertease - Home';
+  }, []);
   return (
     <Layout>
       <HomePage />
