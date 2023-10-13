@@ -3,7 +3,7 @@
 import { FormFieldLayout, FormLayout } from '@/components/forms';
 import {
   AlertDialogCancel,
-  AlertDialogFooter
+  AlertDialogFooter,
 } from '@/components/ui/alert-dialog';
 import { Button, Card, Typography } from '@material-tailwind/react';
 import { Form } from 'formik';
@@ -44,11 +44,7 @@ const EditServices = () => {
                     Cancel
                   </AlertDialogCancel>
                   {/* <AlertDialogAction className="w-full"> */}
-                  <Button
-                    type="submit"
-                    className="w-full"
-                    disabled={ !isValid}
-                  >
+                  <Button type="submit" className="w-full" disabled={!isValid}>
                     Add
                   </Button>
                   {/* </AlertDialogAction> */}

@@ -9,7 +9,7 @@ import profileImg from 'public/MyProfile/my-profile.jpg';
 type Props = {};
 
 const MyProfile = (props: Props) => {
-  const {data} = useCurrentUserQuery();
+  const { data } = useCurrentUserQuery();
   return (
     <>
       <Sidebar

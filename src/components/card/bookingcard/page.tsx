@@ -20,8 +20,9 @@ import Image from 'next/image';
 import img1 from 'public/AboutUs/about-us.png';
 
 interface IBookingCard {
+  id: string;
   title?: string;
-  charges?: string;
+  charges?: number;
   description?: string;
   buttonLabel: string;
   likeSymbol: boolean;
@@ -29,6 +30,7 @@ interface IBookingCard {
 }
 
 const BookingCard: React.FC<IBookingCard> = ({
+  id,
   title,
   charges,
   description,
@@ -105,15 +107,13 @@ const BookingCard: React.FC<IBookingCard> = ({
               </Typography>
             </div>
           </div>
-          <div className='flex flex-row gap-x-1'>
+          <div className="flex flex-row gap-x-1">
             <div>
-            <Typography color="gray">
-            - 
-          </Typography>
+              <Typography color="gray">-</Typography>
             </div>
-            <div><Typography color="gray">
-            Engine Check up , Tyre Check up
-          </Typography></div>
+            <div>
+              <Typography color="gray">{description}</Typography>
+            </div>
           </div>
         </CardBody>
         <CardFooter className="pt-3">
@@ -128,7 +128,7 @@ const BookingCard: React.FC<IBookingCard> = ({
             </AlertDialogTrigger>
             <AlertDialogContent className="-p-15 sm:p-7">
               {buttonLabel == 'Edit Service' ? <EditServices /> : null}
-              {buttonLabel == 'Get Details' ? <GetDetails /> : null}
+              {buttonLabel == 'Get Details' ? <GetDetails id={id}/> : null}
               {/* <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction>Continue</AlertDialogAction>

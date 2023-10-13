@@ -6,15 +6,12 @@ import { useRegisterCompanyMutation } from '@/generated/graphql';
 import { TraderRegisterSchema } from '../schema/traderRegisterSchema';
 
 export const useTraderSignUp = () => {
-  const [cookies, setCookies, deleteCookies] = useCookies();
+  const [cookies, setCookies] = useCookies();
   const router = useRouter();
 
   const [traderSignupMutation, { data, loading, error }] =
     useRegisterCompanyMutation({
       onCompleted(data) {
-        deleteCookies(TOKEN_NAME);
-        deleteCookies('currentUserId');
-
         setCookies(TOKEN_NAME, data.registerCompany?.token);
         setCookies('currentUserId', data.registerCompany?.company?.userId);
 

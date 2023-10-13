@@ -13,39 +13,19 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { useCurrentUserQuery } from '@/generated/graphql';
-import { RegisterSchema } from '@/modules/auth/schema';
 import { Button } from '@material-tailwind/react';
 import { Form } from 'formik';
 import Image from 'next/image';
 import sproviderImg from 'public/MyProfile/4605578_2444689.jpg';
+import { useUpdateCompany } from './hooks/useUpdateCompany';
 
 type Props = {};
 
 const ServiceProviderProfile = (props: Props) => {
-  
-
-  const handleSubmit = (value: any) => {
-    console.log(value);
-  };
-
-  const validationSchema = {
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  };
   const { data } = useCurrentUserQuery();
 
-  const initialValues = {
-    companyName: data?.currentUser?.company?.name,
-    email: data?.currentUser?.email,
-    category: data?.currentUser?.company?.companyCategory?.category?.name,
-    contactNumber: data?.currentUser?.addresses.nodes[0].contactNumber,
-    address: data?.currentUser?.addresses.nodes[0].address,
-    shopOpen: data?.currentUser?.company?.availability?.startTime,
-    shopClose: data?.currentUser?.company?.availability?.endTime,
-    description: data?.currentUser?.company?.description,
-  };
+  const { initialValues, UpdateTraderSchema, handleSubmit, loading } =
+    useUpdateCompany(data?.currentUser?.company?.id);
 
   return (
     <>
@@ -53,11 +33,11 @@ const ServiceProviderProfile = (props: Props) => {
         items={[
           {
             title: 'Service Provider Profile',
-            href: '/myprofile/service-provider-profile',
+            href: '/dashboard/my-profile/service-provider-profile',
           },
           {
             title: 'Listed Services',
-            href: '/serviceproviderdashboard',
+            href: '/dashboard/service-provider-dashboard',
           },
         ]}
       />
@@ -79,15 +59,15 @@ const ServiceProviderProfile = (props: Props) => {
             <FormLayout
               onSubmit={handleSubmit}
               initialValues={initialValues}
-              validationSchema={RegisterSchema}
+              validationSchema={UpdateTraderSchema}
               enableReinitialize
             >
-              {() => (
+              {({ isValid }: any) => (
                 <Form className="mt-4 mb-2 w-80 max-w-screen-lg sm:w-[25.5rem]">
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-4 mb-3">
                     <FormFieldLayout
                       label="Company Name"
-                      name="companyName"
+                      name="name"
                       isDisabled
                     />
                     <FormFieldLayout
@@ -114,32 +94,47 @@ const ServiceProviderProfile = (props: Props) => {
                       />
                     </div>
                     <FormFieldLayout label="Description" name="description" />
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      disabled={loading || !isValid}
+                    >
+                      Update Details
+                    </Button>
+                    {/* <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button>Update Details</Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action will update your profile and user's will
+                            see your updated Profile.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="w-full">
+                            Cancel
+                          </AlertDialogCancel>
+                          <AlertDialogAction className="w-full bg-transparent">
+                          <Button
+                            type="submit"
+                            className="w-full"
+                            disabled={loading || !isValid}
+                          >
+                            Continue
+                          </Button>
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog> */}
                   </div>
                 </Form>
               )}
             </FormLayout>
-            <div>
-              <AlertDialog>
-                <AlertDialogTrigger asChild className="rounded-none">
-                  <Button>Update Details</Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you absolutely sure?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action will update your profile and user's will see
-                      your updated Profile.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>Continue</AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
-import { AuthRestrict, Layout } from '@/components/layout';
+'use client';
+import { Layout } from '@/components/layout';
 import { About } from '@/modules/about';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function Page() {
   useEffect(() => {

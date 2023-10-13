@@ -1,4 +1,4 @@
-import { AuthRestrict, Layout } from '@/components/layout';
+import { Layout } from '@/components/layout';
 import { SignUpForm } from '@/modules/auth';
 import React from 'react';
 

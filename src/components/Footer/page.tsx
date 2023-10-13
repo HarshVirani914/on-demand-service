@@ -6,15 +6,32 @@ import Link from 'next/link';
 
 const LINKS = [
   {
-    title: 'Our Services',
+    title: 'Car Services',
     items: [
       {
-        title: 'Car Services',
-        link: `/category/${("Car Services").replace(/ /g, '-').toLowerCase()}`
+        title: 'Car General Services',
+        link: `/car-general-services`,
       },
       {
-        title: 'Home Services',
-        link: `/category/${("Home Services").replace(/ /g, '-').toLowerCase()}`
+        title: 'Car Washing Services',
+        link: `/car-washing-services`,
+      },
+    ],
+  },
+  {
+    title: 'Home Services',
+    items: [
+      {
+        title: 'Home Cleaning Services',
+        link: `/home-cleaning-services`,
+      },
+      {
+        title: 'Plumber Services',
+        link: `/plumber-services`,
+      },
+      {
+        title: 'AC Services',
+        link: `/ac-services`,
       },
     ],
   },
@@ -54,7 +71,7 @@ export default function FooterWithSocialLinks() {
               width={140}
             />
           </Link>
-          <div className="grid grid-cols-3 justify-between gap-4">
+          <div className="grid grid-cols-4 justify-between gap-4">
             {LINKS.map(({ title, items }) => (
               <ul key={title}>
                 <Typography
@@ -68,7 +85,7 @@ export default function FooterWithSocialLinks() {
                   <li key={key}>
                     <Link href={link}>
                       <Typography
-                        as="text"
+                        as="div"
                         color="gray"
                         className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
                       >

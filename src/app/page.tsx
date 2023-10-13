@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Layout } from '@/components/layout';
 import { HomePage } from '@/modules/Home';
 import React, { useEffect } from 'react';

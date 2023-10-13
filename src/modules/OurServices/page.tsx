@@ -6,7 +6,7 @@ const OurServices = () => {
   return (
     <>
       <div>
-      <CarouselCustomNavigation />
+        <CarouselCustomNavigation />
       </div>
     </>
   );

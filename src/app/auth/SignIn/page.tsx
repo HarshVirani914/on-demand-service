@@ -1,4 +1,4 @@
-import { AuthRestrict, Layout } from '@/components/layout';
+import { Layout } from '@/components/layout';
 import { SignInForm } from '@/modules/auth';
 
 type Props = {};

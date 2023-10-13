@@ -124,7 +124,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 const App = () => {
-    const { categories } = useCategories();
+  const { categories } = useCategories(null);
 
   const { initialValues, handleSubmit } = useTraderSignUp();
 
@@ -193,28 +193,26 @@ const App = () => {
               Enter company details to continue
             </Typography>
             <div className="mb-4 flex flex-col gap-4">
-                <Form className="mt-4 mb-2 w-full ">
-                  <div className=" flex flex-col gap-4">
-                    <Field name="categoryId">
-                      {({ field, form }: FieldProps) => (
-                        <Select
-                          {...field}
-                          label="Select Category"
-                          variant="outlined"
-                          onChange={(e: any) =>
-                            form.setFieldValue(field.name, e)
-                          }
-                        >
-                          {categories.map(({ id, name }) => (
-                            <Option value={id} key={id}>
-                              {name.toLocaleUpperCase()}
-                            </Option>
-                          ))}
-                        </Select>
-                      )}
-                    </Field>
-                  </div>
-                </Form>
+              <Form className="mt-4 mb-2 w-full ">
+                <div className=" flex flex-col gap-4">
+                  <Field name="categoryId">
+                    {({ field, form }: FieldProps) => (
+                      <Select
+                        {...field}
+                        label="Select Category"
+                        variant="outlined"
+                        onChange={(e: any) => form.setFieldValue(field.name, e)}
+                      >
+                        {categories.map(({ id, name }) => (
+                          <Option value={id} key={id}>
+                            {name.toLocaleUpperCase()}
+                          </Option>
+                        ))}
+                      </Select>
+                    )}
+                  </Field>
+                </div>
+              </Form>
               <FormFieldLayout label="Shop Open" type="time" name="shopOpen" />
               <FormFieldLayout
                 label="Shop Close"

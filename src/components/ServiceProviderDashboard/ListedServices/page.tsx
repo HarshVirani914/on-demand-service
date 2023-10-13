@@ -6,29 +6,29 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { useCurrentUserQuery } from '@/generated/graphql';
 import { AddService } from '@/modules/Add-Edit-Forms/AddService';
+import { useServices } from '@/modules/Add-Edit-Forms/hooks/useServices';
 import { CgAdd } from 'react-icons/cg';
 
 const ServiceProviderDashboard = () => {
-  const serviceData = [
-    { id: 1, title: 'Service 1', charges: '200', description: 'Description 1' },
-    { id: 2, title: 'Service 2', charges: '200', description: 'Description 2' },
-    { id: 3, title: 'Service 3', charges: '200', description: 'Description 3' },
-  ];
+  const { data } = useCurrentUserQuery();
 
+  const { services } = useServices({
+    companyId: data?.currentUser?.company?.id,
+  });
 
   return (
-    
     <>
       <Sidebar
         items={[
           {
             title: 'Service Provider Profile',
-            href: '/myprofile/service-provider-profile',
+            href: '/dashboard/service-provider-profile',
           },
           {
             title: 'Listed Services',
-            href: '/serviceproviderdashboard',
+            href: '/dashboard/service-provider-dashboard',
           },
         ]}
       />
@@ -58,14 +58,15 @@ const ServiceProviderDashboard = () => {
           </AlertDialog>
         </div>
         <div className="p-7 sm:px-20 mt-[3rem] sm:-mt[2rem] mx-auto grid  lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-5">
-          {serviceData.map((service) => (
+          {services.map((service) => (
             <div key={service.id}>
               <BookingCard
+                id={service.id}
                 buttonLabel="Edit Service"
                 likeSymbol={false}
                 ratingSymbol={false}
-                charges={service.charges}
-                title={service.title}
+                charges={service.price}
+                title={service.name}
                 description={service.description}
               />
             </div>

@@ -1,16 +1,15 @@
-import { useCategoriesQuery } from "@/generated/graphql";
+import { useCategoriesQuery } from '@/generated/graphql';
 
-export const useCategories = (parentId?: string) => {
-  
+export const useCategories = (parentId?: string | null) => {
   const { data } = useCategoriesQuery({
-    variables:{
+    variables: {
       condition: {
-        parentId : parentId || null
-      }
-    }
+        parentId,
+      },
+    },
   });
 
   return {
     categories: data?.categories?.nodes || [],
-  }
-}
+  };
+};

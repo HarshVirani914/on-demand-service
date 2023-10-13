@@ -1,0 +1,7 @@
+query Services($filter: ServiceFilter) {
+  services(filter: $filter) {
+    nodes {
+      ...Lite_Service
+    }
+  }
+}

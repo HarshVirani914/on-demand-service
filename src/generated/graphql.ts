@@ -28,6 +28,9 @@ export type Address = {
   availabilitiesByBookingAddressIdAndAvailabilityId: AddressAvailabilitiesByBookingAddressIdAndAvailabilityIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Booking`. */
   bookings: BookingsConnection;
+  /** Reads a single `Company` that is related to this `Address`. */
+  company?: Maybe<Company>;
+  companyId?: Maybe<Scalars['UUID']['output']>;
   contactNumber?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['Datetime']['output'];
   id: Scalars['UUID']['output'];
@@ -47,6 +50,7 @@ export type AddressAvailabilitiesByBookingAddressIdAndAvailabilityIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<AvailabilityCondition>;
+  filter?: InputMaybe<AvailabilityFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -58,6 +62,7 @@ export type AddressBookingsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -69,6 +74,7 @@ export type AddressServicesByBookingAddressIdAndServiceIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<ServiceCondition>;
+  filter?: InputMaybe<ServiceFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -80,10 +86,21 @@ export type AddressUsersByBookingAddressIdAndUserIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+/** The fields on `address` to look up the row to connect. */
+export type AddressAddressesCompanyIdKeyConnect = {
+  companyId: Scalars['UUID']['input'];
+};
+
+/** The fields on `address` to look up the row to delete. */
+export type AddressAddressesCompanyIdKeyDelete = {
+  companyId: Scalars['UUID']['input'];
 };
 
 /** The fields on `address` to look up the row to connect. */
@@ -126,6 +143,7 @@ export type AddressAvailabilitiesByBookingAddressIdAndAvailabilityIdManyToManyEd
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -134,16 +152,46 @@ export type AddressAvailabilitiesByBookingAddressIdAndAvailabilityIdManyToManyEd
 
 /** A condition to be used against `Address` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export type AddressCondition = {
+  /** Checks for equality with the object’s `companyId` field. */
+  companyId?: InputMaybe<Scalars['UUID']['input']>;
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['UUID']['input']>;
   /** Checks for equality with the object’s `userId` field. */
   userId?: InputMaybe<Scalars['UUID']['input']>;
 };
 
+/** A filter to be used against `Address` object types. All fields are combined with a logical ‘and.’ */
+export type AddressFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<AddressFilter>>;
+  /** Filter by the object’s `bookings` relation. */
+  bookings?: InputMaybe<AddressToManyBookingFilter>;
+  /** Some related `bookings` exist. */
+  bookingsExist?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `company` relation. */
+  company?: InputMaybe<CompanyFilter>;
+  /** A related `company` exists. */
+  companyExists?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `companyId` field. */
+  companyId?: InputMaybe<UuidFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<UuidFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<AddressFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<AddressFilter>>;
+  /** Filter by the object’s `user` relation. */
+  user?: InputMaybe<UserFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<UuidFilter>;
+};
+
 /** An input for mutations affecting `Address` */
 export type AddressInput = {
   address?: InputMaybe<Scalars['String']['input']>;
   bookingsUsingId?: InputMaybe<BookingsAddressIdFkeyInverseInput>;
+  companyId?: InputMaybe<Scalars['UUID']['input']>;
+  companyToCompanyId?: InputMaybe<AddressesCompanyIdFkeyInput>;
   contactNumber?: InputMaybe<Scalars['String']['input']>;
   isPrimary?: InputMaybe<Scalars['Boolean']['input']>;
   userId?: InputMaybe<Scalars['UUID']['input']>;
@@ -151,10 +199,38 @@ export type AddressInput = {
 };
 
 /** The fields on `address` to look up the row to update. */
+export type AddressOnAddressForAddressesCompanyIdFkeyUsingAddressesCompanyIdKeyUpdate = {
+  companyId: Scalars['UUID']['input'];
+  /** An object where the defined keys will be set on the `address` being updated. */
+  patch: UpdateAddressOnAddressForAddressesCompanyIdFkeyPatch;
+};
+
+/** The fields on `address` to look up the row to update. */
+export type AddressOnAddressForAddressesCompanyIdFkeyUsingAddressesPkeyUpdate = {
+  id: Scalars['UUID']['input'];
+  /** An object where the defined keys will be set on the `address` being updated. */
+  patch: UpdateAddressOnAddressForAddressesCompanyIdFkeyPatch;
+};
+
+/** The fields on `address` to look up the row to update. */
+export type AddressOnAddressForAddressesUserIdFkeyUsingAddressesCompanyIdKeyUpdate = {
+  companyId: Scalars['UUID']['input'];
+  /** An object where the defined keys will be set on the `address` being updated. */
+  patch: UpdateAddressOnAddressForAddressesUserIdFkeyPatch;
+};
+
+/** The fields on `address` to look up the row to update. */
 export type AddressOnAddressForAddressesUserIdFkeyUsingAddressesPkeyUpdate = {
   id: Scalars['UUID']['input'];
   /** An object where the defined keys will be set on the `address` being updated. */
   patch: UpdateAddressOnAddressForAddressesUserIdFkeyPatch;
+};
+
+/** The fields on `address` to look up the row to update. */
+export type AddressOnBookingForBookingsAddressIdFkeyUsingAddressesCompanyIdKeyUpdate = {
+  companyId: Scalars['UUID']['input'];
+  /** An object where the defined keys will be set on the `address` being updated. */
+  patch: UpdateAddressOnBookingForBookingsAddressIdFkeyPatch;
 };
 
 /** The fields on `address` to look up the row to update. */
@@ -168,6 +244,8 @@ export type AddressOnBookingForBookingsAddressIdFkeyUsingAddressesPkeyUpdate = {
 export type AddressPatch = {
   address?: InputMaybe<Scalars['String']['input']>;
   bookingsUsingId?: InputMaybe<BookingsAddressIdFkeyInverseInput>;
+  companyId?: InputMaybe<Scalars['UUID']['input']>;
+  companyToCompanyId?: InputMaybe<AddressesCompanyIdFkeyInput>;
   contactNumber?: InputMaybe<Scalars['String']['input']>;
   isPrimary?: InputMaybe<Scalars['Boolean']['input']>;
   userId?: InputMaybe<Scalars['UUID']['input']>;
@@ -204,10 +282,21 @@ export type AddressServicesByBookingAddressIdAndServiceIdManyToManyEdgeBookingsA
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<BookingsOrderBy>>;
+};
+
+/** A filter to be used against many `Booking` object types. All fields are combined with a logical ‘and.’ */
+export type AddressToManyBookingFilter = {
+  /** Every related `Booking` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  every?: InputMaybe<BookingFilter>;
+  /** No related `Booking` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  none?: InputMaybe<BookingFilter>;
+  /** Some related `Booking` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  some?: InputMaybe<BookingFilter>;
 };
 
 /** A connection to a list of `User` values, with data from `Booking`. */
@@ -240,10 +329,73 @@ export type AddressUsersByBookingAddressIdAndUserIdManyToManyEdgeBookingsArgs = 
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<BookingsOrderBy>>;
+};
+
+/** The `address` to be created by this mutation. */
+export type AddressesCompanyIdFkeyAddressesCreateInput = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  bookingsUsingId?: InputMaybe<BookingsAddressIdFkeyInverseInput>;
+  companyToCompanyId?: InputMaybe<AddressesCompanyIdFkeyInput>;
+  contactNumber?: InputMaybe<Scalars['String']['input']>;
+  isPrimary?: InputMaybe<Scalars['Boolean']['input']>;
+  userId?: InputMaybe<Scalars['UUID']['input']>;
+  userToUserId?: InputMaybe<AddressesUserIdFkeyInput>;
+};
+
+/** The `company` to be created by this mutation. */
+export type AddressesCompanyIdFkeyCompaniesCreateInput = {
+  addressUsingId?: InputMaybe<AddressesCompanyIdFkeyInverseInput>;
+  availabilityUsingId?: InputMaybe<AvailabilitiesCompanyIdFkeyInverseInput>;
+  companyCategoryUsingId?: InputMaybe<CompanyCategoriesCompanyIdFkeyInverseInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  isVerified?: InputMaybe<Scalars['Boolean']['input']>;
+  name: Scalars['String']['input'];
+  servicesUsingId?: InputMaybe<ServicesCompanyIdFkeyInverseInput>;
+  userId?: InputMaybe<Scalars['UUID']['input']>;
+  userToUserId?: InputMaybe<CompaniesUserIdFkeyInput>;
+};
+
+/** Input for the nested mutation of `company` in the `AddressInput` mutation. */
+export type AddressesCompanyIdFkeyInput = {
+  /** The primary key(s) for `company` for the far side of the relationship. */
+  connectById?: InputMaybe<CompanyCompaniesPkeyConnect>;
+  /** The primary key(s) for `company` for the far side of the relationship. */
+  connectByUserId?: InputMaybe<CompanyCompaniesUserIdUniqueConnect>;
+  /** A `CompanyInput` object that will be created and connected to this object. */
+  create?: InputMaybe<AddressesCompanyIdFkeyCompaniesCreateInput>;
+  /** The primary key(s) for `company` for the far side of the relationship. */
+  deleteById?: InputMaybe<CompanyCompaniesPkeyDelete>;
+  /** The primary key(s) for `company` for the far side of the relationship. */
+  deleteByUserId?: InputMaybe<CompanyCompaniesUserIdUniqueDelete>;
+  /** The primary key(s) and patch data for `company` for the far side of the relationship. */
+  updateById?: InputMaybe<CompanyOnAddressForAddressesCompanyIdFkeyUsingCompaniesPkeyUpdate>;
+  /** The primary key(s) and patch data for `company` for the far side of the relationship. */
+  updateByUserId?: InputMaybe<CompanyOnAddressForAddressesCompanyIdFkeyUsingCompaniesUserIdUniqueUpdate>;
+};
+
+/** Input for the nested mutation of `address` in the `CompanyInput` mutation. */
+export type AddressesCompanyIdFkeyInverseInput = {
+  /** The primary key(s) for `address` for the far side of the relationship. */
+  connectByCompanyId?: InputMaybe<AddressAddressesCompanyIdKeyConnect>;
+  /** The primary key(s) for `address` for the far side of the relationship. */
+  connectById?: InputMaybe<AddressAddressesPkeyConnect>;
+  /** A `AddressInput` object that will be created and connected to this object. */
+  create?: InputMaybe<Array<AddressesCompanyIdFkeyAddressesCreateInput>>;
+  /** The primary key(s) for `address` for the far side of the relationship. */
+  deleteByCompanyId?: InputMaybe<AddressAddressesCompanyIdKeyDelete>;
+  /** The primary key(s) for `address` for the far side of the relationship. */
+  deleteById?: InputMaybe<AddressAddressesPkeyDelete>;
+  /** Flag indicating whether all other `address` records that match this relationship should be removed. */
+  deleteOthers?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The primary key(s) and patch data for `address` for the far side of the relationship. */
+  updateByCompanyId?: InputMaybe<AddressOnAddressForAddressesCompanyIdFkeyUsingAddressesCompanyIdKeyUpdate>;
+  /** The primary key(s) and patch data for `address` for the far side of the relationship. */
+  updateById?: InputMaybe<AddressOnAddressForAddressesCompanyIdFkeyUsingAddressesPkeyUpdate>;
 };
 
 /** A connection to a list of `Address` values. */
@@ -270,6 +422,8 @@ export type AddressesEdge = {
 
 /** Methods to use when ordering `Address`. */
 export enum AddressesOrderBy {
+  CompanyIdAsc = 'COMPANY_ID_ASC',
+  CompanyIdDesc = 'COMPANY_ID_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
   Natural = 'NATURAL',
@@ -283,6 +437,8 @@ export enum AddressesOrderBy {
 export type AddressesUserIdFkeyAddressesCreateInput = {
   address?: InputMaybe<Scalars['String']['input']>;
   bookingsUsingId?: InputMaybe<BookingsAddressIdFkeyInverseInput>;
+  companyId?: InputMaybe<Scalars['UUID']['input']>;
+  companyToCompanyId?: InputMaybe<AddressesCompanyIdFkeyInput>;
   contactNumber?: InputMaybe<Scalars['String']['input']>;
   isPrimary?: InputMaybe<Scalars['Boolean']['input']>;
   userToUserId?: InputMaybe<AddressesUserIdFkeyInput>;
@@ -303,13 +459,19 @@ export type AddressesUserIdFkeyInput = {
 /** Input for the nested mutation of `address` in the `UserInput` mutation. */
 export type AddressesUserIdFkeyInverseInput = {
   /** The primary key(s) for `address` for the far side of the relationship. */
+  connectByCompanyId?: InputMaybe<Array<AddressAddressesCompanyIdKeyConnect>>;
+  /** The primary key(s) for `address` for the far side of the relationship. */
   connectById?: InputMaybe<Array<AddressAddressesPkeyConnect>>;
   /** A `AddressInput` object that will be created and connected to this object. */
   create?: InputMaybe<Array<AddressesUserIdFkeyAddressesCreateInput>>;
   /** The primary key(s) for `address` for the far side of the relationship. */
+  deleteByCompanyId?: InputMaybe<Array<AddressAddressesCompanyIdKeyDelete>>;
+  /** The primary key(s) for `address` for the far side of the relationship. */
   deleteById?: InputMaybe<Array<AddressAddressesPkeyDelete>>;
   /** Flag indicating whether all other `address` records that match this relationship should be removed. */
   deleteOthers?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The primary key(s) and patch data for `address` for the far side of the relationship. */
+  updateByCompanyId?: InputMaybe<Array<AddressOnAddressForAddressesUserIdFkeyUsingAddressesCompanyIdKeyUpdate>>;
   /** The primary key(s) and patch data for `address` for the far side of the relationship. */
   updateById?: InputMaybe<Array<AddressOnAddressForAddressesUserIdFkeyUsingAddressesPkeyUpdate>>;
 };
@@ -337,6 +499,7 @@ export type AvailabilitiesCompanyIdFkeyAvailabilitiesCreateInput = {
 
 /** The `company` to be created by this mutation. */
 export type AvailabilitiesCompanyIdFkeyCompaniesCreateInput = {
+  addressUsingId?: InputMaybe<AddressesCompanyIdFkeyInverseInput>;
   availabilityUsingId?: InputMaybe<AvailabilitiesCompanyIdFkeyInverseInput>;
   companyCategoryUsingId?: InputMaybe<CompanyCategoriesCompanyIdFkeyInverseInput>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -442,6 +605,7 @@ export type AvailabilityAddressesByBookingAvailabilityIdAndAddressIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<AddressCondition>;
+  filter?: InputMaybe<AddressFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -453,6 +617,7 @@ export type AvailabilityBookingsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -464,6 +629,7 @@ export type AvailabilityServicesByBookingAvailabilityIdAndServiceIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<ServiceCondition>;
+  filter?: InputMaybe<ServiceFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -475,6 +641,7 @@ export type AvailabilityUsersByBookingAvailabilityIdAndUserIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -511,6 +678,7 @@ export type AvailabilityAddressesByBookingAvailabilityIdAndAddressIdManyToManyEd
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -546,6 +714,26 @@ export type AvailabilityCondition = {
   companyId?: InputMaybe<Scalars['UUID']['input']>;
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+/** A filter to be used against `Availability` object types. All fields are combined with a logical ‘and.’ */
+export type AvailabilityFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<AvailabilityFilter>>;
+  /** Filter by the object’s `bookings` relation. */
+  bookings?: InputMaybe<AvailabilityToManyBookingFilter>;
+  /** Some related `bookings` exist. */
+  bookingsExist?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `company` relation. */
+  company?: InputMaybe<CompanyFilter>;
+  /** Filter by the object’s `companyId` field. */
+  companyId?: InputMaybe<UuidFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<UuidFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<AvailabilityFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<AvailabilityFilter>>;
 };
 
 /** An input for mutations affecting `Availability` */
@@ -624,10 +812,21 @@ export type AvailabilityServicesByBookingAvailabilityIdAndServiceIdManyToManyEdg
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<BookingsOrderBy>>;
+};
+
+/** A filter to be used against many `Booking` object types. All fields are combined with a logical ‘and.’ */
+export type AvailabilityToManyBookingFilter = {
+  /** Every related `Booking` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  every?: InputMaybe<BookingFilter>;
+  /** No related `Booking` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  none?: InputMaybe<BookingFilter>;
+  /** Some related `Booking` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  some?: InputMaybe<BookingFilter>;
 };
 
 /** A connection to a list of `User` values, with data from `Booking`. */
@@ -660,6 +859,7 @@ export type AvailabilityUsersByBookingAvailabilityIdAndUserIdManyToManyEdgeBooki
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -708,6 +908,34 @@ export type BookingCondition = {
   serviceId?: InputMaybe<Scalars['UUID']['input']>;
   /** Checks for equality with the object’s `userId` field. */
   userId?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+/** A filter to be used against `Booking` object types. All fields are combined with a logical ‘and.’ */
+export type BookingFilter = {
+  /** Filter by the object’s `address` relation. */
+  address?: InputMaybe<AddressFilter>;
+  /** Filter by the object’s `addressId` field. */
+  addressId?: InputMaybe<UuidFilter>;
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<BookingFilter>>;
+  /** Filter by the object’s `availability` relation. */
+  availability?: InputMaybe<AvailabilityFilter>;
+  /** Filter by the object’s `availabilityId` field. */
+  availabilityId?: InputMaybe<UuidFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<UuidFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<BookingFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<BookingFilter>>;
+  /** Filter by the object’s `service` relation. */
+  service?: InputMaybe<ServiceFilter>;
+  /** Filter by the object’s `serviceId` field. */
+  serviceId?: InputMaybe<UuidFilter>;
+  /** Filter by the object’s `user` relation. */
+  user?: InputMaybe<UserFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<UuidFilter>;
 };
 
 /** An input for mutations affecting `Booking` */
@@ -767,6 +995,8 @@ export type BookingPatch = {
 export type BookingsAddressIdFkeyAddressesCreateInput = {
   address?: InputMaybe<Scalars['String']['input']>;
   bookingsUsingId?: InputMaybe<BookingsAddressIdFkeyInverseInput>;
+  companyId?: InputMaybe<Scalars['UUID']['input']>;
+  companyToCompanyId?: InputMaybe<AddressesCompanyIdFkeyInput>;
   contactNumber?: InputMaybe<Scalars['String']['input']>;
   isPrimary?: InputMaybe<Scalars['Boolean']['input']>;
   userId?: InputMaybe<Scalars['UUID']['input']>;
@@ -787,11 +1017,17 @@ export type BookingsAddressIdFkeyBookingsCreateInput = {
 /** Input for the nested mutation of `address` in the `BookingInput` mutation. */
 export type BookingsAddressIdFkeyInput = {
   /** The primary key(s) for `address` for the far side of the relationship. */
+  connectByCompanyId?: InputMaybe<AddressAddressesCompanyIdKeyConnect>;
+  /** The primary key(s) for `address` for the far side of the relationship. */
   connectById?: InputMaybe<AddressAddressesPkeyConnect>;
   /** A `AddressInput` object that will be created and connected to this object. */
   create?: InputMaybe<BookingsAddressIdFkeyAddressesCreateInput>;
   /** The primary key(s) for `address` for the far side of the relationship. */
+  deleteByCompanyId?: InputMaybe<AddressAddressesCompanyIdKeyDelete>;
+  /** The primary key(s) for `address` for the far side of the relationship. */
   deleteById?: InputMaybe<AddressAddressesPkeyDelete>;
+  /** The primary key(s) and patch data for `address` for the far side of the relationship. */
+  updateByCompanyId?: InputMaybe<AddressOnBookingForBookingsAddressIdFkeyUsingAddressesCompanyIdKeyUpdate>;
   /** The primary key(s) and patch data for `address` for the far side of the relationship. */
   updateById?: InputMaybe<AddressOnBookingForBookingsAddressIdFkeyUsingAddressesPkeyUpdate>;
 };
@@ -1039,6 +1275,7 @@ export enum CategoriesOrderBy {
 export type CategoriesParentIdFkeyCategoriesCreateInput = {
   categoryToParentId?: InputMaybe<CategoriesParentIdFkeyInput>;
   companyCategoriesUsingId?: InputMaybe<CompanyCategoriesCategoryIdFkeyInverseInput>;
+  description: Scalars['String']['input'];
   name: Scalars['String']['input'];
   servicesUsingId?: InputMaybe<ServicesCategoryIdFkeyInverseInput>;
   slug: Scalars['String']['input'];
@@ -1077,6 +1314,7 @@ export type Category = {
   /** Reads and enables pagination through a set of `CompanyCategory`. */
   companyCategories: CompanyCategoriesConnection;
   createdAt: Scalars['Datetime']['output'];
+  description: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
   name: Scalars['String']['output'];
   /** Reads a single `Category` that is related to this `Category`. */
@@ -1093,6 +1331,7 @@ export type CategoryChildCategoriesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<CategoryCondition>;
+  filter?: InputMaybe<CategoryFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1104,6 +1343,7 @@ export type CategoryCompaniesByServiceCategoryIdAndCompanyIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<CompanyCondition>;
+  filter?: InputMaybe<CompanyFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1115,6 +1355,7 @@ export type CategoryCompanyCategoriesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<CompanyCategoryCondition>;
+  filter?: InputMaybe<CompanyCategoryFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1126,6 +1367,7 @@ export type CategoryServicesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<ServiceCondition>;
+  filter?: InputMaybe<ServiceFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1192,6 +1434,7 @@ export type CategoryCompaniesByServiceCategoryIdAndCompanyIdManyToManyEdgeServic
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<ServiceCondition>;
+  filter?: InputMaybe<ServiceFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1213,10 +1456,45 @@ export type CategoryCondition = {
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** A filter to be used against `Category` object types. All fields are combined with a logical ‘and.’ */
+export type CategoryFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<CategoryFilter>>;
+  /** Filter by the object’s `childCategories` relation. */
+  childCategories?: InputMaybe<CategoryToManyCategoryFilter>;
+  /** Some related `childCategories` exist. */
+  childCategoriesExist?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `companyCategories` relation. */
+  companyCategories?: InputMaybe<CategoryToManyCompanyCategoryFilter>;
+  /** Some related `companyCategories` exist. */
+  companyCategoriesExist?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<UuidFilter>;
+  /** Filter by the object’s `name` field. */
+  name?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<CategoryFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<CategoryFilter>>;
+  /** Filter by the object’s `parent` relation. */
+  parent?: InputMaybe<CategoryFilter>;
+  /** A related `parent` exists. */
+  parentExists?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `parentId` field. */
+  parentId?: InputMaybe<UuidFilter>;
+  /** Filter by the object’s `services` relation. */
+  services?: InputMaybe<CategoryToManyServiceFilter>;
+  /** Some related `services` exist. */
+  servicesExist?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `slug` field. */
+  slug?: InputMaybe<StringFilter>;
+};
+
 /** An input for mutations affecting `Category` */
 export type CategoryInput = {
   categoryToParentId?: InputMaybe<CategoriesParentIdFkeyInput>;
   companyCategoriesUsingId?: InputMaybe<CompanyCategoriesCategoryIdFkeyInverseInput>;
+  description: Scalars['String']['input'];
   name: Scalars['String']['input'];
   parentId?: InputMaybe<Scalars['UUID']['input']>;
   servicesUsingId?: InputMaybe<ServicesCategoryIdFkeyInverseInput>;
@@ -1290,10 +1568,41 @@ export type CategoryOnServiceForServicesCategoryIdFkeyUsingCategoriesSlugKeyUpda
 export type CategoryPatch = {
   categoryToParentId?: InputMaybe<CategoriesParentIdFkeyInput>;
   companyCategoriesUsingId?: InputMaybe<CompanyCategoriesCategoryIdFkeyInverseInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   parentId?: InputMaybe<Scalars['UUID']['input']>;
   servicesUsingId?: InputMaybe<ServicesCategoryIdFkeyInverseInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** A filter to be used against many `Category` object types. All fields are combined with a logical ‘and.’ */
+export type CategoryToManyCategoryFilter = {
+  /** Every related `Category` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  every?: InputMaybe<CategoryFilter>;
+  /** No related `Category` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  none?: InputMaybe<CategoryFilter>;
+  /** Some related `Category` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  some?: InputMaybe<CategoryFilter>;
+};
+
+/** A filter to be used against many `CompanyCategory` object types. All fields are combined with a logical ‘and.’ */
+export type CategoryToManyCompanyCategoryFilter = {
+  /** Every related `CompanyCategory` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  every?: InputMaybe<CompanyCategoryFilter>;
+  /** No related `CompanyCategory` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  none?: InputMaybe<CompanyCategoryFilter>;
+  /** Some related `CompanyCategory` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  some?: InputMaybe<CompanyCategoryFilter>;
+};
+
+/** A filter to be used against many `Service` object types. All fields are combined with a logical ‘and.’ */
+export type CategoryToManyServiceFilter = {
+  /** Every related `Service` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  every?: InputMaybe<ServiceFilter>;
+  /** No related `Service` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  none?: InputMaybe<ServiceFilter>;
+  /** Some related `Service` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  some?: InputMaybe<ServiceFilter>;
 };
 
 /** A connection to a list of `Company` values. */
@@ -1331,6 +1640,7 @@ export enum CompaniesOrderBy {
 
 /** The `company` to be created by this mutation. */
 export type CompaniesUserIdFkeyCompaniesCreateInput = {
+  addressUsingId?: InputMaybe<AddressesCompanyIdFkeyInverseInput>;
   availabilityUsingId?: InputMaybe<AvailabilitiesCompanyIdFkeyInverseInput>;
   companyCategoryUsingId?: InputMaybe<CompanyCategoriesCompanyIdFkeyInverseInput>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -1387,6 +1697,13 @@ export type CompaniesUserIdFkeyUsersCreateInput = {
 
 export type Company = {
   __typename?: 'Company';
+  /** Reads a single `Address` that is related to this `Company`. */
+  address?: Maybe<Address>;
+  /**
+   * Reads and enables pagination through a set of `Address`.
+   * @deprecated Please use address instead
+   */
+  addresses: AddressesConnection;
   /**
    * Reads and enables pagination through a set of `Availability`.
    * @deprecated Please use availability instead
@@ -1417,10 +1734,23 @@ export type Company = {
 };
 
 
+export type CompanyAddressesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<AddressCondition>;
+  filter?: InputMaybe<AddressFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<AddressesOrderBy>>;
+};
+
+
 export type CompanyAvailabilitiesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<AvailabilityCondition>;
+  filter?: InputMaybe<AvailabilityFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1432,6 +1762,7 @@ export type CompanyCategoriesByServiceCompanyIdAndCategoryIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<CategoryCondition>;
+  filter?: InputMaybe<CategoryFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1443,6 +1774,7 @@ export type CompanyCompanyCategoriesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<CompanyCategoryCondition>;
+  filter?: InputMaybe<CompanyCategoryFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1454,6 +1786,7 @@ export type CompanyServicesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<ServiceCondition>;
+  filter?: InputMaybe<ServiceFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1490,6 +1823,7 @@ export type CompanyCategoriesByServiceCompanyIdAndCategoryIdManyToManyEdgeServic
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<ServiceCondition>;
+  filter?: InputMaybe<ServiceFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1500,6 +1834,7 @@ export type CompanyCategoriesByServiceCompanyIdAndCategoryIdManyToManyEdgeServic
 export type CompanyCategoriesCategoryIdFkeyCategoriesCreateInput = {
   categoryToParentId?: InputMaybe<CategoriesParentIdFkeyInput>;
   companyCategoriesUsingId?: InputMaybe<CompanyCategoriesCategoryIdFkeyInverseInput>;
+  description: Scalars['String']['input'];
   name: Scalars['String']['input'];
   parentId?: InputMaybe<Scalars['UUID']['input']>;
   servicesUsingId?: InputMaybe<ServicesCategoryIdFkeyInverseInput>;
@@ -1559,6 +1894,7 @@ export type CompanyCategoriesCategoryIdFkeyInverseInput = {
 
 /** The `company` to be created by this mutation. */
 export type CompanyCategoriesCompanyIdFkeyCompaniesCreateInput = {
+  addressUsingId?: InputMaybe<AddressesCompanyIdFkeyInverseInput>;
   availabilityUsingId?: InputMaybe<AvailabilitiesCompanyIdFkeyInverseInput>;
   companyCategoryUsingId?: InputMaybe<CompanyCategoriesCompanyIdFkeyInverseInput>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -1694,6 +2030,26 @@ export type CompanyCategoryCondition = {
   id?: InputMaybe<Scalars['UUID']['input']>;
 };
 
+/** A filter to be used against `CompanyCategory` object types. All fields are combined with a logical ‘and.’ */
+export type CompanyCategoryFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<CompanyCategoryFilter>>;
+  /** Filter by the object’s `category` relation. */
+  category?: InputMaybe<CategoryFilter>;
+  /** Filter by the object’s `categoryId` field. */
+  categoryId?: InputMaybe<UuidFilter>;
+  /** Filter by the object’s `company` relation. */
+  company?: InputMaybe<CompanyFilter>;
+  /** Filter by the object’s `companyId` field. */
+  companyId?: InputMaybe<UuidFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<UuidFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<CompanyCategoryFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<CompanyCategoryFilter>>;
+};
+
 /** An input for mutations affecting `CompanyCategory` */
 export type CompanyCategoryInput = {
   categoryId?: InputMaybe<Scalars['UUID']['input']>;
@@ -1766,8 +2122,41 @@ export type CompanyCondition = {
   userId?: InputMaybe<Scalars['UUID']['input']>;
 };
 
+/** A filter to be used against `Company` object types. All fields are combined with a logical ‘and.’ */
+export type CompanyFilter = {
+  /** Filter by the object’s `address` relation. */
+  address?: InputMaybe<AddressFilter>;
+  /** A related `address` exists. */
+  addressExists?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<CompanyFilter>>;
+  /** Filter by the object’s `availability` relation. */
+  availability?: InputMaybe<AvailabilityFilter>;
+  /** A related `availability` exists. */
+  availabilityExists?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `companyCategory` relation. */
+  companyCategory?: InputMaybe<CompanyCategoryFilter>;
+  /** A related `companyCategory` exists. */
+  companyCategoryExists?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<UuidFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<CompanyFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<CompanyFilter>>;
+  /** Filter by the object’s `services` relation. */
+  services?: InputMaybe<CompanyToManyServiceFilter>;
+  /** Some related `services` exist. */
+  servicesExist?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `user` relation. */
+  user?: InputMaybe<UserFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<UuidFilter>;
+};
+
 /** An input for mutations affecting `Company` */
 export type CompanyInput = {
+  addressUsingId?: InputMaybe<AddressesCompanyIdFkeyInverseInput>;
   availabilityUsingId?: InputMaybe<AvailabilitiesCompanyIdFkeyInverseInput>;
   companyCategoryUsingId?: InputMaybe<CompanyCategoriesCompanyIdFkeyInverseInput>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -1776,6 +2165,20 @@ export type CompanyInput = {
   servicesUsingId?: InputMaybe<ServicesCompanyIdFkeyInverseInput>;
   userId?: InputMaybe<Scalars['UUID']['input']>;
   userToUserId?: InputMaybe<CompaniesUserIdFkeyInput>;
+};
+
+/** The fields on `company` to look up the row to update. */
+export type CompanyOnAddressForAddressesCompanyIdFkeyUsingCompaniesPkeyUpdate = {
+  id: Scalars['UUID']['input'];
+  /** An object where the defined keys will be set on the `company` being updated. */
+  patch: UpdateCompanyOnAddressForAddressesCompanyIdFkeyPatch;
+};
+
+/** The fields on `company` to look up the row to update. */
+export type CompanyOnAddressForAddressesCompanyIdFkeyUsingCompaniesUserIdUniqueUpdate = {
+  /** An object where the defined keys will be set on the `company` being updated. */
+  patch: UpdateCompanyOnAddressForAddressesCompanyIdFkeyPatch;
+  userId: Scalars['UUID']['input'];
 };
 
 /** The fields on `company` to look up the row to update. */
@@ -1836,6 +2239,7 @@ export type CompanyOnServiceForServicesCompanyIdFkeyUsingCompaniesUserIdUniqueUp
 
 /** Represents an update to a `Company`. Fields that are set will be updated. */
 export type CompanyPatch = {
+  addressUsingId?: InputMaybe<AddressesCompanyIdFkeyInverseInput>;
   availabilityUsingId?: InputMaybe<AvailabilitiesCompanyIdFkeyInverseInput>;
   companyCategoryUsingId?: InputMaybe<CompanyCategoriesCompanyIdFkeyInverseInput>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -1844,6 +2248,16 @@ export type CompanyPatch = {
   servicesUsingId?: InputMaybe<ServicesCompanyIdFkeyInverseInput>;
   userId?: InputMaybe<Scalars['UUID']['input']>;
   userToUserId?: InputMaybe<CompaniesUserIdFkeyInput>;
+};
+
+/** A filter to be used against many `Service` object types. All fields are combined with a logical ‘and.’ */
+export type CompanyToManyServiceFilter = {
+  /** Every related `Service` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  every?: InputMaybe<ServiceFilter>;
+  /** No related `Service` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  none?: InputMaybe<ServiceFilter>;
+  /** Some related `Service` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  some?: InputMaybe<ServiceFilter>;
 };
 
 /** All input for the create `Address` mutation. */
@@ -1869,6 +2283,8 @@ export type CreateAddressPayload = {
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Company` that is related to this `Address`. */
+  company?: Maybe<Company>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `User` that is related to this `Address`. */
@@ -2134,6 +2550,16 @@ export type CreateUserPayloadUserEdgeArgs = {
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
 };
 
+/** All input for the `deleteAddressByCompanyId` mutation. */
+export type DeleteAddressByCompanyIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  companyId: Scalars['UUID']['input'];
+};
+
 /** All input for the `deleteAddress` mutation. */
 export type DeleteAddressInput = {
   /**
@@ -2156,6 +2582,8 @@ export type DeleteAddressPayload = {
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Company` that is related to this `Address`. */
+  company?: Maybe<Company>;
   deletedAddressNodeId?: Maybe<Scalars['ID']['output']>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
@@ -2472,6 +2900,8 @@ export type Mutation = {
   createUser?: Maybe<CreateUserPayload>;
   /** Deletes a single `Address` using a unique key. */
   deleteAddress?: Maybe<DeleteAddressPayload>;
+  /** Deletes a single `Address` using a unique key. */
+  deleteAddressByCompanyId?: Maybe<DeleteAddressPayload>;
   /** Deletes a single `Availability` using a unique key. */
   deleteAvailability?: Maybe<DeleteAvailabilityPayload>;
   /** Deletes a single `Availability` using a unique key. */
@@ -2505,6 +2935,8 @@ export type Mutation = {
   resetPassword?: Maybe<ResetPasswordPayload>;
   /** Updates a single `Address` using a unique key and a patch. */
   updateAddress?: Maybe<UpdateAddressPayload>;
+  /** Updates a single `Address` using a unique key and a patch. */
+  updateAddressByCompanyId?: Maybe<UpdateAddressPayload>;
   /** Updates a single `Availability` using a unique key and a patch. */
   updateAvailability?: Maybe<UpdateAvailabilityPayload>;
   /** Updates a single `Availability` using a unique key and a patch. */
@@ -2583,6 +3015,12 @@ export type MutationCreateUserArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteAddressArgs = {
   input: DeleteAddressInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteAddressByCompanyIdArgs = {
+  input: DeleteAddressByCompanyIdInput;
 };
 
 
@@ -2683,6 +3121,12 @@ export type MutationUpdateAddressArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateAddressByCompanyIdArgs = {
+  input: UpdateAddressByCompanyIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateAvailabilityArgs = {
   input: UpdateAvailabilityInput;
 };
@@ -2770,6 +3214,7 @@ export type PageInfo = {
 export type Query = {
   __typename?: 'Query';
   address?: Maybe<Address>;
+  addressByCompanyId?: Maybe<Address>;
   /** Reads and enables pagination through a set of `Address`. */
   addresses?: Maybe<AddressesConnection>;
   /** Reads and enables pagination through a set of `Availability`. */
@@ -2817,10 +3262,17 @@ export type QueryAddressArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryAddressByCompanyIdArgs = {
+  companyId: Scalars['UUID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryAddressesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<AddressCondition>;
+  filter?: InputMaybe<AddressFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2833,6 +3285,7 @@ export type QueryAvailabilitiesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<AvailabilityCondition>;
+  filter?: InputMaybe<AvailabilityFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2863,6 +3316,7 @@ export type QueryBookingsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2875,6 +3329,7 @@ export type QueryCategoriesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<CategoryCondition>;
+  filter?: InputMaybe<CategoryFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2905,6 +3360,7 @@ export type QueryCompaniesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<CompanyCondition>;
+  filter?: InputMaybe<CompanyFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2929,6 +3385,7 @@ export type QueryCompanyCategoriesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<CompanyCategoryCondition>;
+  filter?: InputMaybe<CompanyCategoryFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2959,6 +3416,7 @@ export type QueryServicesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<ServiceCondition>;
+  filter?: InputMaybe<ServiceFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2977,6 +3435,7 @@ export type QueryUsersArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3068,6 +3527,7 @@ export type ServiceAddressesByBookingServiceIdAndAddressIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<AddressCondition>;
+  filter?: InputMaybe<AddressFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3079,6 +3539,7 @@ export type ServiceAvailabilitiesByBookingServiceIdAndAvailabilityIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<AvailabilityCondition>;
+  filter?: InputMaybe<AvailabilityFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3090,6 +3551,7 @@ export type ServiceBookingsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3101,6 +3563,7 @@ export type ServiceUsersByBookingServiceIdAndUserIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3137,6 +3600,7 @@ export type ServiceAddressesByBookingServiceIdAndAddressIdManyToManyEdgeBookings
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3173,6 +3637,7 @@ export type ServiceAvailabilitiesByBookingServiceIdAndAvailabilityIdManyToManyEd
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3189,6 +3654,32 @@ export type ServiceCondition = {
   id?: InputMaybe<Scalars['UUID']['input']>;
   /** Checks for equality with the object’s `name` field. */
   name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** A filter to be used against `Service` object types. All fields are combined with a logical ‘and.’ */
+export type ServiceFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<ServiceFilter>>;
+  /** Filter by the object’s `bookings` relation. */
+  bookings?: InputMaybe<ServiceToManyBookingFilter>;
+  /** Some related `bookings` exist. */
+  bookingsExist?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `category` relation. */
+  category?: InputMaybe<CategoryFilter>;
+  /** Filter by the object’s `categoryId` field. */
+  categoryId?: InputMaybe<UuidFilter>;
+  /** Filter by the object’s `company` relation. */
+  company?: InputMaybe<CompanyFilter>;
+  /** Filter by the object’s `companyId` field. */
+  companyId?: InputMaybe<UuidFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<UuidFilter>;
+  /** Filter by the object’s `name` field. */
+  name?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<ServiceFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<ServiceFilter>>;
 };
 
 /** An input for mutations affecting `Service` */
@@ -3241,6 +3732,16 @@ export type ServiceServicesPkeyConnect = {
   id: Scalars['UUID']['input'];
 };
 
+/** A filter to be used against many `Booking` object types. All fields are combined with a logical ‘and.’ */
+export type ServiceToManyBookingFilter = {
+  /** Every related `Booking` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  every?: InputMaybe<BookingFilter>;
+  /** No related `Booking` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  none?: InputMaybe<BookingFilter>;
+  /** Some related `Booking` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  some?: InputMaybe<BookingFilter>;
+};
+
 /** A connection to a list of `User` values, with data from `Booking`. */
 export type ServiceUsersByBookingServiceIdAndUserIdManyToManyConnection = {
   __typename?: 'ServiceUsersByBookingServiceIdAndUserIdManyToManyConnection';
@@ -3271,6 +3772,7 @@ export type ServiceUsersByBookingServiceIdAndUserIdManyToManyEdgeBookingsArgs = 
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3281,6 +3783,7 @@ export type ServiceUsersByBookingServiceIdAndUserIdManyToManyEdgeBookingsArgs = 
 export type ServicesCategoryIdFkeyCategoriesCreateInput = {
   categoryToParentId?: InputMaybe<CategoriesParentIdFkeyInput>;
   companyCategoriesUsingId?: InputMaybe<CompanyCategoriesCategoryIdFkeyInverseInput>;
+  description: Scalars['String']['input'];
   name: Scalars['String']['input'];
   parentId?: InputMaybe<Scalars['UUID']['input']>;
   servicesUsingId?: InputMaybe<ServicesCategoryIdFkeyInverseInput>;
@@ -3334,6 +3837,7 @@ export type ServicesCategoryIdFkeyServicesCreateInput = {
 
 /** The `company` to be created by this mutation. */
 export type ServicesCompanyIdFkeyCompaniesCreateInput = {
+  addressUsingId?: InputMaybe<AddressesCompanyIdFkeyInverseInput>;
   availabilityUsingId?: InputMaybe<AvailabilitiesCompanyIdFkeyInverseInput>;
   companyCategoryUsingId?: InputMaybe<CompanyCategoriesCompanyIdFkeyInverseInput>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -3420,6 +3924,122 @@ export enum ServicesOrderBy {
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
 }
 
+/** A filter to be used against String fields. All fields are combined with a logical ‘and.’ */
+export type StringFilter = {
+  /** Not equal to the specified value, treating null like an ordinary value. */
+  distinctFrom?: InputMaybe<Scalars['String']['input']>;
+  /** Not equal to the specified value, treating null like an ordinary value (case-insensitive). */
+  distinctFromInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Ends with the specified string (case-sensitive). */
+  endsWith?: InputMaybe<Scalars['String']['input']>;
+  /** Ends with the specified string (case-insensitive). */
+  endsWithInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Equal to the specified value. */
+  equalTo?: InputMaybe<Scalars['String']['input']>;
+  /** Equal to the specified value (case-insensitive). */
+  equalToInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Greater than the specified value. */
+  greaterThan?: InputMaybe<Scalars['String']['input']>;
+  /** Greater than the specified value (case-insensitive). */
+  greaterThanInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Greater than or equal to the specified value. */
+  greaterThanOrEqualTo?: InputMaybe<Scalars['String']['input']>;
+  /** Greater than or equal to the specified value (case-insensitive). */
+  greaterThanOrEqualToInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Included in the specified list. */
+  in?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Included in the specified list (case-insensitive). */
+  inInsensitive?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Contains the specified string (case-sensitive). */
+  includes?: InputMaybe<Scalars['String']['input']>;
+  /** Contains the specified string (case-insensitive). */
+  includesInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Less than the specified value. */
+  lessThan?: InputMaybe<Scalars['String']['input']>;
+  /** Less than the specified value (case-insensitive). */
+  lessThanInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Less than or equal to the specified value. */
+  lessThanOrEqualTo?: InputMaybe<Scalars['String']['input']>;
+  /** Less than or equal to the specified value (case-insensitive). */
+  lessThanOrEqualToInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. */
+  like?: InputMaybe<Scalars['String']['input']>;
+  /** Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. */
+  likeInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Equal to the specified value, treating null like an ordinary value. */
+  notDistinctFrom?: InputMaybe<Scalars['String']['input']>;
+  /** Equal to the specified value, treating null like an ordinary value (case-insensitive). */
+  notDistinctFromInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Does not end with the specified string (case-sensitive). */
+  notEndsWith?: InputMaybe<Scalars['String']['input']>;
+  /** Does not end with the specified string (case-insensitive). */
+  notEndsWithInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Not equal to the specified value. */
+  notEqualTo?: InputMaybe<Scalars['String']['input']>;
+  /** Not equal to the specified value (case-insensitive). */
+  notEqualToInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Not included in the specified list. */
+  notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Not included in the specified list (case-insensitive). */
+  notInInsensitive?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Does not contain the specified string (case-sensitive). */
+  notIncludes?: InputMaybe<Scalars['String']['input']>;
+  /** Does not contain the specified string (case-insensitive). */
+  notIncludesInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. */
+  notLike?: InputMaybe<Scalars['String']['input']>;
+  /** Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. */
+  notLikeInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Does not start with the specified string (case-sensitive). */
+  notStartsWith?: InputMaybe<Scalars['String']['input']>;
+  /** Does not start with the specified string (case-insensitive). */
+  notStartsWithInsensitive?: InputMaybe<Scalars['String']['input']>;
+  /** Starts with the specified string (case-sensitive). */
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  /** Starts with the specified string (case-insensitive). */
+  startsWithInsensitive?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** A filter to be used against UUID fields. All fields are combined with a logical ‘and.’ */
+export type UuidFilter = {
+  /** Not equal to the specified value, treating null like an ordinary value. */
+  distinctFrom?: InputMaybe<Scalars['UUID']['input']>;
+  /** Equal to the specified value. */
+  equalTo?: InputMaybe<Scalars['UUID']['input']>;
+  /** Greater than the specified value. */
+  greaterThan?: InputMaybe<Scalars['UUID']['input']>;
+  /** Greater than or equal to the specified value. */
+  greaterThanOrEqualTo?: InputMaybe<Scalars['UUID']['input']>;
+  /** Included in the specified list. */
+  in?: InputMaybe<Array<Scalars['UUID']['input']>>;
+  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Less than the specified value. */
+  lessThan?: InputMaybe<Scalars['UUID']['input']>;
+  /** Less than or equal to the specified value. */
+  lessThanOrEqualTo?: InputMaybe<Scalars['UUID']['input']>;
+  /** Equal to the specified value, treating null like an ordinary value. */
+  notDistinctFrom?: InputMaybe<Scalars['UUID']['input']>;
+  /** Not equal to the specified value. */
+  notEqualTo?: InputMaybe<Scalars['UUID']['input']>;
+  /** Not included in the specified list. */
+  notIn?: InputMaybe<Array<Scalars['UUID']['input']>>;
+};
+
+/** All input for the `updateAddressByCompanyId` mutation. */
+export type UpdateAddressByCompanyIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  companyId: Scalars['UUID']['input'];
+  /** An object where the defined keys will be set on the `Address` being updated. */
+  patch: AddressPatch;
+};
+
 /** All input for the `updateAddress` mutation. */
 export type UpdateAddressInput = {
   /**
@@ -3444,6 +4064,8 @@ export type UpdateAddressPayload = {
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Company` that is related to this `Address`. */
+  company?: Maybe<Company>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `User` that is related to this `Address`. */
@@ -3811,6 +4433,7 @@ export type UserAddressesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<AddressCondition>;
+  filter?: InputMaybe<AddressFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3822,6 +4445,7 @@ export type UserAddressesByBookingUserIdAndAddressIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<AddressCondition>;
+  filter?: InputMaybe<AddressFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3833,6 +4457,7 @@ export type UserAvailabilitiesByBookingUserIdAndAvailabilityIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<AvailabilityCondition>;
+  filter?: InputMaybe<AvailabilityFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3844,6 +4469,7 @@ export type UserBookingsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3855,6 +4481,7 @@ export type UserCompaniesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<CompanyCondition>;
+  filter?: InputMaybe<CompanyFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3866,6 +4493,7 @@ export type UserServicesByBookingUserIdAndServiceIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<ServiceCondition>;
+  filter?: InputMaybe<ServiceFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3902,6 +4530,7 @@ export type UserAddressesByBookingUserIdAndAddressIdManyToManyEdgeBookingsArgs =
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3938,6 +4567,7 @@ export type UserAvailabilitiesByBookingUserIdAndAvailabilityIdManyToManyEdgeBook
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3952,6 +4582,34 @@ export type UserCondition = {
   id?: InputMaybe<Scalars['UUID']['input']>;
   /** Checks for equality with the object’s `name` field. */
   name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** A filter to be used against `User` object types. All fields are combined with a logical ‘and.’ */
+export type UserFilter = {
+  /** Filter by the object’s `addresses` relation. */
+  addresses?: InputMaybe<UserToManyAddressFilter>;
+  /** Some related `addresses` exist. */
+  addressesExist?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<UserFilter>>;
+  /** Filter by the object’s `bookings` relation. */
+  bookings?: InputMaybe<UserToManyBookingFilter>;
+  /** Some related `bookings` exist. */
+  bookingsExist?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `company` relation. */
+  company?: InputMaybe<CompanyFilter>;
+  /** A related `company` exists. */
+  companyExists?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `email` field. */
+  email?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<UuidFilter>;
+  /** Filter by the object’s `name` field. */
+  name?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<UserFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<UserFilter>>;
 };
 
 /** An input for mutations affecting `User` */
@@ -4031,10 +4689,31 @@ export type UserServicesByBookingUserIdAndServiceIdManyToManyEdgeBookingsArgs = 
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<BookingCondition>;
+  filter?: InputMaybe<BookingFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<BookingsOrderBy>>;
+};
+
+/** A filter to be used against many `Address` object types. All fields are combined with a logical ‘and.’ */
+export type UserToManyAddressFilter = {
+  /** Every related `Address` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  every?: InputMaybe<AddressFilter>;
+  /** No related `Address` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  none?: InputMaybe<AddressFilter>;
+  /** Some related `Address` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  some?: InputMaybe<AddressFilter>;
+};
+
+/** A filter to be used against many `Booking` object types. All fields are combined with a logical ‘and.’ */
+export type UserToManyBookingFilter = {
+  /** Every related `Booking` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  every?: InputMaybe<BookingFilter>;
+  /** No related `Booking` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  none?: InputMaybe<BookingFilter>;
+  /** Some related `Booking` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  some?: InputMaybe<BookingFilter>;
 };
 
 /** The fields on `user` to look up the row to connect. */
@@ -4083,9 +4762,22 @@ export enum UsersOrderBy {
 }
 
 /** An object where the defined keys will be set on the `address` being updated. */
+export type UpdateAddressOnAddressForAddressesCompanyIdFkeyPatch = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  bookingsUsingId?: InputMaybe<BookingsAddressIdFkeyInverseInput>;
+  companyToCompanyId?: InputMaybe<AddressesCompanyIdFkeyInput>;
+  contactNumber?: InputMaybe<Scalars['String']['input']>;
+  isPrimary?: InputMaybe<Scalars['Boolean']['input']>;
+  userId?: InputMaybe<Scalars['UUID']['input']>;
+  userToUserId?: InputMaybe<AddressesUserIdFkeyInput>;
+};
+
+/** An object where the defined keys will be set on the `address` being updated. */
 export type UpdateAddressOnAddressForAddressesUserIdFkeyPatch = {
   address?: InputMaybe<Scalars['String']['input']>;
   bookingsUsingId?: InputMaybe<BookingsAddressIdFkeyInverseInput>;
+  companyId?: InputMaybe<Scalars['UUID']['input']>;
+  companyToCompanyId?: InputMaybe<AddressesCompanyIdFkeyInput>;
   contactNumber?: InputMaybe<Scalars['String']['input']>;
   isPrimary?: InputMaybe<Scalars['Boolean']['input']>;
   userToUserId?: InputMaybe<AddressesUserIdFkeyInput>;
@@ -4095,6 +4787,8 @@ export type UpdateAddressOnAddressForAddressesUserIdFkeyPatch = {
 export type UpdateAddressOnBookingForBookingsAddressIdFkeyPatch = {
   address?: InputMaybe<Scalars['String']['input']>;
   bookingsUsingId?: InputMaybe<BookingsAddressIdFkeyInverseInput>;
+  companyId?: InputMaybe<Scalars['UUID']['input']>;
+  companyToCompanyId?: InputMaybe<AddressesCompanyIdFkeyInput>;
   contactNumber?: InputMaybe<Scalars['String']['input']>;
   isPrimary?: InputMaybe<Scalars['Boolean']['input']>;
   userId?: InputMaybe<Scalars['UUID']['input']>;
@@ -4170,6 +4864,7 @@ export type UpdateBookingOnBookingForBookingsUserIdFkeyPatch = {
 export type UpdateCategoryOnCategoryForCategoriesParentIdFkeyPatch = {
   categoryToParentId?: InputMaybe<CategoriesParentIdFkeyInput>;
   companyCategoriesUsingId?: InputMaybe<CompanyCategoriesCategoryIdFkeyInverseInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   servicesUsingId?: InputMaybe<ServicesCategoryIdFkeyInverseInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -4179,6 +4874,7 @@ export type UpdateCategoryOnCategoryForCategoriesParentIdFkeyPatch = {
 export type UpdateCategoryOnCompanyCategoryForCompanyCategoriesCategoryIdFkeyPatch = {
   categoryToParentId?: InputMaybe<CategoriesParentIdFkeyInput>;
   companyCategoriesUsingId?: InputMaybe<CompanyCategoriesCategoryIdFkeyInverseInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   parentId?: InputMaybe<Scalars['UUID']['input']>;
   servicesUsingId?: InputMaybe<ServicesCategoryIdFkeyInverseInput>;
@@ -4189,6 +4885,7 @@ export type UpdateCategoryOnCompanyCategoryForCompanyCategoriesCategoryIdFkeyPat
 export type UpdateCategoryOnServiceForServicesCategoryIdFkeyPatch = {
   categoryToParentId?: InputMaybe<CategoriesParentIdFkeyInput>;
   companyCategoriesUsingId?: InputMaybe<CompanyCategoriesCategoryIdFkeyInverseInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   parentId?: InputMaybe<Scalars['UUID']['input']>;
   servicesUsingId?: InputMaybe<ServicesCategoryIdFkeyInverseInput>;
@@ -4210,7 +4907,21 @@ export type UpdateCompanyCategoryOnCompanyCategoryForCompanyCategoriesCompanyIdF
 };
 
 /** An object where the defined keys will be set on the `company` being updated. */
+export type UpdateCompanyOnAddressForAddressesCompanyIdFkeyPatch = {
+  addressUsingId?: InputMaybe<AddressesCompanyIdFkeyInverseInput>;
+  availabilityUsingId?: InputMaybe<AvailabilitiesCompanyIdFkeyInverseInput>;
+  companyCategoryUsingId?: InputMaybe<CompanyCategoriesCompanyIdFkeyInverseInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  isVerified?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  servicesUsingId?: InputMaybe<ServicesCompanyIdFkeyInverseInput>;
+  userId?: InputMaybe<Scalars['UUID']['input']>;
+  userToUserId?: InputMaybe<CompaniesUserIdFkeyInput>;
+};
+
+/** An object where the defined keys will be set on the `company` being updated. */
 export type UpdateCompanyOnAvailabilityForAvailabilitiesCompanyIdFkeyPatch = {
+  addressUsingId?: InputMaybe<AddressesCompanyIdFkeyInverseInput>;
   availabilityUsingId?: InputMaybe<AvailabilitiesCompanyIdFkeyInverseInput>;
   companyCategoryUsingId?: InputMaybe<CompanyCategoriesCompanyIdFkeyInverseInput>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -4223,6 +4934,7 @@ export type UpdateCompanyOnAvailabilityForAvailabilitiesCompanyIdFkeyPatch = {
 
 /** An object where the defined keys will be set on the `company` being updated. */
 export type UpdateCompanyOnCompanyCategoryForCompanyCategoriesCompanyIdFkeyPatch = {
+  addressUsingId?: InputMaybe<AddressesCompanyIdFkeyInverseInput>;
   availabilityUsingId?: InputMaybe<AvailabilitiesCompanyIdFkeyInverseInput>;
   companyCategoryUsingId?: InputMaybe<CompanyCategoriesCompanyIdFkeyInverseInput>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -4235,6 +4947,7 @@ export type UpdateCompanyOnCompanyCategoryForCompanyCategoriesCompanyIdFkeyPatch
 
 /** An object where the defined keys will be set on the `company` being updated. */
 export type UpdateCompanyOnCompanyForCompaniesUserIdFkeyPatch = {
+  addressUsingId?: InputMaybe<AddressesCompanyIdFkeyInverseInput>;
   availabilityUsingId?: InputMaybe<AvailabilitiesCompanyIdFkeyInverseInput>;
   companyCategoryUsingId?: InputMaybe<CompanyCategoriesCompanyIdFkeyInverseInput>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -4246,6 +4959,7 @@ export type UpdateCompanyOnCompanyForCompaniesUserIdFkeyPatch = {
 
 /** An object where the defined keys will be set on the `company` being updated. */
 export type UpdateCompanyOnServiceForServicesCompanyIdFkeyPatch = {
+  addressUsingId?: InputMaybe<AddressesCompanyIdFkeyInverseInput>;
   availabilityUsingId?: InputMaybe<AvailabilitiesCompanyIdFkeyInverseInput>;
   companyCategoryUsingId?: InputMaybe<CompanyCategoriesCompanyIdFkeyInverseInput>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -4334,23 +5048,30 @@ export type CategoriesQueryVariables = Exact<{
 }>;
 
 
-export type CategoriesQuery = { __typename?: 'Query', categories?: { __typename?: 'CategoriesConnection', nodes: Array<{ __typename?: 'Category', id: any, name: string }> } | null };
+export type CategoriesQuery = { __typename?: 'Query', categories?: { __typename?: 'CategoriesConnection', nodes: Array<{ __typename?: 'Category', id: any, name: string, slug: string, description: string, childCategories: { __typename?: 'CategoriesConnection', nodes: Array<{ __typename?: 'Category', id: any, name: string, slug: string, description: string }> } }> } | null };
 
 export type CreateServiceMutationVariables = Exact<{
   service: ServiceInput;
 }>;
 
 
-export type CreateServiceMutation = { __typename?: 'Mutation', createService?: { __typename?: 'CreateServicePayload', service?: { __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any } | null } | null };
+export type CreateServiceMutation = { __typename?: 'Mutation', createService?: { __typename?: 'CreateServicePayload', service?: { __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null } | null } | null };
 
-export type Lite_ServiceFragment = { __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any };
+export type Lite_ServiceFragment = { __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null };
 
 export type ServiceQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type ServiceQuery = { __typename?: 'Query', service?: { __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any } | null };
+export type ServiceQuery = { __typename?: 'Query', service?: { __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null } | null };
+
+export type ServicesQueryVariables = Exact<{
+  filter?: InputMaybe<ServiceFilter>;
+}>;
+
+
+export type ServicesQuery = { __typename?: 'Query', services?: { __typename?: 'ServicesConnection', nodes: Array<{ __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null }> } | null };
 
 export type UpdateServiceMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -4358,23 +5079,38 @@ export type UpdateServiceMutationVariables = Exact<{
 }>;
 
 
-export type UpdateServiceMutation = { __typename?: 'Mutation', updateService?: { __typename?: 'UpdateServicePayload', service?: { __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any } | null } | null };
+export type UpdateServiceMutation = { __typename?: 'Mutation', updateService?: { __typename?: 'UpdateServicePayload', service?: { __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null } | null } | null };
+
+export type CompanyQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type CompanyQuery = { __typename?: 'Query', company?: { __typename?: 'Company', id: any, name: string, description?: string | null, user?: { __typename?: 'User', id: any, name?: string | null, email: string, type: string, isVerified: boolean, isAdmin: boolean, addresses: { __typename?: 'AddressesConnection', nodes: Array<{ __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null }> }, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string, services: { __typename?: 'ServicesConnection', nodes: Array<{ __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null }> } } | null } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null } | null } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string, services: { __typename?: 'ServicesConnection', nodes: Array<{ __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null }> } } | null } | null } | null };
+
+export type UpdateCompanyMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  company: CompanyPatch;
+}>;
+
+
+export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'UpdateCompanyPayload', company?: { __typename?: 'Company', id: any, name: string, description?: string | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string, services: { __typename?: 'ServicesConnection', nodes: Array<{ __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null }> } } | null } | null } | null } | null };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentUserQuery = { __typename?: 'Query', currentUser?: { __typename?: 'User', id: any, name?: string | null, email: string, type: string, isVerified: boolean, isAdmin: boolean, addresses: { __typename?: 'AddressesConnection', nodes: Array<{ __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null }> }, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string } | null } | null, availability?: { __typename?: 'Availability', endTime: any, startTime: any } | null } | null } | null };
+export type CurrentUserQuery = { __typename?: 'Query', currentUser?: { __typename?: 'User', id: any, name?: string | null, email: string, type: string, isVerified: boolean, isAdmin: boolean, addresses: { __typename?: 'AddressesConnection', nodes: Array<{ __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null }> }, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string, services: { __typename?: 'ServicesConnection', nodes: Array<{ __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null }> } } | null } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null } | null } | null };
 
-export type Lite_CompanyFragment = { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', endTime: any, startTime: any } | null };
+export type Lite_CompanyFragment = { __typename?: 'Company', id: any, name: string, description?: string | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string, services: { __typename?: 'ServicesConnection', nodes: Array<{ __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null }> } } | null } | null };
 
-export type Lite_UserFragment = { __typename?: 'User', id: any, name?: string | null, email: string, type: string, isVerified: boolean, isAdmin: boolean, addresses: { __typename?: 'AddressesConnection', nodes: Array<{ __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null }> }, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string } | null } | null, availability?: { __typename?: 'Availability', endTime: any, startTime: any } | null } | null };
+export type Lite_UserFragment = { __typename?: 'User', id: any, name?: string | null, email: string, type: string, isVerified: boolean, isAdmin: boolean, addresses: { __typename?: 'AddressesConnection', nodes: Array<{ __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null }> }, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string, services: { __typename?: 'ServicesConnection', nodes: Array<{ __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null }> } } | null } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null } | null };
 
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginPayload', token?: string | null, user: { __typename?: 'User', id: any, name?: string | null, email: string, type: string, isVerified: boolean, isAdmin: boolean, companies: { __typename?: 'CompaniesConnection', nodes: Array<{ __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', endTime: any, startTime: any } | null }> }, addresses: { __typename?: 'AddressesConnection', nodes: Array<{ __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null }> }, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string } | null } | null, availability?: { __typename?: 'Availability', endTime: any, startTime: any } | null } | null } } | null };
+export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginPayload', token?: string | null, user: { __typename?: 'User', id: any, name?: string | null, email: string, type: string, isVerified: boolean, isAdmin: boolean, companies: { __typename?: 'CompaniesConnection', nodes: Array<{ __typename?: 'Company', id: any, name: string, description?: string | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string, services: { __typename?: 'ServicesConnection', nodes: Array<{ __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null }> } } | null } | null }> }, addresses: { __typename?: 'AddressesConnection', nodes: Array<{ __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null }> }, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string, services: { __typename?: 'ServicesConnection', nodes: Array<{ __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null }> } } | null } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null } | null } } | null };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -4386,14 +5122,14 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register?: { __typename?: 'RegisterPayload', token: string, user: { __typename?: 'User', id: any, name?: string | null, email: string, type: string, isVerified: boolean, isAdmin: boolean, addresses: { __typename?: 'AddressesConnection', nodes: Array<{ __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null }> }, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string } | null } | null, availability?: { __typename?: 'Availability', endTime: any, startTime: any } | null } | null } } | null };
+export type RegisterMutation = { __typename?: 'Mutation', register?: { __typename?: 'RegisterPayload', token: string, user: { __typename?: 'User', id: any, name?: string | null, email: string, type: string, isVerified: boolean, isAdmin: boolean, addresses: { __typename?: 'AddressesConnection', nodes: Array<{ __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null }> }, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string, services: { __typename?: 'ServicesConnection', nodes: Array<{ __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null }> } } | null } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null } | null } } | null };
 
 export type RegisterCompanyMutationVariables = Exact<{
   input: RegisterCompanyInput;
 }>;
 
 
-export type RegisterCompanyMutation = { __typename?: 'Mutation', registerCompany?: { __typename?: 'RegisterCompanyPayload', token: string, company: { __typename?: 'Company', userId: any, id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', endTime: any, startTime: any } | null } } | null };
+export type RegisterCompanyMutation = { __typename?: 'Mutation', registerCompany?: { __typename?: 'RegisterCompanyPayload', token: string, company: { __typename?: 'Company', userId: any, id: any, name: string, description?: string | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, companyCategory?: { __typename?: 'CompanyCategory', categoryId: any, category?: { __typename?: 'Category', id: any, name: string, services: { __typename?: 'ServicesConnection', nodes: Array<{ __typename?: 'Service', id: any, name: string, price: number, description: string, companyId: any, categoryId: any, company?: { __typename?: 'Company', id: any, name: string, description?: string | null, availability?: { __typename?: 'Availability', id: any, endTime: any, startTime: any } | null, address?: { __typename?: 'Address', id: any, address?: string | null, contactNumber?: string | null } | null } | null }> } } | null } | null } } | null };
 
 export const Lite_ServiceFragmentDoc = gql`
     fragment Lite_Service on Service {
@@ -4403,6 +5139,21 @@ export const Lite_ServiceFragmentDoc = gql`
   description
   companyId
   categoryId
+  company {
+    id
+    name
+    description
+    availability {
+      id
+      endTime
+      startTime
+    }
+    address {
+      id
+      address
+      contactNumber
+    }
+  }
 }
     `;
 export const Lite_CompanyFragmentDoc = gql`
@@ -4410,12 +5161,30 @@ export const Lite_CompanyFragmentDoc = gql`
   id
   name
   description
+  address {
+    id
+    address
+    contactNumber
+  }
   availability {
+    id
     endTime
     startTime
   }
+  companyCategory {
+    categoryId
+    category {
+      id
+      name
+      services {
+        nodes {
+          ...Lite_Service
+        }
+      }
+    }
+  }
 }
-    `;
+    ${Lite_ServiceFragmentDoc}`;
 export const Lite_UserFragmentDoc = gql`
     fragment Lite_User on User {
   id
@@ -4449,6 +5218,16 @@ export const CategoriesDocument = gql`
     nodes {
       id
       name
+      slug
+      description
+      childCategories {
+        nodes {
+          id
+          name
+          slug
+          description
+        }
+      }
     }
   }
 }
@@ -4553,6 +5332,43 @@ export function useServiceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Se
 export type ServiceQueryHookResult = ReturnType<typeof useServiceQuery>;
 export type ServiceLazyQueryHookResult = ReturnType<typeof useServiceLazyQuery>;
 export type ServiceQueryResult = Apollo.QueryResult<ServiceQuery, ServiceQueryVariables>;
+export const ServicesDocument = gql`
+    query Services($filter: ServiceFilter) {
+  services(filter: $filter) {
+    nodes {
+      ...Lite_Service
+    }
+  }
+}
+    ${Lite_ServiceFragmentDoc}`;
+
+/**
+ * __useServicesQuery__
+ *
+ * To run a query within a React component, call `useServicesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useServicesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useServicesQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useServicesQuery(baseOptions?: Apollo.QueryHookOptions<ServicesQuery, ServicesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ServicesQuery, ServicesQueryVariables>(ServicesDocument, options);
+      }
+export function useServicesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ServicesQuery, ServicesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ServicesQuery, ServicesQueryVariables>(ServicesDocument, options);
+        }
+export type ServicesQueryHookResult = ReturnType<typeof useServicesQuery>;
+export type ServicesLazyQueryHookResult = ReturnType<typeof useServicesLazyQuery>;
+export type ServicesQueryResult = Apollo.QueryResult<ServicesQuery, ServicesQueryVariables>;
 export const UpdateServiceDocument = gql`
     mutation UpdateService($id: UUID!, $service: ServicePatch!) {
   updateService(input: {patch: $service, id: $id}) {
@@ -4590,6 +5406,84 @@ export function useUpdateServiceMutation(baseOptions?: Apollo.MutationHookOption
 export type UpdateServiceMutationHookResult = ReturnType<typeof useUpdateServiceMutation>;
 export type UpdateServiceMutationResult = Apollo.MutationResult<UpdateServiceMutation>;
 export type UpdateServiceMutationOptions = Apollo.BaseMutationOptions<UpdateServiceMutation, UpdateServiceMutationVariables>;
+export const CompanyDocument = gql`
+    query Company($id: UUID!) {
+  company(id: $id) {
+    id
+    ...Lite_Company
+    user {
+      id
+      ...Lite_User
+    }
+  }
+}
+    ${Lite_CompanyFragmentDoc}
+${Lite_UserFragmentDoc}`;
+
+/**
+ * __useCompanyQuery__
+ *
+ * To run a query within a React component, call `useCompanyQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCompanyQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCompanyQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCompanyQuery(baseOptions: Apollo.QueryHookOptions<CompanyQuery, CompanyQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CompanyQuery, CompanyQueryVariables>(CompanyDocument, options);
+      }
+export function useCompanyLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CompanyQuery, CompanyQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CompanyQuery, CompanyQueryVariables>(CompanyDocument, options);
+        }
+export type CompanyQueryHookResult = ReturnType<typeof useCompanyQuery>;
+export type CompanyLazyQueryHookResult = ReturnType<typeof useCompanyLazyQuery>;
+export type CompanyQueryResult = Apollo.QueryResult<CompanyQuery, CompanyQueryVariables>;
+export const UpdateCompanyDocument = gql`
+    mutation UpdateCompany($id: UUID!, $company: CompanyPatch!) {
+  updateCompany(input: {patch: $company, id: $id}) {
+    company {
+      id
+      ...Lite_Company
+    }
+  }
+}
+    ${Lite_CompanyFragmentDoc}`;
+export type UpdateCompanyMutationFn = Apollo.MutationFunction<UpdateCompanyMutation, UpdateCompanyMutationVariables>;
+
+/**
+ * __useUpdateCompanyMutation__
+ *
+ * To run a mutation, you first call `useUpdateCompanyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCompanyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCompanyMutation, { data, loading, error }] = useUpdateCompanyMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      company: // value for 'company'
+ *   },
+ * });
+ */
+export function useUpdateCompanyMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCompanyMutation, UpdateCompanyMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCompanyMutation, UpdateCompanyMutationVariables>(UpdateCompanyDocument, options);
+      }
+export type UpdateCompanyMutationHookResult = ReturnType<typeof useUpdateCompanyMutation>;
+export type UpdateCompanyMutationResult = Apollo.MutationResult<UpdateCompanyMutation>;
+export type UpdateCompanyMutationOptions = Apollo.BaseMutationOptions<UpdateCompanyMutation, UpdateCompanyMutationVariables>;
 export const CurrentUserDocument = gql`
     query CurrentUser {
   currentUser {

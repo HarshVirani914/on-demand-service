@@ -1,1 +1,1 @@
-export * from "./serviceSchema";
+export * from './serviceSchema';

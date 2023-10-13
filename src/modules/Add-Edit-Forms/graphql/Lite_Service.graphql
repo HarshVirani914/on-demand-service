@@ -5,4 +5,19 @@ fragment Lite_Service on Service {
   description
   companyId
   categoryId
+  company {
+    id
+    name
+    description
+    availability {
+      id
+      endTime
+      startTime
+    }
+    address {
+      id
+      address
+      contactNumber
+    }
+  }
 }

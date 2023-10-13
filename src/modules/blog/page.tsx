@@ -18,16 +18,16 @@ const Blog = (props: Props) => {
             <div className="bg-gradient-to-r from-teal-400 to-yellow-200 bg-clip-text text-transparent text-center font-bold md:text-start text-2xl md:text-6xl w-full flex flex-row sm:gap-x-3">
               <div>{`😀`}</div>
               <div>
-          <Typewriter
-            options={{
-              strings: [' Your One-Stop Service Solution'],
-              autoStart: true,
-              loop: true,
-              delay: 40,
-              deleteSpeed: 10,
-            }}
-          />
-        </div>
+                <Typewriter
+                  options={{
+                    strings: [' Your One-Stop Service Solution'],
+                    autoStart: true,
+                    loop: true,
+                    delay: 40,
+                    deleteSpeed: 10,
+                  }}
+                />
+              </div>
             </div>
             <div className="gap-y-20">
               <div className="flex flex-col md:flex-row mt-[5rem] gap-x-[10rem]">
@@ -56,12 +56,15 @@ const Blog = (props: Props) => {
                 </div>
               </div>
               <div className="flex flex-col md:flex-row mt-[5rem] gap-x-[10rem]">
-              <div className="flex flex-col w-[60%] gap-y-14">
+                <div className="flex flex-col w-[60%] gap-y-14">
                   <div className="text-4xl font-semibold">
-                  The Future of On-Demand Services: Trends and Predictions:
+                    The Future of On-Demand Services: Trends and Predictions:
                   </div>
                   <div className="text-2xl">
-                  In the ever-evolving landscape of on-demand services, staying ahead of the curve is crucial. As we look to the future, it's clear that the on-demand service industry will continue to transform the way we access essential services.
+                    In the ever-evolving landscape of on-demand services,
+                    staying ahead of the curve is crucial. As we look to the
+                    future, it's clear that the on-demand service industry will
+                    continue to transform the way we access essential services.
                   </div>
                 </div>
                 <div className="opacity-0 sm:opacity-75">

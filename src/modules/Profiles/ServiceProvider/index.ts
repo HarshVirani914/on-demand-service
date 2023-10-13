@@ -1,1 +1,1 @@
-export {default as ServiceProviderProfile} from './page'
+export { default as ServiceProviderProfile } from './page';

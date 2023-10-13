@@ -1,1 +1,1 @@
-export { default as Bookingcard} from './page';
+export { default as Bookingcard } from './page';

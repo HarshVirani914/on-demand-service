@@ -1,6 +1,7 @@
-'use client'
+'use client';
+import { Layout } from '@/components/layout';
 import { Blog } from '@/modules/blog';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 type Props = {};
 
@@ -10,7 +11,9 @@ const Page = (props: Props) => {
   }, []);
 
   return (
-    <Blog />
+    <Layout>
+      <Blog />
+    </Layout>
   );
 };
 

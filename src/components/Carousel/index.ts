@@ -1,1 +1,1 @@
-export {default as CarouselCustomNavigation} from './page'
+export { default as CarouselCustomNavigation } from './page';

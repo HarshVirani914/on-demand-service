@@ -1,28 +1,25 @@
 'use client';
 import BookingCard from '@/components/card/bookingcard/page';
 import { Layout } from '@/components/layout';
+import { useServices } from '@/modules/Add-Edit-Forms/hooks/useServices';
 import React, { useEffect } from 'react';
 
 interface Props {
   params: {
-    categoryId: string;
+    slug: string;
   };
 }
 
-const Dashboard: React.FC<Props> = ({ params: { categoryId } }) => {
-  const serviceData = [
-    { id: 1, title: 'Service 1', charges: '200', description: 'Description 1' },
-    { id: 2, title: 'Service 2', charges: '200', description: 'Description 2' },
-    { id: 3, title: 'Service 3', charges: '200', description: 'Description 3' },
-  ];
+const Dashboard: React.FC<Props> = ({ params: { slug } }) => {
+  const { services } = useServices({ slug: `/${slug}` });
 
   useEffect(() => {
-    const title = categoryId
+    const title = slug
       .split('-')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' ');
     document.title = `Expertease-${title}`;
-  }, [categoryId]);
+  }, [slug]);
 
   return (
     <>
@@ -30,18 +27,19 @@ const Dashboard: React.FC<Props> = ({ params: { categoryId } }) => {
         <div className="justify-center items-center">
           <div className="bg-black/90  m-10 p-5 mt-[2rem] sm:m-20 sm:mt-[2rem] rounded-xl">
             <div className="text-center text-white flex justify-center text-4xl font-semibold">
-              {categoryId.replaceAll('-', ' ').toLocaleUpperCase()}
+              {slug.replaceAll('-', ' ').toLocaleUpperCase()}
             </div>
           </div>
           <div className="p-7 sm:px-20 -mt-[3rem] sm:-mt[5rem] mx-auto grid  lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-5">
-            {serviceData.map((service) => (
+            {services.map((service) => (
               <div key={service.id}>
                 <BookingCard
-                  buttonLabel="Edit Service"
+                  id={service.id}
+                  buttonLabel="Get Details"
                   likeSymbol={false}
                   ratingSymbol={false}
-                  title={service.title}
-                  charges={service.charges}
+                  title={service.name}
+                  charges={service.price}
                   description={service.description}
                 />
               </div>

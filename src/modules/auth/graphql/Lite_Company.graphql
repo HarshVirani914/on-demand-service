@@ -2,8 +2,26 @@ fragment Lite_Company on Company {
   id
   name
   description
+  address {
+    id
+    address
+    contactNumber
+  }
   availability {
+    id
     endTime
     startTime
+  }
+  companyCategory {
+    categoryId
+    category {
+      id
+      name
+      services {
+        nodes {
+          ...Lite_Service
+        }
+      }
+    }
   }
 }

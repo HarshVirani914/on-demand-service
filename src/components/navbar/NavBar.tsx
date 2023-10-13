@@ -1,6 +1,8 @@
 'use client';
 
-import { TOKEN_NAME, useLogout } from '@/modules/auth/hooks';
+import { useCurrentUserQuery } from '@/generated/graphql';
+import { useCategories } from '@/modules/Add-Edit-Forms/hooks/useCategories';
+import { useLogout } from '@/modules/auth/hooks';
 import {
   Bars2Icon,
   ChevronDownIcon,
@@ -17,16 +19,14 @@ import {
   MenuItem,
   MenuList,
   Navbar,
-  Typography
+  Typography,
 } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from 'public/ExpertEase-Logo.png';
 import profileImage from 'public/MyProfile/my-profile.jpg';
 import React from 'react';
-import { useCookies } from 'react-cookie';
 import NavigationMenus from './Menu/page';
-import { useCurrentUserQuery } from '@/generated/graphql';
 
 // profile menu component
 const profileMenuItems = [
@@ -35,7 +35,7 @@ const profileMenuItems = [
     icon: UserCircleIcon,
   },
   {
-    label: 'Service Provider Dashboard',
+    label: 'Service Provider Profile',
     icon: UserCircleIcon,
   },
   {
@@ -45,12 +45,12 @@ const profileMenuItems = [
 ];
 
 function ProfileMenu() {
-   const { data } = useCurrentUserQuery();
+  const { data } = useCurrentUserQuery();
 
-   const { logout } = useLogout();
+  const { logout } = useLogout();
 
-   const isLoggedin = !!data?.currentUser?.id;
-   const isServiceProvider = !!data?.currentUser?.company?.id;
+  const isLoggedin = !!data?.currentUser?.id;
+  const isServiceProvider = !!data?.currentUser?.company?.id;
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
@@ -68,7 +68,7 @@ function ProfileMenu() {
               src={profileImage}
               alt=""
               className="w-9 h-9 overflow-hidden rounded-full border border-gray-900"
-            ></Image>
+            />
             <ChevronDownIcon
               strokeWidth={2.5}
               className={`h-3 w-3 transition-transform ${
@@ -81,7 +81,7 @@ function ProfileMenu() {
           {profileMenuItems
             .filter(
               ({ label }) =>
-                !(label === 'Service Provider Dashboard' && !isServiceProvider)
+                !(label === 'Service Provider Profile' && !isServiceProvider)
             )
             .map(({ label, icon }, key) => {
               return (
@@ -104,7 +104,9 @@ function ProfileMenu() {
                     href={
                       label === 'Sign Out'
                         ? '/'
-                        : `/${label.replaceAll(' ', '').toLowerCase()}`
+                        : `/dashboard/${label
+                            .replaceAll(' ', '-')
+                            .toLowerCase()}`
                     }
                   >
                     <Typography
@@ -130,68 +132,30 @@ function ProfileMenu() {
   );
 }
 
-// nav list menu
-const CarServicesList = [
-  {
-    title: 'Car Services',
-    description: 'Revitalize Your Ride with Our Expert Car Service!',
-  },
-  {
-    title: 'Car General Services',
-
-    description: 'Keeping Your Car in Peak Condition, One Service at a Time.',
-  },
-  {
-    title: 'Car Washing',
-    description:
-      'Shine Bright! Pamper Your Car with Our Expert Car Washing Services.',
-  },
-];
-
-const HomeServicesList = [
-  {
-    title: 'Home Services',
-    description: 'Your One-Stop Solution for All Your Home Service Needs!',
-  },
-  {
-    title: 'Ac Services',
-
-    description: 'Stay Cool and Comfortable with Our Home AC Services!',
-  },
-  {
-    title: 'Home Cleaning Services',
-    description: 'Experience the Freshness of a Spotless Home!',
-  },
-  {
-    title: 'Plumber Services',
-    description: "Plumbing Problems? We've Got the Pipes Covred!!",
-  },
-];
-
 interface INavListMenuProps {
   header: string;
   navListMenuItems: {
-    title: string;
+    name: string;
     description: string;
+    slug: string;
   }[];
 }
 
 function NavListMenu({ header, navListMenuItems }: INavListMenuProps) {
-  const renderItems = navListMenuItems.map(({ title, description }) => (
-    <Link
-      href={`/category/${title.replace(/ /g, '-').toLowerCase()}`}
-      key={header}
-    >
-      <MenuItem>
-        <Typography variant="h6" color="blue-gray" className="mb-1">
-          {title}
-        </Typography>
-        <Typography variant="small" color="gray" className="font-normal">
-          {description}
-        </Typography>
-      </MenuItem>
-    </Link>
-  ));
+  const renderItems = navListMenuItems.map(
+    ({ name, description, slug }, index) => (
+      <Link href={slug} key={`${header}-${index}`}>
+        <MenuItem>
+          <Typography variant="h6" color="blue-gray" className="mb-1">
+            {name}
+          </Typography>
+          <Typography variant="small" color="gray" className="font-normal">
+            {description}
+          </Typography>
+        </MenuItem>
+      </Link>
+    )
+  );
 
   return (
     <React.Fragment>
@@ -206,10 +170,18 @@ function NavListMenu({ header, navListMenuItems }: INavListMenuProps) {
 }
 
 function NavList() {
+  const { categories } = useCategories(null);
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      <NavListMenu header="Car services" navListMenuItems={CarServicesList} />
-      <NavListMenu header="Home services" navListMenuItems={HomeServicesList} />
+      {categories &&
+        categories.map((category, index) => (
+          <NavListMenu
+            key={category.id}
+            header={`${category.name}`}
+            navListMenuItems={category.childCategories.nodes}
+          />
+        ))}
+      {/* <NavListMenu header="Home services" navListMenuItems={HomeServicesList} /> */}
     </ul>
   );
 }

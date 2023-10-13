@@ -12,122 +12,52 @@ import {
 
 import carService from 'public/NavBar/8959247.jpg';
 import HomeService from 'public/NavBar/2208.i121.001.S.m005.c13.isometric husband hour.jpg';
-
-interface ServiceItem {
-  category: string;
-  title: string;
-  href: string;
-  description: string;
-}
+import { useCategories } from '@/modules/Add-Edit-Forms/hooks/useCategories';
+import { Typography } from '@material-tailwind/react';
 
 export default function NavigationMenus() {
-  const services: ServiceItem[] = [
-    {
-      category: 'Car Services',
-      title: 'Car General Services',
-      href: '/dashboard/user',
-      description: 'Keeping Your Car in Peak Condition, One Service at a Time.',
-    },
-    {
-      category: 'Car Services',
-      title: 'Car Washing',
-      href: '/docs/installation',
-      description:
-        'Shine Bright! Pamper Your Car with Our Expert Car Washing Services.',
-    },
-    {
-      category: 'Home Services',
-      title: 'Ac Services',
-      href: '/docs',
-      description: 'Stay Cool and Comfortable with Our Home AC Services!',
-    },
-    {
-      category: 'Home Services',
-      title: 'Home Cleaning Services',
-      href: '/docs/installation',
-      description: 'Experience the Freshness of a Spotless Home!',
-    },
-    {
-      category: 'Home Services',
-      title: 'Plumber Services',
-      href: '/docs/installation',
-      description: "Plumbing Problems? We've Got the Pipes Covered!",
-    },
-    // Add more service items here if needed
-  ];
-
-  const renderServiceItems = (category: string) => {
-    return services
-      .filter((item) => item.category === category)
-      .map((item, index) => (
-        <ListItem
-          key={index}
-          title={item.title}
-          href={`/category/${item.title.replace(/ /g, '-').toLowerCase()}`}
-          description={item.description}
-        >
-          {item.description}
-        </ListItem>
-      ));
-  };
+  const { categories } = useCategories(null);
 
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Car Services</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <Link
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href={`/category/${'Car Services'
-                      .replace(/ /g, '-')
-                      .toLowerCase()}`}
-                  >
-                    <Image src={carService} alt="" />
-                    <div className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      Car Services
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      Revitalize Your Ride with Our Expert Car Service!
-                    </p>
-                  </Link>
-                </NavigationMenuLink>
-              </li>
-              {renderServiceItems('Car Services')}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Home Services</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <Link
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href={`/category/${'Home Services'
-                      .replace(/ /g, '-')
-                      .toLowerCase()}`}
-                  >
-                    <Image src={HomeService} alt="" />
-                    <div className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      Home Services
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      Your One-Stop Solution for All Your Home Service Needs!
-                    </p>
-                  </Link>
-                </NavigationMenuLink>
-              </li>
-              {renderServiceItems('Home Services')}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+        {categories &&
+          categories.map((category) => (
+            <NavigationMenuItem key={category.id}>
+              <NavigationMenuTrigger>{category.name}</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  <li className="row-span-3">
+                    <NavigationMenuLink asChild>
+                      <Typography
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        as="div"
+                      >
+                        <Image src={carService} alt="" />
+                        <div className="h-6 w-6" />
+                        <div className="mb-2 mt-4 text-lg font-medium">
+                          {category.name}
+                        </div>
+                        <div className="text-sm leading-tight text-muted-foreground">
+                          {category.description}
+                        </div>
+                      </Typography>
+                    </NavigationMenuLink>
+                  </li>
+                  {category.childCategories.nodes.map((childCategory) => (
+                    <ListItem
+                      key={childCategory.id}
+                      title={childCategory.name}
+                      href={childCategory.slug}
+                      description={childCategory.description}
+                    >
+                      {childCategory.description}
+                    </ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          ))}
       </NavigationMenuList>
     </NavigationMenu>
   );
@@ -136,7 +66,7 @@ export default function NavigationMenus() {
 interface ListItemProps {
   title: string;
   href: string;
-  description: string;
+  description?: string;
   children?: React.ReactNode; // Define children explicitly
 }
 
@@ -146,9 +76,9 @@ const ListItem: React.FC<ListItemProps> = ({ title, href, children }) => {
       <Link href={href}>
         <div className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
           <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
-          </p>
+          </div>
         </div>
       </Link>
     </li>

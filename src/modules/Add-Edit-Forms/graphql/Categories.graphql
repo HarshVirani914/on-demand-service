@@ -3,6 +3,16 @@ query Categories($condition: CategoryCondition) {
     nodes {
       id
       name
+      slug
+      description
+      childCategories {
+        nodes {
+          id
+          name
+          slug
+          description
+        }
+      }
     }
   }
 }

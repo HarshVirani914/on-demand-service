@@ -1,5 +1,5 @@
-import { Layout } from "@/components/layout";
-import OurServices from "@/modules/OurServices/page";
+import { Layout } from '@/components/layout';
+import OurServices from '@/modules/OurServices/page';
 
 export default function Page() {
   return (
