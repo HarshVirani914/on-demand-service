@@ -28,6 +28,7 @@
     "add": "^2.0.6",
     "autoprefixer": "10.4.14",
     "class-variance-authority": "^0.7.0",
+    "classnames": "^2.3.2",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "eslint": "8.44.0",
