@@ -11,6 +11,7 @@ import { FiUsers } from 'react-icons/fi';
 import { IoMdLogOut } from 'react-icons/io';
 import { PiUserSwitchDuotone } from 'react-icons/pi';
 import { TbLayoutSidebarLeftCollapseFilled } from 'react-icons/tb';
+import { GrServices } from 'react-icons/gr';
 
 const menuItems = [
   {
@@ -30,6 +31,12 @@ const menuItems = [
     label: 'Manage Service Providers',
     icon: PiUserSwitchDuotone,
     link: '/dashboard/admin/manage-serviceproviders',
+  },
+  {
+    id: 4,
+    label: 'Manage Services',
+    icon: GrServices,
+    link: '/dashboard/admin/manage-services',
   },
 ];
 
