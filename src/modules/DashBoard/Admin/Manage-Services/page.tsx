@@ -4,16 +4,24 @@ import React, { useState } from 'react';
 import { Button, Card, Typography } from '@material-tailwind/react';
 import { useUsers } from '../../hooks/useUsers';
 import { useDeleteUser } from '../../hooks/useDeleteUser';
+import { useServices } from '@/modules/Add-Edit-Forms/hooks/useServices';
+import { useDeleteService } from '@/modules/Add-Edit-Forms/hooks/useDeleteService';
 
-const TABLE_HEAD = ['Service Title', 'Service Provider Name', 'email' , 'Category', 'Created Date' , 'Action'];
-
+const TABLE_HEAD = [
+  'Service Title',
+  'Service Provider Name',
+  'Email',
+  'Category',
+  'Created Date',
+  'Action',
+];
 
 type Props = {};
 
 const ManageServices = (props: Props) => {
-  const { users } = useUsers();
-  const {handleDelete} = useDeleteUser()
+  const { services } = useServices();
 
+  const { handleDelete } = useDeleteService();
 
   return (
     <div className="h-screen flex flex-row justify-start">
@@ -44,21 +52,21 @@ const ManageServices = (props: Props) => {
                 </tr>
               </thead>
               <tbody>
-                {users.map(({ id, name, email, createdAt }, index) => {
-                  const isLast = index === users.length - 1;
+                {services.map((service, index) => {
+                  const isLast = index === services.length - 1;
                   const classes = isLast
                     ? 'p-4'
                     : 'p-4 border-b border-blue-gray-50';
 
                   return (
-                    <tr key={email}>
+                    <tr key={service.id}>
                       <td className={classes}>
                         <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal"
                         >
-                          Title
+                          {service.name}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -67,7 +75,7 @@ const ManageServices = (props: Props) => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {name}
+                          {service.company?.name}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -76,7 +84,7 @@ const ManageServices = (props: Props) => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {email}
+                          {service.company?.user?.email}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -85,7 +93,7 @@ const ManageServices = (props: Props) => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          Category
+                          {service.category?.name}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -94,11 +102,18 @@ const ManageServices = (props: Props) => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {createdAt}
+                          {service.createdAt}
                         </Typography>
                       </td>
                       <td className={classes}>
-                        <Button variant="text">Delete</Button>
+                        <Button
+                          onClick={() => {
+                            handleDelete(service.id);
+                          }}
+                          variant="text"
+                        >
+                          Delete
+                        </Button>
                       </td>
                     </tr>
                   );

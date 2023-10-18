@@ -1,14 +1,14 @@
-import { AdminDashboard } from '@/modules/DashBoard/Admin/Dashboard';
+import { ManageUSers } from '@/modules/DashBoard/Admin/Manage-Users';
 import React from 'react';
 
 type Props = {};
 
-const Admin = (props: Props) => {
+const page = (props: Props) => {
   return (
     <>
-      <AdminDashboard />
+      <ManageUSers />
     </>
   );
 };
 
-export default Admin;
+export default page;

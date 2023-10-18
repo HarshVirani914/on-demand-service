@@ -8,13 +8,11 @@ import { useDeleteUser } from '../../hooks/useDeleteUser';
 
 const TABLE_HEAD = ['Name', 'Email', 'Category', 'Account open', 'Action'];
 
-
-
 type Props = {};
 
 const ManageServiceProviders = (props: Props) => {
   const { companies } = useCompanies();
-  const {handleDelete} = useDeleteUser()
+  const { handleDelete } = useDeleteUser();
 
   const [searchText, setSearchText] = useState('');
 
@@ -92,11 +90,14 @@ const ManageServiceProviders = (props: Props) => {
                         </Typography>
                       </td>
                       <td className={classes}>
-                        <Button onClick={
-                          () => {
-                            handleDelete(company.user?.id)
-                          }
-                        } variant="text">Delete</Button>
+                        <Button
+                          onClick={() => {
+                            handleDelete(company.user?.id);
+                          }}
+                          variant="text"
+                        >
+                          Delete
+                        </Button>
                       </td>
                     </tr>
                   );

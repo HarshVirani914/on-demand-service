@@ -1,15 +1,15 @@
 import { useUsersQuery } from '@/generated/graphql';
 
-export const useUsers = (filters?: {companyExists: boolean}) => {
+export const useUsers = (filters?: { companyExists: boolean }) => {
   const { data, loading, error } = useUsersQuery({
     variables: {
-      filter:{
+      filter: {
         name: {
-          notEqualTo: "admin"
+          notEqualTo: 'admin',
         },
-        companyExists: filters?.companyExists || false
-      }
-    }
+        companyExists: filters?.companyExists || false,
+      },
+    },
   });
 
   return {

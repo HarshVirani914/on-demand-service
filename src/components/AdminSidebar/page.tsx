@@ -22,18 +22,12 @@ const menuItems = [
   },
   {
     id: 2,
-    label: 'Manage Users',
-    icon: FiUsers,
-    link: '/dashboard/admin/manage-users',
-  },
-  {
-    id: 3,
     label: 'Manage Service Providers',
     icon: PiUserSwitchDuotone,
     link: '/dashboard/admin/manage-serviceproviders',
   },
   {
-    id: 4,
+    id: 3,
     label: 'Manage Services',
     icon: GrServices,
     link: '/dashboard/admin/manage-services',
@@ -41,8 +35,7 @@ const menuItems = [
 ];
 
 const Sidebar = () => {
-
-  const {logout} = useLogout()
+  const { logout } = useLogout();
 
   const [toggleCollapse, setToggleCollapse] = useState(false);
   const [isCollapsible, setIsCollapsible] = useState(false);
@@ -141,7 +134,10 @@ const Sidebar = () => {
           <IoMdLogOut />
         </div>
         {!toggleCollapse && (
-          <span onClick={logout} className={classNames('text-md font-medium text-text-light')}>
+          <span
+            onClick={logout}
+            className={classNames('text-md font-medium text-text-light')}
+          >
             Logout
           </span>
         )}

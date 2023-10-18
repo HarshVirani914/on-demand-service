@@ -7,13 +7,11 @@ import { useDeleteUser } from '../../hooks/useDeleteUser';
 
 const TABLE_HEAD = ['Name', 'Email', 'Account open', 'Action'];
 
-
 type Props = {};
 
 const ManageUsers = (props: Props) => {
   const { users } = useUsers();
-  const {handleDelete} = useDeleteUser()
-
+  const { handleDelete } = useDeleteUser();
 
   return (
     <div className="h-screen flex flex-row justify-start">

@@ -9,6 +9,11 @@ fragment Lite_Service on Service {
     id
     name
     description
+    user {
+      id
+      name
+      email
+    }
     availability {
       id
       endTime
@@ -20,4 +25,9 @@ fragment Lite_Service on Service {
       contactNumber
     }
   }
+  category {
+    id
+    name
+  }
+  createdAt
 }
