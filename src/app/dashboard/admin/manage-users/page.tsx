@@ -1,14 +1,14 @@
-import { ManageUSers } from '@/modules/DashBoard/Admin/Manage-Users'
-import React from 'react'
+import { ManageUSers } from '@/modules/DashBoard/Admin/Manage-Users';
+import React from 'react';
 
-type Props = {}
+type Props = {};
 
 const page = (props: Props) => {
   return (
     <>
-    <ManageUSers />
+      <ManageUSers />
     </>
-  )
-}
+  );
+};
 
-export default page
+export default page;

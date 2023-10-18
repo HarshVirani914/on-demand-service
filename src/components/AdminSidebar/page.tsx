@@ -1,4 +1,5 @@
 'use client';
+import { useLogout } from '@/modules/auth/hooks';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,7 +13,12 @@ import { PiUserSwitchDuotone } from 'react-icons/pi';
 import { TbLayoutSidebarLeftCollapseFilled } from 'react-icons/tb';
 
 const menuItems = [
-  { id: 1, label: 'Dashboard', icon: AiOutlineHome, link: '/dashboard/admin/home' },
+  {
+    id: 1,
+    label: 'Dashboard',
+    icon: AiOutlineHome,
+    link: '/dashboard/admin/home',
+  },
   {
     id: 2,
     label: 'Manage Users',
@@ -28,6 +34,9 @@ const menuItems = [
 ];
 
 const Sidebar = () => {
+
+  const {logout} = useLogout()
+
   const [toggleCollapse, setToggleCollapse] = useState(false);
   const [isCollapsible, setIsCollapsible] = useState(false);
 
@@ -125,7 +134,7 @@ const Sidebar = () => {
           <IoMdLogOut />
         </div>
         {!toggleCollapse && (
-          <span className={classNames('text-md font-medium text-text-light')}>
+          <span onClick={logout} className={classNames('text-md font-medium text-text-light')}>
             Logout
           </span>
         )}

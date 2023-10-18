@@ -1,1 +1,1 @@
-export {default as ManageServiceProviders} from './page'
+export { default as ManageServiceProviders } from './page';

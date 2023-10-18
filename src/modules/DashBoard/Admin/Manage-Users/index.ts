@@ -1,1 +1,1 @@
-export {default as ManageUSers} from './page'
+export { default as ManageUSers } from './page';

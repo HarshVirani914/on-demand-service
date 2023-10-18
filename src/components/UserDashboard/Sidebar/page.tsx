@@ -1,12 +1,9 @@
 'use client';
-import React from 'react';
-import Link from 'next/link';
-import { GiHamburgerMenu } from 'react-icons/gi';
 import { Disclosure } from '@headlessui/react';
-import {
-  MdOutlineSpaceDashboard,
-  MdOutlineHomeRepairService,
-} from 'react-icons/md';
+import Link from 'next/link';
+import React from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { MdOutlineSpaceDashboard } from 'react-icons/md';
 
 interface SidebarProps {
   items: {

@@ -26,10 +26,12 @@ const GetDetails: React.FC<IGetDetails> = ({ id }) => {
         <Typography variant="h4" color="blue-gray">
           <div className="flex flex-row gap-x-3">
             <FaBuilding size={22} color="black" />
-            <div className="text-2xl -mt-1">{(service?.company?.name)?.toUpperCase()}</div>
+            <div className="text-2xl -mt-1">
+              {service?.company?.name?.toUpperCase()}
+            </div>
           </div>
         </Typography>
-        
+
         <div className="text-lg font-semibold mt-1">{service?.name}</div>
         <div className="mt-[3%] flex flex-col gap-4">
           <div className="flex flex-col gap-1">

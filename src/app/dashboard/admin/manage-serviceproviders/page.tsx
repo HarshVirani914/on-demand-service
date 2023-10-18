@@ -1,14 +1,14 @@
-import { ManageServiceProviders } from '@/modules/DashBoard/Admin/Manage-ServiceProviders'
-import React from 'react'
+import { ManageServiceProviders } from '@/modules/DashBoard/Admin/Manage-ServiceProviders';
+import React from 'react';
 
-type Props = {}
+type Props = {};
 
 const page = (props: Props) => {
   return (
     <>
-    <ManageServiceProviders />
+      <ManageServiceProviders />
     </>
-  )
-}
+  );
+};
 
-export default page
+export default page;

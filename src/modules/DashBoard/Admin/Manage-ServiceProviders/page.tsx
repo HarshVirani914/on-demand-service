@@ -1,45 +1,48 @@
 'use client';
 import { AdminSidebar } from '@/components/AdminSidebar';
 import React, { useState } from 'react';
-import { Card, Typography } from '@material-tailwind/react';
+import { Button, Card, Typography } from '@material-tailwind/react';
+import { useCompanies } from '../../hooks/useCompanies';
+import { useDeleteCompany } from '../../hooks/useDeleteCompany';
+import { useDeleteUser } from '../../hooks/useDeleteUser';
 
-const TABLE_HEAD = ['Name', 'Email','Category' , 'Account open',  'Action'];
+const TABLE_HEAD = ['Name', 'Email', 'Category', 'Account open', 'Action'];
 
 const TABLE_ROWS = [
   {
     name: 'John Michael',
     date: '23/04/18',
-    category : 'Car Services',
+    category: 'Car Services',
     email: 'john@example.com',
   },
   {
     name: 'Alexa Liras',
     date: '23/04/18',
-    category : 'Home Services',
+    category: 'Home Services',
     email: 'alexa@example.com',
   },
   {
     name: 'Laurent Perrier',
     date: '19/09/17',
-    category : 'Home Services',
+    category: 'Home Services',
     email: 'laurent@example.com',
   },
   {
     name: 'Michael Levi',
     date: '24/12/08',
-    category : 'Car Services',
+    category: 'Car Services',
     email: 'michael@example.com',
   },
   {
     name: 'Laurent Perrier',
     date: '19/09/17',
-    category : 'Car Services',
+    category: 'Car Services',
     email: 'laurent@example.com',
   },
   {
     name: 'Michael Levi',
     date: '24/12/08',
-    category : 'Car Services',
+    category: 'Car Services',
     email: 'michael@example.com',
   },
 ];
@@ -47,10 +50,10 @@ const TABLE_ROWS = [
 type Props = {};
 
 const ManageServiceProviders = (props: Props) => {
+  const { companies } = useCompanies();
+  const {handleDelete} = useDeleteUser()
+
   const [searchText, setSearchText] = useState('');
-  const handleDelete = (name: string) => {
-    console.log(`${name} deleted`);
-  };
 
   const filteredRows = TABLE_ROWS.filter((row) =>
     row.email.toLowerCase().includes(searchText.toLowerCase())
@@ -63,8 +66,7 @@ const ManageServiceProviders = (props: Props) => {
         <div className="text-center text-white text-3xl bg-black p-3 m-4 rounded-md">
           Manage - Service Providers
         </div>
-        <div className='m-6 bg-blue-gray-100'>
-          
+        <div className="m-6 bg-blue-gray-100">
           <Card className="h-full w-full">
             <table className="w-full min-w-max table-auto text-left">
               <thead>
@@ -86,21 +88,21 @@ const ManageServiceProviders = (props: Props) => {
                 </tr>
               </thead>
               <tbody>
-                {filteredRows.map(({ name, date, category, email }, index) => {
+                {companies.map((company, index) => {
                   const isLast = index === filteredRows.length - 1;
                   const classes = isLast
                     ? 'p-4'
                     : 'p-4 border-b border-blue-gray-50';
 
                   return (
-                    <tr key={email}>
+                    <tr key={company.id}>
                       <td className={classes}>
                         <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {name}
+                          {company.name}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -109,7 +111,7 @@ const ManageServiceProviders = (props: Props) => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {email}
+                          {company?.user?.email}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -118,7 +120,7 @@ const ManageServiceProviders = (props: Props) => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {category}
+                          {company.companyCategory?.category?.name}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -127,24 +129,15 @@ const ManageServiceProviders = (props: Props) => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {date}
+                          {company.createdAt}
                         </Typography>
                       </td>
                       <td className={classes}>
-                        <button
-                          className='bg-blue-gray-200 rounded-md p-[0.5rem]'
-                          onClick={() => handleDelete(name)}
-                        >
-                          <Typography
-                            as="a"
-                            href="#"
-                            variant="small"
-                            color="blue-gray"
-                            className="font-medium"
-                          >
-                            Delete
-                          </Typography>
-                        </button>
+                        <Button onClick={
+                          () => {
+                            handleDelete(company.user?.id)
+                          }
+                        } variant="text">Delete</Button>
                       </td>
                     </tr>
                   );

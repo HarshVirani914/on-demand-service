@@ -1,1 +1,1 @@
-export {default as AdminSidebar} from  './page'
+export { default as AdminSidebar } from './page';

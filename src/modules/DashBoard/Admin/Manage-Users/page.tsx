@@ -1,7 +1,8 @@
 'use client';
 import { AdminSidebar } from '@/components/AdminSidebar';
 import React, { useState } from 'react';
-import { Card, Typography } from '@material-tailwind/react';
+import { Button, Card, Typography } from '@material-tailwind/react';
+import { useUsers } from '../../hooks/useUsers';
 
 const TABLE_HEAD = ['Name', 'Email', 'Account open', 'Action'];
 
@@ -41,6 +42,8 @@ const TABLE_ROWS = [
 type Props = {};
 
 const ManageUsers = (props: Props) => {
+  const { users } = useUsers();
+
   const [searchText, setSearchText] = useState('');
   const handleDelete = (name: string) => {
     console.log(`${name} deleted`);
@@ -55,10 +58,9 @@ const ManageUsers = (props: Props) => {
       <AdminSidebar />
       <div className="bg-blue-gray-100 justify-center flex-1 text-black">
         <div className="text-center text-white text-3xl bg-black p-3 m-4 rounded-md">
-          Manage - Users
+          Manage Users
         </div>
-        <div className='m-6 bg-blue-gray-100'>
-
+        <div className="m-6 bg-blue-gray-100">
           <Card className="h-full w-full">
             <table className="w-full min-w-max table-auto text-left">
               <thead>
@@ -80,8 +82,8 @@ const ManageUsers = (props: Props) => {
                 </tr>
               </thead>
               <tbody>
-                {filteredRows.map(({ name, date, email }, index) => {
-                  const isLast = index === filteredRows.length - 1;
+                {users.map(({ id, name, email, createdAt }, index) => {
+                  const isLast = index === users.length - 1;
                   const classes = isLast
                     ? 'p-4'
                     : 'p-4 border-b border-blue-gray-50';
@@ -112,24 +114,11 @@ const ManageUsers = (props: Props) => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {date}
+                          {createdAt}
                         </Typography>
                       </td>
                       <td className={classes}>
-                        <button
-                          className='bg-blue-gray-200 rounded-md p-[0.5rem]'
-                          onClick={() => handleDelete(name)}
-                        >
-                          <Typography
-                            as="a"
-                            href="#"
-                            variant="small"
-                            color="blue-gray"
-                            className="font-medium"
-                          >
-                            Delete
-                          </Typography>
-                        </button>
+                        <Button variant="text">Delete</Button>
                       </td>
                     </tr>
                   );

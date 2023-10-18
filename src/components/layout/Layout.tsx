@@ -1,5 +1,5 @@
 'use client';
-import { Lite_UserFragment, useCurrentUserQuery } from '@/generated/graphql';
+import { Lite_UserFragment } from '@/generated/graphql';
 import { ThemeProvider } from '@material-tailwind/react';
 import { Footer } from '../Footer';
 import { Navbar } from '../navbar';
@@ -24,8 +24,6 @@ const Layout: React.FC<LayoutProps> = ({
   children,
   forbidWhen = AuthRestrict.NEVER,
 }) => {
-  const { data } = useCurrentUserQuery();
-
   const forbidsLoggedIn = forbidWhen & AuthRestrict.LOGGED_IN;
   const forbidsLoggedOut = forbidWhen & AuthRestrict.LOGGED_OUT;
   const forbidsNotAdmin = forbidWhen & AuthRestrict.NOT_ADMIN;

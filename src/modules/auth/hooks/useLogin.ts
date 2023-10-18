@@ -17,6 +17,9 @@ export const useLogin = () => {
 
       toast.success('Logged in successfully');
 
+      if (data.login?.user.isAdmin) {
+        router.replace('/dashboard/admin/home');
+      }
       router.replace('/');
     },
     onError(error) {
