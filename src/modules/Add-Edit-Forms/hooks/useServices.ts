@@ -1,6 +1,6 @@
 import { useServicesQuery } from '@/generated/graphql';
 
-export const useServices = (filters: { companyId?: any, slug?: any }) => {
+export const useServices = (filters: { companyId?: any; slug?: any }) => {
   const { data } = useServicesQuery({
     variables: {
       filter: {
@@ -15,9 +15,9 @@ export const useServices = (filters: { companyId?: any, slug?: any }) => {
               slug: {
                 equalTo: filters.slug || null,
               },
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
     },
   });

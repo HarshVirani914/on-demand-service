@@ -19,7 +19,7 @@ export const useServiceForm = (id?: string) => {
     onCompleted(data) {
       toast.success('Service created successfully');
 
-      router.replace('/dashboard/service-provider-dashboard');
+      router.refresh();
     },
     onError(error) {
       toast.error('Error creating service ' + error.message);
@@ -37,7 +37,7 @@ export const useServiceForm = (id?: string) => {
     });
 
   const handleSubmit = (input: any) => {
-    const { id, ...sanitizedInput } = serviceSchema.cast(input, {
+    const { id: _, ...sanitizedInput } = serviceSchema.cast(input, {
       assert: false,
       stripUnknown: true,
     });
@@ -60,8 +60,17 @@ export const useServiceForm = (id?: string) => {
 
   console.log('data', data);
 
+  console.log('service', service);
+
   const initialValues = serviceSchema.cast(
-    { service, companyId: data?.currentUser?.company?.id },
+    {
+      service,
+      companyId: data?.currentUser?.company?.id,
+      categoryId: service?.categoryId,
+      name: service?.name,
+      description: service?.description,
+      price: service?.price,
+    },
     {
       assert: false,
       stripUnknown: true,

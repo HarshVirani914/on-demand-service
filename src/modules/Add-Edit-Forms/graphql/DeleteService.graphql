@@ -1,0 +1,6 @@
+mutation DeleteService($input: DeleteServiceInput!) {
+  deleteService(input: $input) {
+    clientMutationId
+    deletedServiceNodeId
+  }
+}

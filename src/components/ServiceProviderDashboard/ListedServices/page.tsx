@@ -46,13 +46,13 @@ const ServiceProviderDashboard = () => {
                 size="lg"
                 className="flex flex-row content-start"
               >
-                <div className="flex flex-row gap-x-3">
-                  <CgAdd size={25} color="black" />
-                  Add Service
+                <div className="flex flex-row gap-x-2">
+                  <CgAdd size={20} color="black" />
+                  <span className="">Add Service</span>
                 </div>
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent className="">
+            <AlertDialogContent>
               <AddService />
             </AlertDialogContent>
           </AlertDialog>
@@ -62,7 +62,7 @@ const ServiceProviderDashboard = () => {
             <div key={service.id}>
               <BookingCard
                 id={service.id}
-                buttonLabel="Edit Service"
+                buttonLabel="Edit"
                 likeSymbol={false}
                 ratingSymbol={false}
                 charges={service.price}

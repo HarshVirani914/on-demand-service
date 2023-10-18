@@ -7,22 +7,12 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button, Card, Typography } from '@material-tailwind/react';
 import { Form } from 'formik';
-import * as Yup from 'yup';
+import { useServiceForm } from '../hooks/useServiceForm';
 
-const initalValues = {
-  description: '',
-  price: '',
-};
+const EditServices = ({ id }: any) => {
+  const { handleSubmit, initialValues, loading, validationSchema } =
+    useServiceForm(id);
 
-const SigninSchema = Yup.object().shape({
-  description: Yup.string().required('Required'),
-  price: Yup.string().required('Required'),
-});
-const handleSubmit = async (values: any) => {
-  console.log(values);
-};
-
-const EditServices = () => {
   return (
     <div className="-m-[15%]">
       <Card color="transparent" shadow={false} className="m-20">
@@ -30,9 +20,10 @@ const EditServices = () => {
           Edit Service
         </Typography>
         <FormLayout
-          initialValues={initalValues}
-          validationSchema={SigninSchema}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
           onSubmit={handleSubmit}
+          enableReinitialize
         >
           {({ isValid }: any) => (
             <Form className="mt-4 mb-2 w-full ">
@@ -44,8 +35,12 @@ const EditServices = () => {
                     Cancel
                   </AlertDialogCancel>
                   {/* <AlertDialogAction className="w-full"> */}
-                  <Button type="submit" className="w-full" disabled={!isValid}>
-                    Add
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={loading || !isValid}
+                  >
+                    Update
                   </Button>
                   {/* </AlertDialogAction> */}
                 </AlertDialogFooter>

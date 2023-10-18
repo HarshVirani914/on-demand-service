@@ -5,10 +5,11 @@ import {
   AlertDialogContent,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
 import { EditServices } from '@/modules/Add-Edit-Forms/Services-Edit';
+import { useDeleteService } from '@/modules/Add-Edit-Forms/hooks/useDeleteService';
 import { GetDetails } from '@/modules/DashBoard/User/Services';
 import {
+  Button,
   Card,
   CardBody,
   CardFooter,
@@ -38,6 +39,8 @@ const BookingCard: React.FC<IBookingCard> = ({
   likeSymbol,
   ratingSymbol,
 }) => {
+  const { handleDelete } = useDeleteService();
+
   return (
     <>
       <Card className="max-w-sm shadow-lg">
@@ -67,7 +70,7 @@ const BookingCard: React.FC<IBookingCard> = ({
             <div className="flex flex-row gap-x-6 items-center justify-between">
               <div>
                 <Typography
-                  variant="h5"
+                  variant="h6"
                   color="blue-gray"
                   className="font-medium"
                 >
@@ -98,11 +101,7 @@ const BookingCard: React.FC<IBookingCard> = ({
               </div>
             </div>
             <div className="flex flex-row gap-2">
-              <Typography
-                variant="h6"
-                color="blue-gray"
-                className="font-medium"
-              >
+              <Typography color="blue-gray">
                 Service Charge : {charges}/-
               </Typography>
             </div>
@@ -120,23 +119,36 @@ const BookingCard: React.FC<IBookingCard> = ({
           {/* <Button size="lg" fullWidth={true}>
             {buttonLabel}
           </Button> */}
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="default" size="lg" className="w-full">
-                {buttonLabel}
+          <div className="flex flex-row gap-2 justify-center items-center">
+            {buttonLabel == 'Edit' ? (
+              <Button
+                onClick={() => {
+                  handleDelete(id);
+                }}
+                variant="outlined"
+                size="lg"
+                className="w-full py-3 font-semibold"
+              >
+                Delete
               </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent className="-p-15 sm:p-7">
-              {buttonLabel == 'Edit Service' ? <EditServices /> : null}
-              {buttonLabel == 'Get Details' ? <GetDetails id={id}/> : null}
-              {/* <AlertDialogFooter>
+            ) : null}
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button size="lg" className="w-full py-3 font-semibold">
+                  {buttonLabel}
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="-p-15 sm:p-7">
+                {buttonLabel == 'Edit' ? <EditServices id={id} /> : null}
+                {buttonLabel == 'Get Details' ? <GetDetails id={id} /> : null}
+                {/* <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction>Continue</AlertDialogAction>
               </AlertDialogFooter> */}
-            </AlertDialogContent>
-          </AlertDialog>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
         </CardFooter>
-
         {/* <Button size="lg" fullWidth={true}>
             Get Details
           </Button> */}

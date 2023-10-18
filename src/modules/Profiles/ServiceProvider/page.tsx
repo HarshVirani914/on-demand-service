@@ -1,17 +1,6 @@
 'use client';
 import { Sidebar } from '@/components/UserDashboard/Sidebar';
 import { FormFieldLayout, FormLayout } from '@/components/forms';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
 import { useCurrentUserQuery } from '@/generated/graphql';
 import { Button } from '@material-tailwind/react';
 import { Form } from 'formik';
