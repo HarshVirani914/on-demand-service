@@ -26,10 +26,11 @@ const GetDetails: React.FC<IGetDetails> = ({ id }) => {
         <Typography variant="h4" color="blue-gray">
           <div className="flex flex-row gap-x-3">
             <FaBuilding size={22} color="black" />
-            <div className="text-2xl -mt-1">{service?.name}</div>
+            <div className="text-2xl -mt-1">{(service?.company?.name)?.toUpperCase()}</div>
           </div>
         </Typography>
-
+        
+        <div className="text-lg font-semibold mt-1">{service?.name}</div>
         <div className="mt-[3%] flex flex-col gap-4">
           <div className="flex flex-col gap-1">
             <div className="font-bold text-black">Shop Time</div>
@@ -58,7 +59,7 @@ const GetDetails: React.FC<IGetDetails> = ({ id }) => {
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <div className="font-bold text-black">Price</div>
+            <div className="font-bold text-black">Charges</div>
             <div className="flex flex-row gap-x-3">
               <LuIndianRupee size={19} color="black" />
               <div className="-mt-1">{service?.price}/-</div>
