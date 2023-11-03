@@ -78,7 +78,9 @@ const ManageUsers = (props: Props) => {
                         </Typography>
                       </td>
                       <td className={classes}>
-                        <Button variant="text">Delete</Button>
+                        <Button onClick={
+                          () => handleDelete(id)
+                        } variant="text">Delete</Button>
                       </td>
                     </tr>
                   );

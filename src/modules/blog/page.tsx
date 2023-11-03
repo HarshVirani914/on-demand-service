@@ -45,7 +45,7 @@ const Blog = (props: Props) => {
                     The Evolution of On-Demand Services:
                   </div>
                   <div className="text-2xl">
-                    In today's fast-paced world, convenience is key, and the
+                    In today&apos;s fast-paced world, convenience is key, and the
                     evolution of on-demand services has played a pivotal role in
                     reshaping how we access essential services. Gone are the
                     days when you had to search endlessly for a car service
@@ -63,7 +63,7 @@ const Blog = (props: Props) => {
                   <div className="text-2xl">
                     In the ever-evolving landscape of on-demand services,
                     staying ahead of the curve is crucial. As we look to the
-                    future, it's clear that the on-demand service industry will
+                    future, it&apos;s clear that the on-demand service industry will
                     continue to transform the way we access essential services.
                   </div>
                 </div>

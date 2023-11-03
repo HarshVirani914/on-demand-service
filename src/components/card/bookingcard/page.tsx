@@ -18,7 +18,8 @@ import {
   Typography,
 } from '@material-tailwind/react';
 import Image from 'next/image';
-import img1 from 'public/AboutUs/about-us.png';
+import carService from 'public/OurServices/car-service.jpg';
+import homeService from 'public/OurServices/home-service.jpg';
 
 interface IBookingCard {
   id: string;
@@ -28,6 +29,7 @@ interface IBookingCard {
   buttonLabel: string;
   likeSymbol: boolean;
   ratingSymbol: boolean;
+  categoryName?: string;
 }
 
 const BookingCard: React.FC<IBookingCard> = ({
@@ -38,6 +40,7 @@ const BookingCard: React.FC<IBookingCard> = ({
   buttonLabel,
   likeSymbol,
   ratingSymbol,
+  categoryName,
 }) => {
   const { handleDelete } = useDeleteService();
 
@@ -45,7 +48,16 @@ const BookingCard: React.FC<IBookingCard> = ({
     <>
       <Card className="max-w-sm shadow-lg">
         <CardHeader floated={false} color="blue-gray">
-          <Image src={img1} alt="ui/ux review check" height={500} width={500} />
+          <Image
+            src={
+              categoryName == 'car general services' || categoryName == 'car washing'
+                ? carService
+                : homeService
+            }
+            alt="ui/ux review check"
+            height={500}
+            width={500}
+          />
           <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
           {likeSymbol ? (
             <IconButton
@@ -74,7 +86,7 @@ const BookingCard: React.FC<IBookingCard> = ({
                   color="blue-gray"
                   className="font-medium"
                 >
-                  {title}
+                  {title?.toUpperCase()}
                 </Typography>
               </div>
               <div>
@@ -111,7 +123,7 @@ const BookingCard: React.FC<IBookingCard> = ({
               <Typography color="gray">-</Typography>
             </div>
             <div>
-              <Typography color="gray">{description}</Typography>
+              <Typography as='span' color="gray">{description}</Typography>
             </div>
           </div>
         </CardBody>
@@ -134,9 +146,11 @@ const BookingCard: React.FC<IBookingCard> = ({
             ) : null}
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button size="lg" className="w-full py-3 font-semibold">
+                {/* <Button size="lg" className="w-full py-3 font-semibold"> */}
+                <Typography className="w-full border-2 bg-black text-white text-center p-2 px-6 border-black cursor-pointer hover:text-white/80 uppercase  font-bold rounded-lg ">
                   {buttonLabel}
-                </Button>
+                </Typography>
+                {/* </Button> */}
               </AlertDialogTrigger>
               <AlertDialogContent className="-p-15 sm:p-7">
                 {buttonLabel == 'Edit' ? <EditServices id={id} /> : null}

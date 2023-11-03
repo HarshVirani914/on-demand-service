@@ -24,7 +24,7 @@ const Sidebar: React.FC<SidebarProps> = ({ items }) => {
                 aria-hidden="true"
               />
             </Disclosure.Button>
-            <div className=" p-6 w-1/2 h-screen bg-white z-10 fixed -left-96 lg:left-0 lg:w-60  peer-focus:left-0 peer:transition ease-out delay-150 duration-200">
+            <div className=" p-6 w-1/2 bg-white z-10 fixed -left-96 lg:left-0 lg:w-60  peer-focus:left-0 peer:transition ease-out delay-150 duration-200">
               <div className="flex flex-col justify-start item-center">
                 <div className=" my-4 border-b border-gray-100 pb-4">
                   {items.map((item, index) => (

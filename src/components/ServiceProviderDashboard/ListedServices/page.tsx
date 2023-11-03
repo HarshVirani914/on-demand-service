@@ -12,6 +12,7 @@ import { useServices } from '@/modules/Add-Edit-Forms/hooks/useServices';
 import { CgAdd } from 'react-icons/cg';
 
 const ServiceProviderDashboard = () => {
+  
   const { data } = useCurrentUserQuery();
 
   const { services } = useServices({
@@ -57,7 +58,7 @@ const ServiceProviderDashboard = () => {
             </AlertDialogContent>
           </AlertDialog>
         </div>
-        <div className="p-7 sm:px-20 mt-[3rem] sm:-mt[2rem] mx-auto grid  lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-5">
+        <div className="p-7 sm:px-20 mt-[3rem] sm:-mt[2rem] mx-auto grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-5">
           {services.map((service) => (
             <div key={service.id}>
               <BookingCard

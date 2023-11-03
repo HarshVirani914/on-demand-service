@@ -30,7 +30,7 @@ const Dashboard: React.FC<Props> = ({ params: { slug } }) => {
               {slug.replaceAll('-', ' ').toLocaleUpperCase()}
             </div>
           </div>
-          <div className="p-7 sm:px-20 -mt-[3rem] sm:-mt[5rem] mx-auto grid  lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-5">
+          <div className="p-7 sm:px-20 -mt-[3rem] sm:-mt[5rem] mx-auto grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-5">
             {services.map((service) => (
               <div key={service.id}>
                 <BookingCard
@@ -41,6 +41,7 @@ const Dashboard: React.FC<Props> = ({ params: { slug } }) => {
                   title={service.name}
                   charges={service.price}
                   description={service.description}
+                  categoryName={service?.category?.name}
                 />
               </div>
             ))}
