@@ -69,6 +69,7 @@ const ServiceProviderDashboard = () => {
                 charges={service.price}
                 title={service.name}
                 description={service.description}
+                categoryName={service?.category?.name}
               />
             </div>
           ))}

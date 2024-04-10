@@ -16,7 +16,7 @@ const MyProfile = (props: Props) => {
         items={[
           {
             title: 'My Profile',
-            href: '/myprofile',
+            href: 'my-profile',
           },
         ]}
       />

@@ -44,7 +44,7 @@ const Page: React.FC<IHomePageProps> = () => {
         'https://img.freepik.com/free-photo/repairman-doing-air-conditioner-service_1303-26541.jpg?w=996&t=st=1692370580~exp=1692371180~hmac=7ea0425cd3ae96c5fa179dbccb9260c081a3742033906bd66984d8c5c6786d91',
     },
     {
-      title: 'Car Services',
+      title: 'Car General Services',
       imgUrl:
         'https://www.bmw.lt/content/dam/bmw/common/topics/offers-and-services/service-workshop/service-maintenance/bmwaftersales_serviceworkshop_servicemaintenance_2_checkmaintanaince_01.jpg/jcr:content/renditions/cq5dam.resized.img.585.low.time1477931150205.jpg',
     },
@@ -80,9 +80,7 @@ const Page: React.FC<IHomePageProps> = () => {
           </div>
         </div>
         <div className="mt-4">
-          <Link
-            href={`/category/${'Services'.replace(/ /g, '-').toLowerCase()}`}
-          >
+          <Link href={`/car-general-services`}>
             <button className="bg-black text-white sm:bg-white sm:text-black p-4 px-10 border-black border-2 text-center font-semibold hover:bg-black transition-colors duration-200 hover:text-white">
               Explore Our Services
             </button>

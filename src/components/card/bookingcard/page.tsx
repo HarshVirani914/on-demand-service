@@ -43,6 +43,7 @@ const BookingCard: React.FC<IBookingCard> = ({
   categoryName,
 }) => {
   const { handleDelete } = useDeleteService();
+  console.log(categoryName)
 
   return (
     <>
@@ -50,7 +51,8 @@ const BookingCard: React.FC<IBookingCard> = ({
         <CardHeader floated={false} color="blue-gray">
           <Image
             src={
-              categoryName == 'car general services' || categoryName == 'car washing'
+              categoryName == 'Car General Services' ||
+              categoryName == 'Car Washing'
                 ? carService
                 : homeService
             }
@@ -123,7 +125,9 @@ const BookingCard: React.FC<IBookingCard> = ({
               <Typography color="gray">-</Typography>
             </div>
             <div>
-              <Typography as='span' color="gray">{description}</Typography>
+              <Typography as="span" color="gray">
+                {description}
+              </Typography>
             </div>
           </div>
         </CardBody>

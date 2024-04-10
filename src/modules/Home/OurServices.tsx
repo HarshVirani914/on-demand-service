@@ -40,7 +40,7 @@ const OurServices: React.FC<IOurServicesProps> = ({ cardTitles }) => {
           {cardTitles.map(({ title, imgUrl }, key) => (
             <Link
               className="hover:scale-105 ease-linear"
-              href={`/category/${title.replace(/ /g, '-').toLowerCase()}`}
+              href={`/${title.replace(/ /g, '-').toLowerCase()}`}
               key={key}
             >
               <FeatureCard title={title} imgUrl={imgUrl} />
