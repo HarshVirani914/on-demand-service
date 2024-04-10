@@ -1,0 +1,22 @@
+query Companies {
+  companies {
+    totalCount
+    nodes {
+      id
+      name
+      companyCategory {
+        id
+        category {
+          id
+          name
+        }
+      }
+      createdAt
+      user {
+        id
+        name
+        email
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+mutation login($input: LoginInput!) {
+  login(input: $input) {
+    token
+    user {
+      ...Lite_User
+      companies {
+        nodes {
+          ...Lite_Company
+        }
+      }
+    }
+  }
+}

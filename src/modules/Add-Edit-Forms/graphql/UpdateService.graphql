@@ -1,0 +1,8 @@
+mutation UpdateService($id: UUID!, $service: ServicePatch!) {
+  updateService(input: { patch: $service, id: $id }) {
+    service {
+      id
+      ...Lite_Service
+    }
+  }
+}

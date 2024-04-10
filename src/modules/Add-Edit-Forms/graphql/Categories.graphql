@@ -1,0 +1,18 @@
+query Categories($condition: CategoryCondition) {
+  categories(condition: $condition) {
+    nodes {
+      id
+      name
+      slug
+      description
+      childCategories {
+        nodes {
+          id
+          name
+          slug
+          description
+        }
+      }
+    }
+  }
+}

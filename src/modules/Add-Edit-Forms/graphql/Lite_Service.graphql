@@ -1,0 +1,33 @@
+fragment Lite_Service on Service {
+  id
+  name
+  price
+  description
+  companyId
+  categoryId
+  company {
+    id
+    name
+    description
+    user {
+      id
+      name
+      email
+    }
+    availability {
+      id
+      endTime
+      startTime
+    }
+    address {
+      id
+      address
+      contactNumber
+    }
+  }
+  category {
+    id
+    name
+  }
+  createdAt
+}
