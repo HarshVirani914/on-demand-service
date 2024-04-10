@@ -1,0 +1,63 @@
+users
+- id
+- name
+- email
+- password
+- type
+- is_verified
+- is_admin
+- created_at
+- updated_at
+
+addresses
+- id
+- address_1
+- address_2
+- contact_number
+- user_id
+- is_primary
+- created_at
+- updated_at
+
+companies
+- id
+- name
+- user_id
+- is_verified
+- description
+
+services
+- id
+- title
+- company_id
+- category_id
+- description
+- price
+
+categories
+- id
+- name
+- slug
+- parent_id
+
+availabilities
+- id
+- company_id
+- start_time
+- end_time
+
+bookings
+- id
+- user_id
+- service_id
+- availability_id
+- address_id
+- status
+- created_at
+- updated_at
+
+user_sessions
+- id
+- user_id
+- created_at
+- last_active
